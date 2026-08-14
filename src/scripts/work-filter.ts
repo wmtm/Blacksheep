@@ -48,7 +48,7 @@ export function initWorkFilter() {
         stagger: 0.03,
         absolute: true,
       });
-      document.dispatchEvent(new CustomEvent('daneva:refresh-cursor'));
+      document.dispatchEvent(new CustomEvent('blacksheep:refresh-cursor'));
     }
   }
 

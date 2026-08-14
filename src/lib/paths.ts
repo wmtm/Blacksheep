@@ -1,5 +1,5 @@
 /**
- * Prefixes an internal path with the site's base path (e.g. "/Daneva/"),
+ * Prefixes an internal path with the site's base path (e.g. "/Blacksheep/"),
  * so links keep working when the site is deployed under a subpath.
  * Astro's `base` config does not rewrite hardcoded hrefs automatically —
  * only asset URLs it manages itself — so every internal link needs this.

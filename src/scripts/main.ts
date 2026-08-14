@@ -35,6 +35,6 @@ document.addEventListener('astro:before-swap', () => {
 
 // Re-attach cursor targets whenever content changes without a full nav
 // (e.g. work filter reflow adding/removing cards)
-document.addEventListener('daneva:refresh-cursor', () => {
+document.addEventListener('blacksheep:refresh-cursor', () => {
   refreshCursorTargets();
 });

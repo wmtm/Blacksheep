@@ -15,7 +15,7 @@ Mathieu Maigrot's portfolio/blog-style site — built with [Astro](https://astro
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/daneva/
+npm run dev      # http://localhost:4321/Blacksheep/
 npm run build    # outputs to ./dist
 npm run preview  # preview the production build
 ```
@@ -66,10 +66,10 @@ A few things were placeholders by necessity and should be confirmed/replaced bef
 
 A workflow at `.github/workflows/deploy.yml` builds and deploys to GitHub Pages on every push to `main`. One-time setup in the repo: **Settings → Pages → Source → GitHub Actions**.
 
-By default the site is configured for the project URL `https://gaelledardanne-code.github.io/daneva/` (see `astro.config.mjs` — `base: '/daneva'`). If you attach a custom domain (e.g. `blacksheep.design`) later:
+By default the site is configured for the project URL `https://wmtm.github.io/Blacksheep/` (see `astro.config.mjs` — `base: '/Blacksheep'`). If you attach a custom domain (e.g. `blacksheep.design`) later:
 
 1. Add a `public/CNAME` file containing the domain.
-2. Set the `CUSTOM_DOMAIN=true` environment variable in the GitHub Actions workflow (or update `astro.config.mjs` directly) so `base` becomes `/` instead of `/daneva`.
+2. Set the `CUSTOM_DOMAIN=true` environment variable in the GitHub Actions workflow (or update `astro.config.mjs` directly) so `base` becomes `/` instead of `/Blacksheep`.
 
 ## Accessibility & performance notes
 
