@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Lost sheep" description="This page doesn't exist." showFooterCta={false}>
+  <section class="flex min-h-[85svh] flex-col items-center justify-center px-6 text-center">
+    <p data-reveal class="mb-4 text-[11px] uppercase tracking-[0.2em] text-paper/50">404</p>
+    <h1 data-reveal data-reveal-delay="0.08" class="font-display text-[16vw] leading-[0.9] tracking-[-0.03em] sm:text-8xl">
+      Lost sheep.
+    </h1>
+    <p data-reveal data-reveal-delay="0.16" class="mt-6 max-w-md text-paper/60">
+      This page wandered off from the rest of the flock. It happens — even black sheep take wrong turns.
+    </p>
+    <a
+      href="/"
+      data-cursor="link"
+      data-magnetic="0.3"
+      data-reveal
+      data-reveal-delay="0.24"
+      class="mt-10 inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+    >
+      Back to safety →
+    </a>
+  </section>
+</BaseLayout>

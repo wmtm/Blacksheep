@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
+import { SOCIALS, CONTACT_EMAIL } from '@/lib/social';
+---
+
+<BaseLayout title="Contact" description="Got a good idea? Let's make it move. Get in touch with BlackSheep for freelance projects and collaborations." showFooterCta={false}>
+  <section class="relative flex min-h-[85svh] flex-col justify-center overflow-hidden px-6 py-32 sm:px-12 lg:px-20">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-violet/20 blur-[140px]"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-4xl text-center">
+      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.2em] text-paper/50">Say hello</p>
+
+      <h1 data-reveal-lines class="font-display text-[13vw] leading-[0.95] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+        <span class="block overflow-hidden"><span data-line class="block">Got a good idea?</span></span>
+        <span class="block overflow-hidden"><span data-line class="block text-outline">Let's make it move.</span></span>
+      </h1>
+
+      <div data-reveal data-reveal-delay="0.2" class="mt-12 flex flex-col items-center gap-6">
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          data-cursor="drag"
+          data-cursor-text="Email me"
+          data-magnetic="0.4"
+          class="group inline-flex items-center gap-3 rounded-full bg-paper px-8 py-5 font-display text-xl text-ink transition-transform duration-300 hover:scale-[1.03] sm:text-2xl"
+        >
+          {CONTACT_EMAIL}
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-ink text-paper transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+
+        <AvailabilityBadge />
+        <p class="text-[11px] uppercase tracking-[0.15em] text-paper/40">
+          Mauritius — GMT+4 — <span data-clock>--:--</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line px-6 py-16 sm:px-12 lg:px-20">
+    <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
+      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Find me elsewhere</p>
+      <ul data-reveal-group class="flex flex-wrap justify-center gap-x-8 gap-y-3">
+        {SOCIALS.map((social) => (
+          <li data-reveal-item>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="link"
+              class="font-display text-lg text-paper/60 transition-colors duration-300 hover:text-brand-coral sm:text-xl"
+            >
+              {social.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

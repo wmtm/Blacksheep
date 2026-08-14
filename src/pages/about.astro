@@ -1,0 +1,93 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
+import { CATEGORY_LIST } from '@/lib/categories';
+
+const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D', 'Premiere Pro'];
+---
+
+<BaseLayout title="About" description="Mathieu Maigrot — graphic & motion designer based in Mauritius, working across visual identity, animation and digital design.">
+  <section class="px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:items-start lg:gap-16">
+      <div>
+        <p data-reveal class="mb-4 text-[11px] uppercase tracking-[0.15em] text-paper/40">About</p>
+        <h1 data-reveal-lines class="font-display text-[10.5vw] leading-[0.98] tracking-[-0.03em] sm:text-6xl lg:text-[4.6vw]">
+          <span class="block overflow-hidden"><span data-line class="block">Born in Mauritius.</span></span>
+          <span class="block overflow-hidden"><span data-line class="block text-outline">Designed for anywhere.</span></span>
+        </h1>
+
+        <div data-reveal data-reveal-delay="0.15" class="mt-10 max-w-xl space-y-5 text-lg text-paper/70">
+          <p>
+            I'm <strong class="text-paper">Mathieu Maigrot</strong>, a graphic &amp; motion designer based in
+            Mauritius, working across visual identity, animation, digital design and everything in between.
+          </p>
+          <p>
+            I like taking an idea — sometimes clear, sometimes completely chaotic — and turning it into
+            something visual, engaging and impossible to ignore.
+          </p>
+          <p>
+            From logos that move to brands that need a personality, digital experiences, illustrations,
+            campaigns and the occasional weird side project, I'm interested in design that does more than
+            look good. It should have a point of view.
+          </p>
+        </div>
+
+        <p data-reveal data-reveal-delay="0.22" class="mt-8 font-display text-xl text-paper/50 sm:text-2xl">
+          Graphic designer. Motion maker.<br />Professional overthinker of pixels.
+        </p>
+
+        <div data-reveal data-reveal-delay="0.3" class="mt-10">
+          <AvailabilityBadge label="Currently available for freelance projects, collaborations & creative adventures" />
+        </div>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.1" class="lg:sticky lg:top-32">
+        <Placeholder ratio="4:5" kind="image" label="MATHIEU — PORTRAIT" accent="#FF4B6E" />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">What I do</p>
+    <div data-reveal-group class="divide-y divide-line border-y border-line">
+      {CATEGORY_LIST.map((cat) => (
+        <a
+          href={`/work/?cat=${cat.id}`}
+          data-reveal-item
+          data-cursor="link"
+          class="group flex flex-col gap-2 py-6 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between sm:py-8"
+        >
+          <div class="flex items-center gap-5">
+            <span class="font-display text-sm text-paper/30">{cat.index}</span>
+            <h3 class="font-display text-2xl tracking-[-0.01em] transition-colors duration-300 sm:text-4xl" style={`--hover-color:${cat.accent}`}>
+              {cat.label}
+            </h3>
+          </div>
+          <p class="pl-9 text-sm text-paper/50 transition-colors duration-300 sm:pl-0 sm:text-right">
+            {cat.description}
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[0.4fr_1fr]">
+      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Currently using</p>
+      <ul data-reveal-group class="flex flex-wrap gap-3">
+        {tools.map((tool) => (
+          <li data-reveal-item class="rounded-full border border-line px-4 py-2 text-sm text-paper/70">
+            {tool}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  section a.group h3:hover {
+    color: var(--hover-color, var(--color-brand-coral));
+  }
+</style>

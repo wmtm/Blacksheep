@@ -1,0 +1,151 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import CaseStudyIndex from '@/components/CaseStudyIndex.astro';
+import { getCollection, render } from 'astro:content';
+import { CATEGORIES } from '@/lib/categories';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const allIds = [...projects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project, allIds },
+  }));
+}
+
+const { project, allIds } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const cat = CATEGORIES[data.category];
+const currentIndex = allIds.indexOf(project.id);
+const nextId = allIds[(currentIndex + 1) % allIds.length];
+const allProjects = await getCollection('projects');
+const nextProject = allProjects.find((p) => p.id === nextId)!;
+const nextCat = CATEGORIES[nextProject.data.category];
+
+const indexItems = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'story', label: 'Story' },
+  ...(data.gallery.length ? [{ id: 'gallery', label: 'Gallery' }] : []),
+  { id: 'next', label: 'Next project' },
+];
+---
+
+<BaseLayout title={data.title} description={data.excerpt} showFooterCta={false}>
+  <CaseStudyIndex items={indexItems} accent={data.accent} />
+
+  <div class="fixed inset-x-0 top-0 z-40 h-[3px] origin-left scale-x-0 bg-paper" data-scroll-progress></div>
+
+  <section id="overview" class="px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <a
+      href="/work/"
+      data-cursor="link"
+      class="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors hover:text-paper"
+    >
+      ← All work
+    </a>
+
+    <div class="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-16">
+      <div data-reveal>
+        <p class="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50">
+          <span class="h-1.5 w-1.5 rounded-full" style={`background:${cat.accent}`}></span>
+          {cat.label} · {data.year}
+        </p>
+        <h1 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-[5.2vw]">
+          {data.title}
+        </h1>
+      </div>
+
+      <dl data-reveal data-reveal-delay="0.1" class="grid grid-cols-2 gap-6 border-t border-line pt-6 text-sm lg:border-t-0 lg:pt-0">
+        {data.client && (
+          <div>
+            <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Client</dt>
+            <dd class="mt-1 text-paper/80">{data.client}</dd>
+          </div>
+        )}
+        <div>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Role</dt>
+          <dd class="mt-1 text-paper/80">{data.role.join(', ')}</dd>
+        </div>
+        <div class="col-span-2">
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Summary</dt>
+          <dd class="mt-1 text-paper/80">{data.summary}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section data-reveal class="px-6 pb-20 sm:px-12 lg:px-20">
+    <Placeholder ratio={data.cover.ratio === '1:1' ? '4:5' : 'full'} kind={data.cover.kind} label={data.cover.label} accent={data.accent} />
+  </section>
+
+  <section id="story" class="px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+    <div class="grid gap-12 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">The story</p>
+      <div data-reveal data-reveal-delay="0.08" class="prose-case max-w-2xl text-paper/70">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {data.gallery.length > 0 && (
+    <section id="gallery" class="px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+      <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">Gallery</p>
+      <div data-reveal-group class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {data.gallery.map((item) => (
+          <div data-reveal-item class:list={[item.ratio === 'full' ? 'sm:col-span-2' : '']}>
+            <Placeholder ratio={item.ratio} kind={item.kind} label={item.label} accent={data.accent} />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section id="next" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/40">Next project</p>
+    <a
+      href={`/work/${nextProject.id}/`}
+      data-preview-trigger
+      data-cursor="view"
+      data-cursor-text="View"
+      class="group relative block"
+    >
+      <div data-reveal class="flex items-baseline justify-between gap-6 border-b border-line pb-8">
+        <h2 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] transition-colors duration-500 group-hover:text-brand-coral sm:text-6xl lg:text-7xl">
+          {nextProject.data.title}
+        </h2>
+        <span class="hidden shrink-0 items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 sm:flex">
+          <span class="h-1.5 w-1.5 rounded-full" style={`background:${nextCat.accent}`}></span>
+          {nextCat.short}
+        </span>
+      </div>
+
+      <div
+        data-preview-thumb
+        class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
+      >
+        <Placeholder ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} />
+      </div>
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose-case :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    color: var(--color-paper);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-case :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .prose-case :global(p) {
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+</style>

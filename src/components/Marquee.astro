@@ -1,0 +1,48 @@
+---
+interface Props {
+  items: string[];
+  speed?: number;
+  class?: string;
+  outline?: boolean;
+}
+const { items, speed = 28, class: className = '', outline = false } = Astro.props;
+---
+
+<div class:list={['marquee overflow-hidden', className]} style={`--speed:${speed}s`}>
+  <div class="marquee-track flex w-max items-center">
+    {[0, 1].map(() => (
+      <ul class="flex items-center gap-8 pr-8" aria-hidden={'true'}>
+        {items.map((item) => (
+          <li
+            class:list={[
+              'flex items-center gap-8 whitespace-nowrap font-display text-[10vw] leading-none sm:text-6xl',
+              outline ? 'text-outline' : 'text-paper/90',
+            ]}
+          >
+            {item}
+            <span class="inline-block h-2.5 w-2.5 rounded-full bg-brand-coral align-middle"></span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee-track {
+    animation: marquee-scroll var(--speed) linear infinite;
+  }
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>
