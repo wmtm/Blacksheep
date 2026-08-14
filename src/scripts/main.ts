@@ -8,6 +8,7 @@ import { initFollowPreview } from './follow-preview';
 import { initClock } from './clock';
 import { initTilt } from './tilt';
 import { initBeforeAfter } from './before-after';
+import { initMoveText } from './move-text';
 
 function boot() {
   initSmoothScroll();
@@ -19,6 +20,7 @@ function boot() {
   initClock();
   initTilt();
   initBeforeAfter();
+  initMoveText();
 }
 
 initPageTransitions();
