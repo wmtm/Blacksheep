@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class:list={['inline-flex items-center gap-2.5 font-display', className]}>
+  <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true" class="shrink-0">
+    <circle cx="16" cy="16" r="15.5" stroke="currentColor" stroke-width="1"></circle>
+    <path
+      d="M10 20.5c0-3.5 1.8-6.5 4.4-8.2.6-.4 1.4-.1 1.4.6v1.2c0 .4.3.7.7.8 2.3.5 4 2.6 4 5.1v.5c0 .6-.5 1-1 1H11c-.6 0-1-.4-1-1z"
+      fill="currentColor"
+    ></path>
+    <circle cx="13.5" cy="19" r="1" fill="var(--color-ink, #0b0b0c)"></circle>
+  </svg>
+  <span class="tracking-[-0.01em]">BLACKSHEEP</span>
+</span>
