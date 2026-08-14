@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Placeholder from '@/components/Placeholder.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
 import { CATEGORY_LIST } from '@/lib/categories';
+import { withBase } from '@/lib/paths';
 
 const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D', 'Premiere Pro'];
 ---
@@ -53,7 +54,7 @@ const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D'
     <div data-reveal-group class="divide-y divide-line border-y border-line">
       {CATEGORY_LIST.map((cat) => (
         <a
-          href={`/work/?cat=${cat.id}`}
+          href={withBase(`/work/?cat=${cat.id}`)}
           data-reveal-item
           data-cursor="link"
           class="group flex flex-col gap-2 py-6 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between sm:py-8"

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/paths';
 ---
 
 <BaseLayout title="Lost sheep" description="This page doesn't exist." showFooterCta={false}>
@@ -12,7 +13,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       This page wandered off from the rest of the flock. It happens — even black sheep take wrong turns.
     </p>
     <a
-      href="/"
+      href={withBase('/')}
       data-cursor="link"
       data-magnetic="0.3"
       data-reveal

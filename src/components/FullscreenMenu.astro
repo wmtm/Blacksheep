@@ -1,13 +1,14 @@
 ---
 import { CATEGORY_LIST } from '@/lib/categories';
 import { SOCIALS } from '@/lib/social';
+import { withBase } from '@/lib/paths';
 import AvailabilityBadge from './AvailabilityBadge.astro';
 
 const primaryLinks = [
-  { label: 'Selected work', href: '/' },
-  { label: 'All work', href: '/work/' },
-  { label: 'About', href: '/about/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'Selected work', href: withBase('/') },
+  { label: 'All work', href: withBase('/work/') },
+  { label: 'About', href: withBase('/about/') },
+  { label: 'Contact', href: withBase('/contact/') },
 ];
 ---
 
@@ -41,7 +42,7 @@ const primaryLinks = [
           {CATEGORY_LIST.map((cat) => (
             <li>
               <a
-                href={`/work/?cat=${cat.id}`}
+                href={withBase(`/work/?cat=${cat.id}`)}
                 data-cursor="link"
                 class="group flex items-center gap-3 font-display text-lg text-paper/70 transition-colors duration-300 hover:text-paper"
               >

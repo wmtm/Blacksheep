@@ -4,6 +4,7 @@ import Placeholder from '@/components/Placeholder.astro';
 import CaseStudyIndex from '@/components/CaseStudyIndex.astro';
 import { getCollection, render } from 'astro:content';
 import { CATEGORIES } from '@/lib/categories';
+import { withBase } from '@/lib/paths';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -40,7 +41,7 @@ const indexItems = [
 
   <section id="overview" class="px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
     <a
-      href="/work/"
+      href={withBase('/work/')}
       data-cursor="link"
       class="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors hover:text-paper"
     >
@@ -106,7 +107,7 @@ const indexItems = [
   <section id="next" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
     <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/40">Next project</p>
     <a
-      href={`/work/${nextProject.id}/`}
+      href={withBase(`/work/${nextProject.id}/`)}
       data-preview-trigger
       data-cursor="view"
       data-cursor-text="View"

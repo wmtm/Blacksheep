@@ -4,10 +4,11 @@ interface Props {
   kind?: 'image' | 'video';
   label: string;
   accent?: string;
+  seed?: string;
   class?: string;
 }
 
-const { ratio = '4:5', kind = 'image', label, accent = '#ff4b6e', class: className = '' } = Astro.props;
+const { ratio = '4:5', kind = 'image', label, accent = '#ff4b6e', seed, class: className = '' } = Astro.props;
 
 const ratioMap: Record<string, string> = {
   '16:9': 'aspect-[16/9]',
@@ -15,6 +16,72 @@ const ratioMap: Record<string, string> = {
   '1:1': 'aspect-square',
   full: 'aspect-[21/9]',
 };
+
+// Deterministic "fictional artwork" generator: a small abstract composition,
+// seeded from the label, so every placeholder looks like a distinct piece
+// rather than a repeated empty box. Server-side only, no runtime cost.
+function hashString(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seedNum: number) {
+  let a = seedNum;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+type Shape =
+  | { kind: 'circle'; cx: number; cy: number; r: number; fill: string; opacity: number }
+  | { kind: 'rect'; x: number; y: number; w: number; h: number; rotate: number; fill: string; opacity: number }
+  | { kind: 'triangle'; points: string; rotate: number; cx: number; cy: number; fill: string; opacity: number }
+  | { kind: 'line'; x1: number; y1: number; x2: number; y2: number; stroke: string; opacity: number };
+
+const rand = mulberry32(hashString(seed ?? label));
+const shapeCount = 4 + Math.floor(rand() * 4);
+const palette = ['var(--paper)', 'var(--accent)', 'var(--ink)'];
+
+const shapes: Shape[] = Array.from({ length: shapeCount }).map(() => {
+  const type = Math.floor(rand() * 4);
+  const fill = palette[Math.floor(rand() * palette.length)];
+  const opacity = 0.5 + rand() * 0.4;
+
+  if (type === 0) {
+    return { kind: 'circle', cx: rand() * 100, cy: rand() * 100, r: 6 + rand() * 20, fill, opacity };
+  }
+  if (type === 1) {
+    const w = 10 + rand() * 30;
+    return { kind: 'rect', x: rand() * 100, y: rand() * 100, w, h: w * (0.3 + rand() * 0.7), rotate: rand() * 90 - 45, fill, opacity };
+  }
+  if (type === 2) {
+    const size = 12 + rand() * 22;
+    const cx = rand() * 100;
+    const cy = rand() * 100;
+    const points = `${cx},${cy - size} ${cx + size},${cy + size} ${cx - size},${cy + size}`;
+    return { kind: 'triangle', points, rotate: rand() * 360, cx, cy, fill, opacity };
+  }
+  const x1 = rand() * 100;
+  const y1 = rand() * 100;
+  const angle = rand() * Math.PI * 2;
+  const len = 30 + rand() * 50;
+  return {
+    kind: 'line',
+    x1,
+    y1,
+    x2: x1 + Math.cos(angle) * len,
+    y2: y1 + Math.sin(angle) * len,
+    stroke: palette[Math.floor(rand() * palette.length)],
+    opacity: 0.35 + rand() * 0.35,
+  };
+});
 ---
 
 <div
@@ -27,6 +94,44 @@ const ratioMap: Record<string, string> = {
   data-placeholder
 >
   <div class="placeholder-bg absolute inset-0"></div>
+  <svg
+    class="placeholder-art absolute inset-0 h-full w-full mix-blend-soft-light"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+  >
+    {shapes.map((s) => {
+      if (s.kind === 'circle') {
+        return <circle cx={s.cx} cy={s.cy} r={s.r} fill={s.fill} opacity={s.opacity} />;
+      }
+      if (s.kind === 'rect') {
+        return (
+          <rect
+            x={s.x}
+            y={s.y}
+            width={s.w}
+            height={s.h}
+            fill={s.fill}
+            opacity={s.opacity}
+            transform={`rotate(${s.rotate} ${s.x} ${s.y})`}
+          />
+        );
+      }
+      if (s.kind === 'triangle') {
+        return (
+          <polygon
+            points={s.points}
+            fill={s.fill}
+            opacity={s.opacity}
+            transform={`rotate(${s.rotate} ${s.cx} ${s.cy})`}
+          />
+        );
+      }
+      return (
+        <line x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2} stroke={s.stroke} stroke-width="0.6" opacity={s.opacity} />
+      );
+    })}
+  </svg>
   <div class="grain absolute inset-0"></div>
   <div class="absolute inset-0 flex flex-col justify-between p-4 xs:p-5">
     <div class="flex items-center justify-between text-[10px] tracking-[0.15em] uppercase font-display text-paper/80">
@@ -56,6 +161,8 @@ const ratioMap: Record<string, string> = {
 <style>
   .placeholder-media {
     background: color-mix(in srgb, var(--accent) 18%, #0b0b0c);
+    --paper: #f6f3ee;
+    --ink: #0b0b0c;
   }
   .placeholder-bg {
     background:
@@ -74,6 +181,12 @@ const ratioMap: Record<string, string> = {
   }
   [data-placeholder]:hover .placeholder-bg {
     transform: scale(1.04);
+  }
+  .placeholder-art {
+    transition: transform 0.7s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  [data-placeholder]:hover .placeholder-art {
+    transform: scale(1.06) rotate(1deg);
   }
   .play-ring {
     transition: transform 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));

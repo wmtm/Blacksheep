@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import Placeholder from './Placeholder.astro';
 import { CATEGORIES } from '@/lib/categories';
+import { withBase } from '@/lib/paths';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -20,7 +21,7 @@ const allCats = [data.category, ...data.secondaryCategories].join(',');
   data-category={allCats}
   class="group relative"
 >
-  <a href={`/work/${id}/`} data-cursor="view" data-cursor-text="View" class="block">
+  <a href={withBase(`/work/${id}/`)} data-cursor="view" data-cursor-text="View" class="block">
     <div class="relative">
       <Placeholder ratio={data.cover.ratio} kind={data.cover.kind} label={data.cover.label} accent={data.accent} />
       <div class="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/10"></div>

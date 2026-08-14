@@ -6,6 +6,7 @@ import Marquee from '@/components/Marquee.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_LIST } from '@/lib/categories';
+import { withBase } from '@/lib/paths';
 
 const allProjects = await getCollection('projects');
 const featured = allProjects
@@ -70,7 +71,7 @@ const featured = allProjects
         </h2>
       </div>
       <a
-        href="/work/"
+        href={withBase('/work/')}
         data-cursor="link"
         data-magnetic="0.3"
         class="group inline-flex w-fit items-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
@@ -115,7 +116,7 @@ const featured = allProjects
           Based in Mauritius, working across visual identity, animation and digital design — for clients everywhere, and for the occasional idea that doesn't need a client to exist.
         </p>
         <a
-          href="/about/"
+          href={withBase('/about/')}
           data-cursor="link"
           data-magnetic="0.3"
           data-reveal
