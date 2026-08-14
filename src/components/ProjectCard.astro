@@ -23,7 +23,7 @@ const allCats = [data.category, ...data.secondaryCategories].join(',');
 >
   <a href={withBase(`/work/${id}/`)} data-cursor="view" data-cursor-text="View" class="block">
     <div class="relative">
-      <Placeholder ratio={data.cover.ratio} kind={data.cover.kind} label={data.cover.label} accent={data.accent} />
+      <Placeholder ratio={data.cover.ratio} kind={data.cover.kind} label={data.cover.label} accent={data.accent} category={data.category} />
       <div class="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/10"></div>
     </div>
 

@@ -1,14 +1,27 @@
 ---
+import type { CategoryId } from '@/lib/categories';
+
 interface Props {
   ratio?: '16:9' | '4:5' | '1:1' | 'full';
   kind?: 'image' | 'video';
   label: string;
   accent?: string;
   seed?: string;
+  category?: CategoryId;
+  tilt?: boolean;
   class?: string;
 }
 
-const { ratio = '4:5', kind = 'image', label, accent = '#ff4b6e', seed, class: className = '' } = Astro.props;
+const {
+  ratio = '4:5',
+  kind = 'image',
+  label,
+  accent = '#ff4b6e',
+  seed,
+  category,
+  tilt = true,
+  class: className = '',
+} = Astro.props;
 
 const ratioMap: Record<string, string> = {
   '16:9': 'aspect-[16/9]',
@@ -18,8 +31,10 @@ const ratioMap: Record<string, string> = {
 };
 
 // Deterministic "fictional artwork" generator: a small abstract composition,
-// seeded from the label, so every placeholder looks like a distinct piece
-// rather than a repeated empty box. Server-side only, no runtime cost.
+// seeded from the label and biased by category (branding gets a bold
+// centered mark, editorial gets column rules, digital gets a grid, etc.)
+// so placeholders read as intentional rather than randomly decorative.
+// Server-side only, no runtime cost.
 function hashString(str: string): number {
   let h = 0;
   for (let i = 0; i < str.length; i++) {
@@ -46,12 +61,12 @@ type Shape =
   | { kind: 'line'; x1: number; y1: number; x2: number; y2: number; stroke: string; opacity: number };
 
 const rand = mulberry32(hashString(seed ?? label));
-const shapeCount = 4 + Math.floor(rand() * 4);
 const palette = ['var(--paper)', 'var(--accent)', 'var(--ink)'];
+const pick = <T,>(arr: T[]): T => arr[Math.floor(rand() * arr.length)];
 
-const shapes: Shape[] = Array.from({ length: shapeCount }).map(() => {
+function randomShape(): Shape {
   const type = Math.floor(rand() * 4);
-  const fill = palette[Math.floor(rand() * palette.length)];
+  const fill = pick(palette);
   const opacity = 0.5 + rand() * 0.4;
 
   if (type === 0) {
@@ -78,10 +93,110 @@ const shapes: Shape[] = Array.from({ length: shapeCount }).map(() => {
     y1,
     x2: x1 + Math.cos(angle) * len,
     y2: y1 + Math.sin(angle) * len,
-    stroke: palette[Math.floor(rand() * palette.length)],
+    stroke: pick(palette),
     opacity: 0.35 + rand() * 0.35,
   };
-});
+}
+
+function buildShapes(): Shape[] {
+  // Branding — one bold, centered mark (circle + triangle overlap), like a logo.
+  if (category === 'branding') {
+    const cx = 42 + rand() * 16;
+    const cy = 42 + rand() * 16;
+    const r = 20 + rand() * 10;
+    const size = 22 + rand() * 10;
+    const points = `${cx},${cy - size} ${cx + size},${cy + size} ${cx - size},${cy + size}`;
+    return [
+      { kind: 'circle', cx, cy, r, fill: pick(palette), opacity: 0.55 },
+      { kind: 'triangle', points, rotate: rand() * 360, cx, cy, fill: pick(palette), opacity: 0.7 },
+      { kind: 'circle', cx: cx + r * 0.6, cy: cy - r * 0.6, r: r * 0.3, fill: 'var(--paper)', opacity: 0.5 },
+    ];
+  }
+
+  // Motion — streaking diagonal lines suggesting movement/blur.
+  if (category === 'motion') {
+    const angle = -0.5 + rand() * 0.3;
+    return Array.from({ length: 7 + Math.floor(rand() * 4) }).map(() => {
+      const y1 = rand() * 100;
+      const len = 60 + rand() * 60;
+      return {
+        kind: 'line' as const,
+        x1: -10,
+        y1,
+        x2: -10 + Math.cos(angle) * len,
+        y2: y1 + Math.sin(angle) * len,
+        stroke: pick(palette),
+        opacity: 0.3 + rand() * 0.4,
+      };
+    });
+  }
+
+  // Digital — a loose grid of rectangles, like UI blocks.
+  if (category === 'digital') {
+    const cols = 3;
+    const rows = 3;
+    const shapes: Shape[] = [];
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (rand() > 0.55) continue;
+        const w = 100 / cols;
+        const h = 100 / rows;
+        shapes.push({
+          kind: 'rect',
+          x: i * w + w * 0.15,
+          y: j * h + h * 0.15,
+          w: w * (0.5 + rand() * 0.4),
+          h: h * (0.5 + rand() * 0.4),
+          rotate: 0,
+          fill: pick(palette),
+          opacity: 0.4 + rand() * 0.4,
+        });
+      }
+    }
+    return shapes;
+  }
+
+  // Illustration — clustered organic circles.
+  if (category === 'illustration') {
+    const clusterX = 30 + rand() * 40;
+    const clusterY = 30 + rand() * 40;
+    return Array.from({ length: 6 + Math.floor(rand() * 5) }).map(() => ({
+      kind: 'circle' as const,
+      cx: clusterX + (rand() - 0.5) * 60,
+      cy: clusterY + (rand() - 0.5) * 60,
+      r: 5 + rand() * 16,
+      fill: pick(palette),
+      opacity: 0.35 + rand() * 0.4,
+    }));
+  }
+
+  // Editorial — horizontal rules mimicking text columns, plus a divider.
+  if (category === 'editorial') {
+    const shapes: Shape[] = [];
+    const lineCount = 6 + Math.floor(rand() * 4);
+    for (let i = 0; i < lineCount; i++) {
+      const y = 12 + (i / lineCount) * 76 + rand() * 4;
+      const fullWidth = rand() > 0.75;
+      shapes.push({
+        kind: 'line',
+        x1: 8,
+        y1: y,
+        x2: fullWidth ? 92 : 30 + rand() * 55,
+        y2: y,
+        stroke: pick(palette),
+        opacity: 0.35 + rand() * 0.35,
+      });
+    }
+    shapes.push({ kind: 'line', x1: 50, y1: 8, x2: 50, y2: 92, stroke: pick(palette), opacity: 0.25 });
+    return shapes;
+  }
+
+  // Experiments (or no category) — fully chaotic mix.
+  const shapeCount = 5 + Math.floor(rand() * 5);
+  return Array.from({ length: shapeCount }).map(() => randomShape());
+}
+
+const shapes = buildShapes();
 ---
 
 <div
@@ -92,6 +207,8 @@ const shapes: Shape[] = Array.from({ length: shapeCount }).map(() => {
   ]}
   style={`--accent:${accent}`}
   data-placeholder
+  data-kind={kind}
+  data-tilt={tilt ? '7' : undefined}
 >
   <div class="placeholder-bg absolute inset-0"></div>
   <svg
@@ -187,6 +304,20 @@ const shapes: Shape[] = Array.from({ length: shapeCount }).map(() => {
   }
   [data-placeholder]:hover .placeholder-art {
     transform: scale(1.06) rotate(1deg);
+  }
+  /* "Reel playing" cue: video placeholders drift gently while hovered,
+     suggesting motion instead of a static frame. */
+  [data-placeholder][data-kind='video']:hover .placeholder-art {
+    animation: reel-drift 2.6s ease-in-out infinite;
+  }
+  @keyframes reel-drift {
+    0%,
+    100% {
+      transform: scale(1.06) rotate(0.4deg) translate(0, 0);
+    }
+    50% {
+      transform: scale(1.09) rotate(-0.4deg) translate(1px, -1px);
+    }
   }
   .play-ring {
     transition: transform 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));

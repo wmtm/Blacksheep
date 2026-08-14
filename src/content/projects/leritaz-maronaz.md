@@ -14,6 +14,13 @@ cover:
   ratio: "4:5"
   kind: image
   label: "LERITAZ MARONAZ — PRIMARY MARK"
+beforeAfter:
+  before:
+    label: "OLD MARK — GENERIC HERITAGE CLICHÉ"
+    caption: "Where it started: a stock-photo palm tree and a script font — heritage reduced to a postcard."
+  after:
+    label: "LERITAZ MARONAZ — PRIMARY MARK"
+    caption: "Where it landed: hand-cut texture, earned proportions, a mark that carries the name's weight."
 gallery:
   - ratio: "16:9"
     kind: image

@@ -1,0 +1,45 @@
+---
+import Placeholder from './Placeholder.astro';
+
+interface Props {
+  before: { label: string; caption: string };
+  after: { label: string; caption: string };
+  accent: string;
+}
+
+const { before, after, accent } = Astro.props;
+---
+
+<div data-before-after class="relative select-none overflow-hidden rounded-[2px] aspect-[16/9]" data-cursor="drag" data-cursor-text="Drag">
+  <div class="absolute inset-0">
+    <Placeholder ratio="16:9" label={before.label} accent="#5a5a5a" seed={`before-${before.label}`} tilt={false} class="h-full w-full" />
+  </div>
+
+  <div data-before-after-after class="absolute inset-0" style="clip-path: inset(0 0 0 50%);">
+    <Placeholder ratio="16:9" label={after.label} accent={accent} seed={`after-${after.label}`} tilt={false} class="h-full w-full" />
+  </div>
+
+  <div
+    data-before-after-handle
+    class="pointer-events-none absolute inset-y-0 z-10 flex w-0.5 items-center justify-center bg-paper"
+    style="left: 50%;"
+  >
+    <span class="flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-lg">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+        <path d="M5 1L1 6L5 11M11 1L15 6L11 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </span>
+  </div>
+
+  <span class="pointer-events-none absolute left-4 top-4 z-10 rounded-full bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] text-paper/90 backdrop-blur-sm">
+    Before
+  </span>
+  <span class="pointer-events-none absolute right-4 top-4 z-10 rounded-full bg-ink/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] text-paper/90 backdrop-blur-sm">
+    After
+  </span>
+</div>
+
+<div class="mt-4 grid grid-cols-2 gap-4 text-sm text-paper/60">
+  <p>{before.caption}</p>
+  <p class="text-right">{after.caption}</p>
+</div>

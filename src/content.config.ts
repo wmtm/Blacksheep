@@ -39,6 +39,18 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().default(99),
     live: z.string().url().optional(),
+    beforeAfter: z
+      .object({
+        before: z.object({
+          label: z.string(),
+          caption: z.string(),
+        }),
+        after: z.object({
+          label: z.string(),
+          caption: z.string(),
+        }),
+      })
+      .optional(),
   }),
 });
 

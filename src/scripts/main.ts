@@ -6,6 +6,8 @@ import { initNav } from './nav';
 import { initWorkFilter } from './work-filter';
 import { initFollowPreview } from './follow-preview';
 import { initClock } from './clock';
+import { initTilt } from './tilt';
+import { initBeforeAfter } from './before-after';
 
 function boot() {
   initSmoothScroll();
@@ -15,6 +17,8 @@ function boot() {
   initWorkFilter();
   initFollowPreview();
   initClock();
+  initTilt();
+  initBeforeAfter();
 }
 
 initPageTransitions();
