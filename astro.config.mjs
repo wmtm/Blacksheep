@@ -10,7 +10,7 @@ export default defineConfig({
   site: usingCustomDomain
     ? 'https://blacksheep.design'
     : 'https://gaelledardanne-code.github.io',
-  base: usingCustomDomain ? '/' : '/daneva',
+  base: usingCustomDomain ? '/' : '/Daneva',
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
