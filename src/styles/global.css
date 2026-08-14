@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #0b0b0c;
+  --color-ink-soft: #17171a;
+  --color-paper: #f6f3ee;
+  --color-paper-dim: #eae5db;
+  --color-line: #2a2a2e;
+  --color-line-soft: #dcd6c8;
+
+  --color-brand-coral: #ff4b6e;
+  --color-brand-violet: #6c4cff;
+  --color-brand-teal: #12b7b0;
+  --color-brand-gold: #ffb238;
+  --color-brand-blue: #2e7dff;
+  --color-brand-orange: #ff7a1a;
+
+  --color-branding: #ff4b6e;
+  --color-motion: #6c4cff;
+  --color-digital: #12b7b0;
+  --color-illustration: #ffb238;
+  --color-editorial: #2e7dff;
+  --color-experiments: #ff7a1a;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  * {
+    @apply border-line-soft;
+  }
+
+  html {
+    background: var(--color-ink);
+    color-scheme: dark;
+    scroll-behavior: auto;
+  }
+
+  html.has-lenis {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-ink text-paper font-body antialiased;
+    font-feature-settings: "ss01" 1, "cv05" 1;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-brand-coral);
+    color: var(--color-ink);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  /* thin, brand-tinted scrollbar (webkit) */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-coral);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .text-outline {
+    -webkit-text-stroke: 1px var(--color-paper);
+    color: transparent;
+  }
+
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom cursor — hidden entirely on touch/coarse pointers */
+@media (pointer: fine) {
+  html.cursor-ready,
+  html.cursor-ready * {
+    cursor: none !important;
+  }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 999px;
+  background: var(--color-paper);
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: opacity 0.2s var(--ease-out-expo);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-paper) 55%, transparent);
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform, width, height, margin, background-color, border-color;
+  transition: width 0.35s var(--ease-out-expo), height 0.35s var(--ease-out-expo),
+    margin 0.35s var(--ease-out-expo), background-color 0.35s var(--ease-out-expo),
+    border-color 0.35s var(--ease-out-expo), opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.cursor-ready,
+  html.cursor-ready * {
+    cursor: auto !important;
+  }
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

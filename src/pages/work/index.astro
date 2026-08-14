@@ -1,0 +1,71 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { CATEGORY_LIST } from '@/lib/categories';
+
+const allProjects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="All work" description="The full BlackSheep archive — branding, motion, digital, illustration, editorial and experiments.">
+  <section class="px-6 pb-10 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">Archive</p>
+    <h1 data-reveal data-reveal-delay="0.08" class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+      Everything,<br />sorted by mood.
+    </h1>
+  </section>
+
+  <section
+    data-work-filter
+    class="sticky top-[4.5rem] z-30 -mx-px border-y border-line bg-ink/85 px-6 py-4 backdrop-blur-md sm:px-12 lg:px-20"
+  >
+    <div data-filter-track class="relative flex items-center gap-1 overflow-x-auto no-scrollbar">
+      <div
+        data-filter-indicator
+        class="pointer-events-none absolute left-0 top-0 h-full rounded-full bg-paper"
+        style="width:0;"
+      ></div>
+
+      <button type="button" data-filter="all" class="filter-pill relative z-10" data-active="true">
+        All
+      </button>
+
+      {CATEGORY_LIST.map((cat) => (
+        <button type="button" data-filter={cat.id} class="filter-pill relative z-10">
+          <span class="mr-1.5 inline-block h-1.5 w-1.5 rounded-full align-middle" style={`background:${cat.accent}`}></span>
+          {cat.short}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-6 pt-10 sm:px-12 sm:pt-12 lg:px-20">
+    <p class="text-[11px] uppercase tracking-[0.15em] text-paper/40">
+      Showing <span data-filter-count>{String(allProjects.length).padStart(2, '0')}</span> of {String(allProjects.length).padStart(2, '0')}
+    </p>
+  </section>
+
+  <section class="px-6 pb-16 pt-6 sm:px-12 sm:pb-20 lg:px-20">
+    <div data-work-grid class="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+      {allProjects.map((project, i) => (
+        <ProjectCard project={project} index={i} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-pill {
+    padding: 0.65rem 1.1rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--color-paper) 55%, transparent);
+    transition: color 0.35s var(--ease-out-expo);
+  }
+  .filter-pill[data-active='true'] {
+    color: var(--color-ink);
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Placeholder from './Placeholder.astro';
+import { CATEGORIES } from '@/lib/categories';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index?: number;
+  priority?: boolean;
+}
+
+const { project, index } = Astro.props;
+const { data, id } = project;
+const cat = CATEGORIES[data.category];
+const allCats = [data.category, ...data.secondaryCategories].join(',');
+---
+
+<article
+  data-card
+  data-category={allCats}
+  class="group relative"
+>
+  <a href={`/work/${id}/`} data-cursor="view" data-cursor-text="View" class="block">
+    <div class="relative">
+      <Placeholder ratio={data.cover.ratio} kind={data.cover.kind} label={data.cover.label} accent={data.accent} />
+      <div class="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/10"></div>
+    </div>
+
+    <div class="mt-4 flex items-start justify-between gap-4">
+      <div>
+        <h3 class="font-display text-xl leading-tight tracking-[-0.01em] text-paper sm:text-2xl">
+          {data.title}
+        </h3>
+        <p class="mt-1.5 flex items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-paper/50">
+          <span class="h-1.5 w-1.5 rounded-full" style={`background:${cat.accent}`}></span>
+          {cat.short} · {data.year}
+        </p>
+      </div>
+      {typeof index === 'number' && (
+        <span class="shrink-0 font-display text-xs text-paper/30">{String(index + 1).padStart(2, '0')}</span>
+      )}
+    </div>
+  </a>
+</article>

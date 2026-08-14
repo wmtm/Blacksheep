@@ -1,0 +1,84 @@
+---
+interface Props {
+  ratio?: '16:9' | '4:5' | '1:1' | 'full';
+  kind?: 'image' | 'video';
+  label: string;
+  accent?: string;
+  class?: string;
+}
+
+const { ratio = '4:5', kind = 'image', label, accent = '#ff4b6e', class: className = '' } = Astro.props;
+
+const ratioMap: Record<string, string> = {
+  '16:9': 'aspect-[16/9]',
+  '4:5': 'aspect-[4/5]',
+  '1:1': 'aspect-square',
+  full: 'aspect-[21/9]',
+};
+---
+
+<div
+  class:list={[
+    'placeholder-media relative overflow-hidden rounded-[2px]',
+    ratioMap[ratio],
+    className,
+  ]}
+  style={`--accent:${accent}`}
+  data-placeholder
+>
+  <div class="placeholder-bg absolute inset-0"></div>
+  <div class="grain absolute inset-0"></div>
+  <div class="absolute inset-0 flex flex-col justify-between p-4 xs:p-5">
+    <div class="flex items-center justify-between text-[10px] tracking-[0.15em] uppercase font-display text-paper/80">
+      <span class="flex items-center gap-1.5">
+        {kind === 'video' && (
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-paper animate-pulse"></span>
+        )}
+        {kind}
+      </span>
+      <span>{ratio}</span>
+    </div>
+    <p class="font-display text-xs xs:text-sm tracking-[0.06em] uppercase text-paper/90 leading-snug">
+      {label}
+    </p>
+  </div>
+  {kind === 'video' && (
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <span class="play-ring flex h-14 w-14 items-center justify-center rounded-full border border-paper/50">
+        <svg width="14" height="16" viewBox="0 0 14 16" fill="none" class="translate-x-[1px]">
+          <path d="M0 0L14 8L0 16V0Z" fill="currentColor" class="text-paper/90"></path>
+        </svg>
+      </span>
+    </div>
+  )}
+</div>
+
+<style>
+  .placeholder-media {
+    background: color-mix(in srgb, var(--accent) 18%, #0b0b0c);
+  }
+  .placeholder-bg {
+    background:
+      repeating-linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--accent) 55%, transparent) 0px,
+        color-mix(in srgb, var(--accent) 55%, transparent) 1.5px,
+        transparent 1.5px,
+        transparent 34px
+      ),
+      radial-gradient(120% 120% at 15% 15%, color-mix(in srgb, var(--accent) 65%, transparent), transparent 60%),
+      radial-gradient(140% 140% at 100% 100%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 55%),
+      var(--color-ink-soft, #17171a);
+    opacity: 0.9;
+    transition: transform 0.7s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  [data-placeholder]:hover .placeholder-bg {
+    transform: scale(1.04);
+  }
+  .play-ring {
+    transition: transform 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  [data-placeholder]:hover .play-ring {
+    transform: scale(1.1);
+  }
+</style>
