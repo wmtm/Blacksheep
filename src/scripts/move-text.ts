@@ -48,10 +48,10 @@ export function initMoveText() {
             scale: 1,
             opacity: 1,
             color: 'var(--color-paper)',
-            duration: 1.2,
-            ease: 'back.out(1.15)',
+            duration: 1.7,
+            ease: 'power3.out',
           },
-          i * 0.075
+          i * 0.12
         );
       });
     }
@@ -66,7 +66,7 @@ export function initMoveText() {
       if (hovering) return;
       hovering = true;
       play();
-      gsap.delayedCall(1.6, () => (hovering = false));
+      gsap.delayedCall(2.3, () => (hovering = false));
     });
   });
 }
