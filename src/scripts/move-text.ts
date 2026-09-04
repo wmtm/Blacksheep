@@ -19,13 +19,19 @@ export function initMoveText() {
       return;
     }
 
+    // Letters explode outward from the word's centre rather than jittering
+    // randomly — reads as one coherent, spacious motion instead of noise.
+    const center = (letters.length - 1) / 2;
     const scatter = () =>
-      letters.map(() => ({
-        x: gsap.utils.random(-36, 36),
-        y: gsap.utils.random(-26, 26),
-        rotation: gsap.utils.random(-50, 50),
-        scale: gsap.utils.random(0.6, 0.85),
-      }));
+      letters.map((_, i) => {
+        const dir = center === 0 ? 0 : (i - center) / center;
+        return {
+          x: dir * gsap.utils.random(55, 85) + gsap.utils.random(-6, 6),
+          y: gsap.utils.random(-14, 14),
+          rotation: gsap.utils.random(-16, 16) + dir * gsap.utils.random(-5, 5),
+          scale: gsap.utils.random(0.85, 0.94),
+        };
+      });
 
     function play() {
       const states = scatter();
@@ -34,7 +40,7 @@ export function initMoveText() {
       letters.forEach((letter, i) => {
         tl.fromTo(
           letter,
-          { ...states[i], color: 'transparent', opacity: 0.55 },
+          { ...states[i], color: 'transparent', opacity: 0.7 },
           {
             x: 0,
             y: 0,
@@ -42,10 +48,10 @@ export function initMoveText() {
             scale: 1,
             opacity: 1,
             color: 'var(--color-paper)',
-            duration: 0.85,
-            ease: 'elastic.out(1, 0.65)',
+            duration: 1.2,
+            ease: 'back.out(1.15)',
           },
-          i * 0.05
+          i * 0.075
         );
       });
     }
@@ -60,7 +66,7 @@ export function initMoveText() {
       if (hovering) return;
       hovering = true;
       play();
-      gsap.delayedCall(1, () => (hovering = false));
+      gsap.delayedCall(1.6, () => (hovering = false));
     });
   });
 }
