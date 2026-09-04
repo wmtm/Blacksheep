@@ -27,9 +27,9 @@ export function initMoveText() {
         const dir = center === 0 ? 0 : (i - center) / center;
         return {
           x: dir * gsap.utils.random(55, 85) + gsap.utils.random(-6, 6),
-          y: gsap.utils.random(-14, 14),
-          rotation: gsap.utils.random(-16, 16) + dir * gsap.utils.random(-5, 5),
-          scale: gsap.utils.random(0.85, 0.94),
+          y: gsap.utils.random(-10, 10),
+          rotation: gsap.utils.random(-10, 10) + dir * gsap.utils.random(-3, 3),
+          scale: gsap.utils.random(0.9, 0.96),
         };
       });
 
@@ -48,10 +48,10 @@ export function initMoveText() {
             scale: 1,
             opacity: 1,
             color: 'var(--color-paper)',
-            duration: 1.7,
+            duration: 2.3,
             ease: 'power3.out',
           },
-          i * 0.12
+          i * 0.16
         );
       });
     }
@@ -66,7 +66,7 @@ export function initMoveText() {
       if (hovering) return;
       hovering = true;
       play();
-      gsap.delayedCall(2.3, () => (hovering = false));
+      gsap.delayedCall(3.1, () => (hovering = false));
     });
   });
 }
