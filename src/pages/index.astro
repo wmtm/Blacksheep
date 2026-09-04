@@ -29,7 +29,9 @@ const featured = allProjects
 
       <h1 data-reveal-lines class="font-display text-[13.5vw] leading-[0.92] tracking-[-0.03em] sm:text-[9vw] lg:text-[7.4vw]">
         <span class="block overflow-hidden"><span data-line class="block">WE MAKE</span></span>
-        <span class="block overflow-hidden"><span data-line class="block">THINGS <em data-move-text class="text-outline not-italic inline-block will-change-transform">MOVE.</em></span></span>
+        <span class="block overflow-hidden"><span data-line class="block">THINGS <em data-move-text class="not-italic inline-block">{"MOVE.".split('').map((char) => (
+          <span data-move-letter class="move-letter inline-block will-change-transform">{char}</span>
+        ))}</em></span></span>
       </h1>
 
       <div class="mt-6 flex flex-col gap-6 sm:mt-8 sm:flex-row sm:items-end sm:justify-between">
@@ -130,3 +132,11 @@ const featured = allProjects
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .move-letter {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-paper);
+    transform-origin: 50% 60%;
+  }
+</style>
