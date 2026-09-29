@@ -1,0 +1,203 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Marquee from '@/components/Marquee.astro';
+import { withBase } from '@/lib/paths';
+
+// Toys live as self-contained static sites in public/playground/<toy>/.
+// Links into them need data-astro-reload: they aren't Astro pages, so the
+// ClientRouter must do a full navigation instead of swapping the DOM.
+const seequence = withBase('/playground/seequence/');
+
+const brewing = [
+  { index: '02', line: 'Something with sheep.', accent: 'Probably.', tilt: 4.2 },
+  { index: '03', line: 'A button you', accent: 'shouldn’t press.', tilt: -4.2 },
+  { index: '04', line: 'The thing that moves.', accent: 'Obviously.', tilt: 2.1 },
+];
+---
+
+<BaseLayout
+  title="Playground"
+  description="The BlackSheep playground — side projects, toys and experiments that don't need a client to exist. Starting with Seequence, comics that never end."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden px-6 pb-16 pt-36 sm:px-12 sm:pb-24 sm:pt-44 lg:px-20">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -right-40 top-0 h-[34rem] w-[34rem] rounded-full bg-brand-orange/20 blur-[120px]"></div>
+      <div class="absolute -left-32 top-1/2 h-[28rem] w-[28rem] rounded-full bg-brand-teal/15 blur-[120px]"></div>
+    </div>
+
+    <div class="relative">
+      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.2em] text-paper/50">Playground — the fun zone</p>
+      <h1 data-reveal-lines class="font-display text-[15vw] leading-[0.9] tracking-[-0.03em] sm:text-[10vw] lg:text-[8.4vw]">
+        <span class="block overflow-hidden"><span data-line class="block">NO BRIEF.</span></span>
+        <span class="block overflow-hidden"><span data-line class="block">JUST <em data-move-text class="not-italic inline-block">{"PLAY.".split('').map((char) => (
+          <span data-move-letter class="move-letter inline-block will-change-transform">{char}</span>
+        ))}</em></span></span>
+      </h1>
+      <p data-reveal data-reveal-delay="0.15" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+        Side projects, toys and experiments that don't need a client to exist. Touch everything. Break nothing. Or do, it's a playground.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-y border-line py-6">
+    <Marquee items={['MAKE IT WEIRD', 'SIDE QUESTS', 'NO BRIEF', 'BREAK THINGS', 'PLAY']} outline speed={42} />
+  </section>
+
+  <!-- Toy 01: Seequence -->
+  <section class="px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">
+      <span class="font-display text-paper/70">01</span> — Now playing
+    </p>
+
+    <div class="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <a
+        href={seequence}
+        data-astro-reload
+        data-cursor="view"
+        data-cursor-text="Enter"
+        data-reveal
+        class="toy-cover group relative mx-auto block w-full max-w-md"
+        aria-label="Enter Seequence"
+      >
+        <div data-tilt="6" class="relative overflow-hidden rounded-[28px] border border-line shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]">
+          <picture>
+            <source srcset={withBase('/playground/seequence/stories/desert-arc/cover.webp')} type="image/webp" />
+            <img
+              src={withBase('/playground/seequence/stories/desert-arc/cover.jpg')}
+              alt="Desert Arc cover: a lone figure in a neon megastructure city"
+              width="840"
+              height="1050"
+              loading="lazy"
+              decoding="async"
+              class="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.042]"
+            />
+          </picture>
+        </div>
+        <span class="sticker absolute -right-3 -top-4 rounded-full bg-brand-coral px-4 py-2 font-display text-xs uppercase tracking-[0.08em] text-ink sm:-right-6">
+          Live — loops forever
+        </span>
+      </a>
+
+      <div>
+        <h2 data-reveal class="font-display text-[14vw] leading-[0.88] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+          SEE<em class="italic font-medium">QUENCE</em>
+        </h2>
+        <p data-reveal data-reveal-delay="0.08" class="mt-6 max-w-lg text-lg text-paper/60">
+          Vertical comics that never end. Scroll past the last panel and the first one is already waiting, forever. Mobile-first, zero frameworks and a few secrets hidden inside (hint: the answer to everything).
+        </p>
+        <ul data-reveal data-reveal-delay="0.14" class="mt-6 flex flex-wrap gap-2">
+          {['Comics', 'Infinite scroll', 'Vanilla JS', 'Easter eggs'].map((tag) => (
+            <li class="rounded-full border border-line px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-paper/60">{tag}</li>
+          ))}
+        </ul>
+        <div data-reveal data-reveal-delay="0.2" class="mt-10 flex flex-wrap items-center gap-3">
+          <a
+            href={`${seequence}story.html?id=desert-arc`}
+            data-astro-reload
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+          >
+            Read Desert Arc <span>→</span>
+          </a>
+          <a
+            href={seequence}
+            data-astro-reload
+            data-cursor="link"
+            class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
+          >
+            Enter Seequence <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brewing -->
+  <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <div class="mb-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">Still brewing</p>
+        <h2 data-reveal data-reveal-delay="0.08" class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">
+          More toys,<br />soon-ish.
+        </h2>
+      </div>
+      <p data-reveal class="max-w-xs text-paper/50">Half-built, over-thought and absolutely not ready. Check back.</p>
+    </div>
+
+    <ul data-reveal-group class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {brewing.map((toy) => (
+        <li data-reveal-item>
+          <div class="brew-card" style={`--tilt:${toy.tilt}deg`}>
+            <div class="flex items-center justify-between">
+              <span class="font-display text-sm text-paper/40">{toy.index}</span>
+              <span class="flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-paper/60">
+                <span class="brew-dot h-1.5 w-1.5 rounded-full bg-brand-coral"></span>
+                Brewing
+              </span>
+            </div>
+            <img src={withBase('/logo-mark.png')} alt="" width="56" height="56" class="brew-sheep mx-auto my-10 h-14 w-14 opacity-30" />
+            <p class="font-display text-2xl leading-tight tracking-[-0.02em] sm:text-3xl">
+              {toy.line} <em class="italic text-paper/60">{toy.accent}</em>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .move-letter {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-paper);
+    transform-origin: 50% 60%;
+  }
+
+  .sticker {
+    transform: rotate(4.2deg);
+    transition: transform 0.42s var(--ease-out-expo);
+  }
+  .toy-cover:hover .sticker {
+    transform: rotate(-4.2deg) scale(1.08);
+  }
+
+  .brew-card {
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px dashed color-mix(in srgb, var(--color-paper) 22%, transparent);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--color-ink-soft) 70%, transparent);
+    transform: rotate(var(--tilt));
+    transition: transform 0.42s var(--ease-out-expo), border-color 0.42s var(--ease-out-expo);
+  }
+  .brew-card:hover {
+    transform: rotate(0deg) translateY(-6px);
+    border-color: var(--color-paper);
+  }
+  .brew-sheep {
+    animation: brew-bob 4.2s var(--ease-in-out-quart) infinite;
+  }
+  .brew-dot {
+    animation: brew-pulse 2.1s ease-in-out infinite;
+  }
+  @keyframes brew-bob {
+    0%, 100% { transform: translateY(0) rotate(-4.2deg); }
+    50% { transform: translateY(-10px) rotate(4.2deg); }
+  }
+  @keyframes brew-pulse {
+    50% { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brew-card,
+    .sticker {
+      transform: none;
+    }
+    .brew-sheep,
+    .brew-dot {
+      animation: none;
+    }
+  }
+</style>
