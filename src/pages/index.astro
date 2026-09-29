@@ -4,6 +4,7 @@ import ProjectCard from '@/components/ProjectCard.astro';
 import Placeholder from '@/components/Placeholder.astro';
 import Marquee from '@/components/Marquee.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
+import SeequenceFeature from '@/components/SeequenceFeature.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_LIST } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
@@ -38,7 +39,16 @@ const featured = allProjects
         <p data-reveal data-reveal-delay="0.15" class="max-w-md text-lg text-paper/60 sm:text-xl">
           Sometimes literally. Graphic design, motion, visual identities, digital, illustration &amp; the occasional weird side project.
         </p>
-        <div data-reveal data-reveal-delay="0.25" class="flex items-center gap-4">
+        <div data-reveal data-reveal-delay="0.25" class="flex flex-wrap items-center gap-4">
+          <a
+            href="#seequence"
+            data-cursor="link"
+            class="group inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-300 hover:border-brand-coral hover:text-paper"
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-coral"></span>
+            New — Seequence
+            <span class="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+          </a>
           <AvailabilityBadge />
         </div>
       </div>
@@ -57,6 +67,11 @@ const featured = allProjects
       </span>
     </a>
   </section>
+
+  <!-- First release: Seequence -->
+  <div id="seequence">
+    <SeequenceFeature />
+  </div>
 
   <!-- Marquee strip -->
   <section class="border-y border-line py-6">

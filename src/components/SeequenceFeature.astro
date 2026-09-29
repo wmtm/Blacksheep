@@ -1,0 +1,123 @@
+---
+import { withBase } from '@/lib/paths';
+
+// Homepage spotlight for Seequence, the first released Playground toy.
+// Seequence is a plain static site in public/playground/seequence/, so links
+// into it need data-astro-reload (full page load, not a ClientRouter swap).
+const reader = withBase('/playground/seequence/story.html?id=desert-arc');
+const panels = [1, 2, 3, 4, 5].map((n) => withBase(`/media/seequence/strip-0${n}.webp`));
+const sizes = [692, 568, 545, 780, 1112];
+---
+
+<section class="relative overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20" aria-labelledby="seequence-title">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute -left-40 top-1/4 h-[34rem] w-[34rem] rounded-full bg-brand-coral/15 blur-[120px]"></div>
+    <div class="absolute -right-32 bottom-0 h-[30rem] w-[30rem] rounded-full bg-brand-teal/15 blur-[120px]"></div>
+  </div>
+
+  <div class="relative mx-auto grid max-w-[1600px] items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+    <div>
+      <p data-reveal class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-paper/50">
+        <span class="rounded-full bg-brand-coral px-3 py-1 font-display tracking-[0.08em] text-ink">New</span>
+        First release — out now
+      </p>
+      <h2 id="seequence-title" data-reveal data-reveal-delay="0.06" class="font-display text-[14.5vw] leading-[0.86] tracking-[-0.045em] sm:text-[12vw] lg:text-[8.4vw]">
+        SEE<em class="italic font-medium">QUENCE</em>
+      </h2>
+      <p data-reveal data-reveal-delay="0.12" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+        Our first comic, <span class="text-paper">Desert Arc</span>, is live. Vertical, mobile-first, and it never ends: scroll past the last panel and the first one is already waiting.
+      </p>
+      <div data-reveal data-reveal-delay="0.18" class="mt-10 flex flex-wrap items-center gap-3">
+        <a
+          href={reader}
+          data-astro-reload
+          data-cursor="link"
+          data-magnetic="0.3"
+          class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-300 hover:scale-[1.03]"
+        >
+          Read Desert Arc <span>→</span>
+        </a>
+        <a
+          href={withBase('/playground/')}
+          data-cursor="link"
+          class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
+        >
+          Visit the Playground <span>↗</span>
+        </a>
+      </div>
+    </div>
+
+    <a
+      href={reader}
+      data-astro-reload
+      data-cursor="view"
+      data-cursor-text="Read"
+      data-reveal
+      data-reveal-delay="0.1"
+      class="phone group relative mx-auto block w-[min(78vw,320px)]"
+      aria-label="Read Desert Arc"
+    >
+      <div class="phone__screen relative overflow-hidden rounded-[36px] border border-line bg-ink-soft shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]">
+        <div class="phone__strip">
+          {[0, 1].map((copy) => (
+            <div aria-hidden={copy === 1 ? 'true' : undefined}>
+              {panels.map((src, i) => (
+                <img
+                  src={src}
+                  alt={copy === 0 ? `Desert Arc, panel ${i + 1}` : ''}
+                  width="540"
+                  height={sizes[i]}
+                  loading="lazy"
+                  decoding="async"
+                  class="block h-auto w-full"
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <div class="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-ink/70 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink/70 to-transparent"></div>
+      </div>
+      <span class="sticker absolute -left-4 top-10 rounded-full bg-paper px-4 py-2 font-display text-xs uppercase tracking-[0.08em] text-ink sm:-left-8">
+        ∞ Loops forever
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .phone {
+    transform: rotate(4.2deg);
+    transition: transform 0.42s var(--ease-out-expo);
+  }
+  .phone:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+  .phone__screen {
+    height: min(118vw, 560px);
+  }
+  .phone__strip {
+    animation: seequence-scroll 42s linear infinite;
+  }
+  .phone:hover .phone__strip {
+    animation-play-state: paused;
+  }
+  @keyframes seequence-scroll {
+    to {
+      transform: translateY(-50%);
+    }
+  }
+  .sticker {
+    transform: rotate(-8.4deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .phone,
+    .phone:hover {
+      transform: none;
+    }
+    .phone__strip {
+      animation: none;
+    }
+  }
+</style>
