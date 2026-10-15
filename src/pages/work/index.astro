@@ -7,7 +7,7 @@ import { CATEGORY_LIST } from '@/lib/categories';
 const allProjects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="All work" description="The full BlackSheep archive — branding, motion, digital, illustration, editorial and experiments.">
+<BaseLayout title="All work" description="The full BlackSheep archive: branding, motion, digital, illustration, editorial and experiments.">
   <section class="px-6 pb-10 pt-36 sm:px-12 sm:pt-44 lg:px-20">
     <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">Archive</p>
     <h1 data-reveal data-reveal-delay="0.08" class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-7xl">

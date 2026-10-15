@@ -13,11 +13,11 @@ interface Props {
 
 const {
   title,
-  description = 'BlackSheep — Graphic & Motion Designer turning ideas into things you can see, feel and remember. Based in Mauritius, working everywhere.',
+  description = 'BlackSheep: Graphic & Motion Designer turning ideas into things you can see, feel and remember. Based in Mauritius, working everywhere.',
   showFooterCta = true,
 } = Astro.props;
 
-const pageTitle = title === 'BlackSheep' ? title : `${title} — BlackSheep`;
+const pageTitle = title === 'BlackSheep' ? title : `${title} · BlackSheep`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 

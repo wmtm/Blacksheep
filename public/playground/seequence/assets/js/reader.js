@@ -67,7 +67,7 @@
       "<h2></h2><p></p><a class=\"pill pill--solid\" href=\"./\" data-cursor=\"link\">Back to the library <span class=\"arrow arrow--right\" aria-hidden=\"true\">→</span></a>";
     message.querySelector("h2").textContent = title;
     message.querySelector("p").textContent = text;
-    document.title = title + " — SEEQUENCE";
+    document.title = title + " · SEEQUENCE";
   }
 
   function src(i, ext) {
@@ -95,7 +95,7 @@
     titleEl.textContent = story.title;
     railTitle.textContent = story.title;
     totalEl.textContent = BS.pad(count);
-    document.title = story.title + " — SEEQUENCE";
+    document.title = story.title + " · SEEQUENCE";
 
     return (story.panels && story.panels.length === count ? Promise.resolve(story.panels) : measure(count)).then(function (sizes) {
       panels = sizes;
