@@ -49,28 +49,148 @@
       ]
     },
     {
-      "id": "soon-02",
-      "title": "Untitled",
-      "status": "coming-soon",
-      "teaser": "assets/teasers/teaser-02.jpg"
+      "id": "megastructure-arc",
+      "title": "Megastructure Arc",
+      "status": "live",
+      "cover": "stories/megastructure-arc/cover.jpg",
+      "count": 6,
+      "ext": "jpg",
+      "webp": true,
+      "width": 1080,
+      "panels": [
+        [
+          1080,
+          1320
+        ],
+        [
+          1080,
+          1120
+        ],
+        [
+          1080,
+          1780
+        ],
+        [
+          1080,
+          1080
+        ],
+        [
+          1080,
+          1540
+        ],
+        [
+          1080,
+          2040
+        ]
+      ]
     },
     {
-      "id": "soon-03",
-      "title": "Untitled",
-      "status": "coming-soon",
-      "teaser": "assets/teasers/teaser-03.jpg"
+      "id": "water-arc",
+      "title": "Water Arc",
+      "status": "live",
+      "cover": "stories/water-arc/cover.jpg",
+      "count": 6,
+      "ext": "jpg",
+      "webp": true,
+      "width": 1080,
+      "panels": [
+        [
+          1080,
+          1200
+        ],
+        [
+          1080,
+          1560
+        ],
+        [
+          1080,
+          1080
+        ],
+        [
+          1080,
+          1980
+        ],
+        [
+          1080,
+          1140
+        ],
+        [
+          1080,
+          1680
+        ]
+      ]
     },
     {
-      "id": "soon-04",
-      "title": "Untitled",
-      "status": "coming-soon",
-      "teaser": "assets/teasers/teaser-04.jpg"
+      "id": "flowerfields-arc",
+      "title": "Flowerfields Arc",
+      "status": "live",
+      "cover": "stories/flowerfields-arc/cover.jpg",
+      "count": 6,
+      "ext": "jpg",
+      "webp": true,
+      "width": 1080,
+      "panels": [
+        [
+          1080,
+          1380
+        ],
+        [
+          1080,
+          1080
+        ],
+        [
+          1080,
+          1620
+        ],
+        [
+          1080,
+          1480
+        ],
+        [
+          1080,
+          1120
+        ],
+        [
+          1080,
+          1860
+        ]
+      ]
     },
     {
-      "id": "soon-05",
-      "title": "Untitled",
-      "status": "coming-soon",
-      "teaser": "assets/teasers/teaser-05.jpg"
+      "id": "swamp-arc",
+      "title": "Swamp Arc",
+      "status": "live",
+      "cover": "stories/swamp-arc/cover.jpg",
+      "count": 6,
+      "ext": "jpg",
+      "webp": true,
+      "width": 1080,
+      "panels": [
+        [
+          1080,
+          1460
+        ],
+        [
+          1080,
+          1100
+        ],
+        [
+          1080,
+          1700
+        ],
+        [
+          1080,
+          1980
+        ],
+        [
+          1080,
+          1080
+        ],
+        [
+          1080,
+          1340
+        ]
+      ]
     }
   ]
 }
