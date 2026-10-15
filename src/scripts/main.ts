@@ -9,6 +9,7 @@ import { initClock } from './clock';
 import { initTilt } from './tilt';
 import { initBeforeAfter } from './before-after';
 import { initMoveText } from './move-text';
+import { initMascot } from './mascot';
 
 function boot() {
   initSmoothScroll();
@@ -21,6 +22,7 @@ function boot() {
   initTilt();
   initBeforeAfter();
   initMoveText();
+  initMascot();
 }
 
 initPageTransitions();

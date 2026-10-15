@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Placeholder from '@/components/Placeholder.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
+import MascotPortrait from '@/components/MascotPortrait.astro';
 import { CATEGORY_LIST } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
 
@@ -44,7 +44,7 @@ const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D'
       </div>
 
       <div data-reveal data-reveal-delay="0.1" class="lg:sticky lg:top-32">
-        <Placeholder ratio="4:5" kind="image" label="MATHIEU — PORTRAIT" accent="#FF4B6E" />
+        <MascotPortrait />
       </div>
     </div>
   </section>
