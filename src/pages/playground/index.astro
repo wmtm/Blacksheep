@@ -9,7 +9,6 @@ import { withBase } from '@/lib/paths';
 const seequence = withBase('/playground/seequence/');
 
 const brewing = [
-  { index: '02', line: 'Something with sheep.', accent: 'Probably.', tilt: 4.2 },
   { index: '03', line: 'A button you', accent: 'shouldn’t press.', tilt: -4.2 },
   { index: '04', line: 'The thing that moves.', accent: 'Obviously.', tilt: 2.1 },
 ];
@@ -108,6 +107,62 @@ const brewing = [
             class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
           >
             Enter Seequence <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toy 02: The Reel -->
+  <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">
+      <span class="font-display text-paper/70">02</span> · Fresh render
+    </p>
+
+    <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div data-tilt="4" data-reveal class="toy-cover relative mx-auto block w-full">
+        <div class="relative overflow-hidden rounded-[20px] border border-line shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]">
+          <video
+            src={withBase('/media/reel/blacksheep-reel.mp4')}
+            poster={withBase('/media/reel/blacksheep-reel-poster.jpg')}
+            width="1920"
+            height="1080"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+            preload="metadata"
+            aria-label="BlackSheep sizzle reel, silent, 8.5 seconds, rendered from code"
+            class="block h-auto w-full"
+          ></video>
+        </div>
+        <span class="sticker absolute -right-3 -top-4 rounded-full bg-brand-violet px-4 py-2 font-display text-xs uppercase tracking-[0.08em] text-paper sm:-right-6">
+          Coded, not filmed.
+        </span>
+      </div>
+
+      <div>
+        <h2 data-reveal class="font-display text-[12vw] leading-[0.9] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+          THE <em class="italic font-medium">REEL.</em>
+        </h2>
+        <p data-reveal data-reveal-delay="0.08" class="mt-6 max-w-lg text-lg text-paper/60">
+          8.5 seconds of BlackSheep's own identity: the logo, the kinetic headline, the six "make it" verbs, the mood-ring mascot, zoomed and whipped together. No camera, no footage, no editing software, just HTML, CSS and a GSAP timeline, rendered straight to video.
+        </p>
+        <ul data-reveal data-reveal-delay="0.14" class="mt-6 flex flex-wrap gap-2">
+          {['HTML + CSS + GSAP', 'Rendered with HyperFrames', 'Zero footage'].map((tag) => (
+            <li class="rounded-full border border-line px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-paper/60">{tag}</li>
+          ))}
+        </ul>
+        <div data-reveal data-reveal-delay="0.2" class="mt-10 flex flex-wrap items-center gap-3">
+          <a
+            href={withBase('/media/reel/blacksheep-reel.mp4')}
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+            download
+          >
+            Download the MP4 <span>↓</span>
           </a>
         </div>
       </div>
