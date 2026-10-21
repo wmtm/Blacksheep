@@ -26,6 +26,8 @@ const projects = defineCollection({
       ratio: z.enum(['16:9', '4:5', '1:1', 'full']).default('4:5'),
       kind: z.enum(['image', 'video']).default('image'),
       label: z.string(),
+      src: z.string().optional(),
+      poster: z.string().optional(),
     }),
     gallery: z
       .array(
@@ -33,6 +35,8 @@ const projects = defineCollection({
           ratio: z.enum(['16:9', '4:5', '1:1', 'full']).default('16:9'),
           kind: z.enum(['image', 'video']).default('image'),
           label: z.string(),
+          src: z.string().optional(),
+          poster: z.string().optional(),
         })
       )
       .default([]),

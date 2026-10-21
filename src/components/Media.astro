@@ -1,0 +1,62 @@
+---
+import type { CategoryId } from '@/lib/categories';
+import Placeholder from './Placeholder.astro';
+import { withBase } from '@/lib/paths';
+
+interface Props {
+  ratio?: '16:9' | '4:5' | '1:1' | 'full';
+  kind?: 'image' | 'video';
+  label: string;
+  accent?: string;
+  seed?: string;
+  category?: CategoryId;
+  tilt?: boolean;
+  class?: string;
+  src?: string;
+  poster?: string;
+}
+
+const {
+  ratio = '4:5',
+  kind = 'image',
+  label,
+  accent = '#ff4b6e',
+  seed,
+  category,
+  tilt = true,
+  class: className = '',
+  src,
+  poster,
+} = Astro.props;
+
+const ratioMap: Record<string, string> = {
+  '16:9': 'aspect-[16/9]',
+  '4:5': 'aspect-[4/5]',
+  '1:1': 'aspect-square',
+  full: 'aspect-[21/9]',
+};
+---
+
+{
+  src ? (
+    <div class:list={['relative overflow-hidden rounded-[2px]', ratioMap[ratio], className]} data-tilt={tilt ? '7' : undefined}>
+      {kind === 'video' ? (
+        <video
+          src={withBase(src)}
+          poster={poster ? withBase(poster) : undefined}
+          controls
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label={label}
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <img src={withBase(src)} alt={label} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+      )}
+    </div>
+  ) : (
+    <Placeholder ratio={ratio} kind={kind} label={label} accent={accent} seed={seed} category={category} tilt={tilt} class={className} />
+  )
+}

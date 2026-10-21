@@ -13,11 +13,9 @@ order: 8
 cover:
   ratio: "4:5"
   kind: image
-  label: "ILLUSTRATED MAP · NEIGHBOURHOOD GUIDE"
+  label: "ILLUSTRATED MAP · COASTAL TRAIL"
+  src: "/media/illustrated-maps/coastal-trail.jpg"
 gallery:
-  - ratio: "16:9"
-    kind: image
-    label: "FULL MAP · OVERVIEW"
   - ratio: "1:1"
     kind: image
     label: "ICON SET · LANDMARKS"
@@ -27,6 +25,7 @@ gallery:
   - ratio: "16:9"
     kind: image
     label: "AIRBNB WELCOME BOOK · APPLICATION"
+    src: "/media/illustrated-maps/airbnb-welcome-guide.webp"
 ---
 
 ## Why maps

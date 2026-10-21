@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Placeholder from '@/components/Placeholder.astro';
+import Media from '@/components/Media.astro';
 import CaseStudyIndex from '@/components/CaseStudyIndex.astro';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider.astro';
 import { getCollection, render } from 'astro:content';
@@ -81,7 +81,15 @@ const indexItems = [
   </section>
 
   <section data-reveal class="px-6 pb-20 sm:px-12 lg:px-20">
-    <Placeholder ratio={data.cover.ratio === '1:1' ? '4:5' : 'full'} kind={data.cover.kind} label={data.cover.label} accent={data.accent} category={data.category} />
+    <Media
+      ratio={data.cover.src ? data.cover.ratio : data.cover.ratio === '1:1' ? '4:5' : 'full'}
+      kind={data.cover.kind}
+      label={data.cover.label}
+      accent={data.accent}
+      category={data.category}
+      src={data.cover.src}
+      poster={data.cover.poster}
+    />
   </section>
 
   {data.beforeAfter && (
@@ -106,7 +114,7 @@ const indexItems = [
       <div data-reveal-group class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {data.gallery.map((item) => (
           <div data-reveal-item class:list={[item.ratio === 'full' ? 'sm:col-span-2' : '']}>
-            <Placeholder ratio={item.ratio} kind={item.kind} label={item.label} accent={data.accent} category={data.category} />
+            <Media ratio={item.ratio} kind={item.kind} label={item.label} accent={data.accent} category={data.category} src={item.src} poster={item.poster} />
           </div>
         ))}
       </div>
@@ -136,7 +144,7 @@ const indexItems = [
         data-preview-thumb
         class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
       >
-        <Placeholder ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} tilt={false} />
+        <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} tilt={false} />
       </div>
     </a>
   </section>
