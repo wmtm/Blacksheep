@@ -7,13 +7,19 @@ import { getCollection, render } from 'astro:content';
 import { CATEGORIES } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
 
+// TCHOMBO has its own bespoke page (src/pages/work/tchombo.astro) built around
+// its real brand system, instead of this generic cover+gallery template. It
+// stays in `allIds` below so other projects' "next project" link still cycles
+// through it correctly; only its own route generation is skipped here.
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   const allIds = [...projects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project, allIds },
-  }));
+  return projects
+    .filter((project) => project.id !== 'tchombo')
+    .map((project) => ({
+      params: { slug: project.id },
+      props: { project, allIds },
+    }));
 }
 
 const { project, allIds } = Astro.props;

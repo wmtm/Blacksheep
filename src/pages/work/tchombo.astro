@@ -1,0 +1,244 @@
+---
+import '@fontsource-variable/fraunces';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CaseStudyIndex from '@/components/CaseStudyIndex.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '@/lib/paths';
+
+const allProjects = await getCollection('projects');
+const allIds = [...allProjects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
+const project = allProjects.find((p) => p.id === 'tchombo')!;
+const { data } = project;
+
+const currentIndex = allIds.indexOf('tchombo');
+const nextId = allIds[(currentIndex + 1) % allIds.length];
+const nextProject = allProjects.find((p) => p.id === nextId)!;
+
+const media = (file: string) => withBase(`/media/tchombo/${file}`);
+
+const steps = [
+  {
+    n: '01',
+    name: 'Raise',
+    color: 'var(--tc-leaf)',
+    text: 'A real fact about Mauritius drops with no answer attached. Name a number higher than the last one named. Anyone can keep going.',
+  },
+  {
+    n: '02',
+    name: 'Call TCHOMBO',
+    color: 'var(--tc-coral)',
+    text: "Think the last player already overshot the true number? Call TCHOMBO on them and bet your read is right.",
+  },
+  {
+    n: '03',
+    name: 'Call exact',
+    color: 'var(--tc-gold)',
+    text: 'Know the precise figure? Call it exact instead. Nail it and nobody loses a dodo. Miss and the cost is yours alone.',
+  },
+];
+
+const flock = [
+  { src: media('mascot-tchombo.png'), caption: 'Still in it', rotate: -4 },
+  { src: media('mascot-gagn-twa.png'), caption: 'Gagn twa! Called it exact.', rotate: 3 },
+  { src: media('mascot-ayo.png'), caption: "Ayo! That one's on you.", rotate: -2 },
+];
+
+const stats = [
+  { n: '860', label: 'Trivia questions' },
+  { n: '2', label: 'Languages, full parity' },
+  { n: '15', label: 'Dodo lives to lose' },
+  { n: '0', label: 'Installs or accounts' },
+];
+
+const buildStats = [
+  { n: '43', label: 'Commits' },
+  { n: '~3', label: 'Weeks, start to live' },
+  { n: '47', label: 'Unit tests on the game engine' },
+];
+
+const indexItems = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'how-it-plays', label: 'How it plays' },
+  { id: 'flock', label: 'The flock' },
+  { id: 'built', label: 'How it was built' },
+  { id: 'next', label: 'Next project' },
+];
+---
+
+<BaseLayout title={data.title} description={data.excerpt} showFooterCta={false}>
+  <CaseStudyIndex items={indexItems} accent="#2E6E52" />
+  <div class="fixed inset-x-0 top-0 z-40 h-[3px] origin-left scale-x-0 bg-paper" data-scroll-progress></div>
+
+  <div class="tchombo-zone" style="--tc-navy:#0E1E3A; --tc-coral:#D9553C; --tc-gold:#D9A441; --tc-leaf:#2E6E52; --tc-cream:#F6F2E9; --tc-ink:#1C2440;">
+    <!-- Overview / hero -->
+    <section id="overview" class="relative overflow-hidden px-6 pb-20 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -right-32 top-10 h-[34rem] w-[34rem] rounded-full bg-[var(--tc-coral)]/15 blur-[130px]"></div>
+        <div class="absolute -left-24 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[var(--tc-leaf)]/20 blur-[130px]"></div>
+      </div>
+
+      <div class="relative">
+        <a
+          href={withBase('/work/')}
+          data-cursor="link"
+          class="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/50 transition-colors hover:text-[var(--tc-cream)]"
+        >
+          ← All work
+        </a>
+
+        <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
+          <div data-reveal>
+            <p class="mb-5 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[var(--tc-cream)]/50">
+              <span class="h-1.5 w-1.5 rounded-full bg-[var(--tc-leaf)]"></span>
+              Digital · {data.year} · Live now
+            </p>
+            <h1 class="tc-display text-[13vw] leading-[0.95] tracking-[-0.02em] text-[var(--tc-cream)] sm:text-7xl lg:text-[6vw]">
+              TCHOMBO<span class="text-[var(--tc-coral)]">?</span>
+            </h1>
+            <p class="mt-5 max-w-md text-xl text-[var(--tc-cream)]/70 sm:text-2xl">
+              How far can you push it?
+            </p>
+            <p class="mt-6 max-w-lg text-[var(--tc-cream)]/55">
+              {data.summary}
+            </p>
+
+            <div class="mt-9 flex flex-wrap items-center gap-3">
+              <a
+                href={data.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="link"
+                data-magnetic="0.3"
+                class="inline-flex items-center gap-2 rounded-full bg-[var(--tc-cream)] px-7 py-4 font-display text-sm text-[var(--tc-navy)] transition-transform duration-300 hover:scale-[1.03]"
+              >
+                Play it live <span>↗</span>
+              </a>
+              <a
+                href={withBase('/contact/')}
+                data-cursor="link"
+                class="inline-flex items-center gap-2 rounded-full border border-[var(--tc-cream)]/25 px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] text-[var(--tc-cream)]/80 transition-colors duration-300 hover:border-[var(--tc-cream)]"
+              >
+                Got a game idea? Let's build it <span>→</span>
+              </a>
+            </div>
+          </div>
+
+          <div data-reveal data-reveal-delay="0.1" class="relative mx-auto w-full max-w-sm">
+            <img
+              src={media('mascot-tchombo.png')}
+              alt="The TCHOMBO dodo mascot, wearing a measuring tape like a crown"
+              width="560"
+              height="551"
+              data-tilt="5"
+              class="block w-full"
+            />
+          </div>
+        </div>
+
+        <dl data-reveal data-reveal-delay="0.16" class="mt-16 grid grid-cols-2 gap-6 border-t border-[var(--tc-cream)]/15 pt-8 sm:grid-cols-4">
+          {stats.map((s) => (
+            <div>
+              <dt class="tc-display text-4xl text-[var(--tc-cream)] sm:text-5xl">{s.n}</dt>
+              <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-[var(--tc-cream)]/50">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- How it plays -->
+    <section id="how-it-plays" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+      <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">How it plays</p>
+      <h2 data-reveal data-reveal-delay="0.06" class="tc-display max-w-xl text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
+        Three ways a round can end.
+      </h2>
+
+      <div data-reveal-group class="mt-14 grid gap-px overflow-hidden rounded-2xl bg-[var(--tc-cream)]/10 sm:grid-cols-3">
+        {steps.map((step) => (
+          <div data-reveal-item class="flex flex-col gap-5 bg-[var(--tc-navy)] p-8 sm:p-9">
+            <span class="tc-display text-sm" style={`color:${step.color}`}>{step.n}</span>
+            <h3 class="tc-display text-2xl text-[var(--tc-cream)]">{step.name}</h3>
+            <p class="text-sm leading-relaxed text-[var(--tc-cream)]/60">{step.text}</p>
+            <span class="mt-auto h-1 w-10 rounded-full" style={`background:${step.color}`}></span>
+          </div>
+        ))}
+      </div>
+
+      <p data-reveal data-reveal-delay="0.1" class="mt-8 max-w-2xl text-[var(--tc-cream)]/55">
+        Guess wrong and you lose dodos, and missing an easy one costs more than missing a brutal one: the one rule that keeps everybody honest.
+      </p>
+    </section>
+
+    <!-- The flock -->
+    <section id="flock" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+      <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">The flock</p>
+      <h2 data-reveal data-reveal-delay="0.06" class="tc-display max-w-xl text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
+        One dodo, three moods.
+      </h2>
+
+      <div data-reveal-group class="mt-14 flex flex-wrap items-end justify-center gap-x-6 gap-y-14 sm:gap-x-10">
+        {flock.map((bird) => (
+          <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
+            <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-[var(--tc-cream)] p-5" style={`transform:rotate(${bird.rotate}deg)`}>
+              <img src={bird.src} alt={bird.caption} loading="lazy" decoding="async" class="h-full w-full object-contain" />
+            </div>
+            <p class="mt-4 text-sm text-[var(--tc-cream)]/60">{bird.caption}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Built the same way it plays -->
+    <section id="built" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+      <div class="grid gap-14 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
+        <div>
+          <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">How it was built</p>
+          <h2 data-reveal data-reveal-delay="0.06" class="tc-display text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
+            Built the same way it plays: out loud.
+          </h2>
+          <p data-reveal data-reveal-delay="0.12" class="mt-6 max-w-lg text-[var(--tc-cream)]/60">
+            The real-time engine, the bilingual interface, the trivia itself: all of it came out of a running conversation with an AI pair programmer instead of a blank editor, over a few weeks of back and forth. Every rule was specified in plain language, built, tested and re-checked against the live app before it shipped.
+          </p>
+        </div>
+
+        <dl data-reveal-group class="grid grid-cols-3 gap-6 self-start lg:pt-20">
+          {buildStats.map((s) => (
+            <div data-reveal-item>
+              <dt class="tc-display text-3xl text-[var(--tc-cream)] sm:text-4xl">{s.n}</dt>
+              <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-[var(--tc-cream)]/50">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- Next project -->
+    <section id="next" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">Next project</p>
+      <a
+        href={withBase(`/work/${nextProject.id}/`)}
+        data-cursor="view"
+        data-cursor-text="View"
+        class="group block"
+      >
+        <div data-reveal class="flex items-baseline justify-between gap-6 border-b border-[var(--tc-cream)]/15 pb-8">
+          <h2 class="tc-display text-[11vw] leading-[0.92] tracking-[-0.02em] text-[var(--tc-cream)] transition-colors duration-500 group-hover:text-[var(--tc-coral)] sm:text-6xl lg:text-7xl">
+            {nextProject.data.title}
+          </h2>
+        </div>
+      </a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .tchombo-zone {
+    background: var(--tc-navy);
+  }
+  .tc-display {
+    font-family: 'Fraunces Variable', ui-serif, Georgia, serif;
+    font-weight: 560;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+</style>
