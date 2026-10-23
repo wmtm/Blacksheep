@@ -4,6 +4,7 @@ import ProjectCard from '@/components/ProjectCard.astro';
 import Marquee from '@/components/Marquee.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
 import SeequenceFeature from '@/components/SeequenceFeature.astro';
+import GamesFeature from '@/components/GamesFeature.astro';
 import MascotPortrait from '@/components/MascotPortrait.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORY_LIST } from '@/lib/categories';
@@ -109,6 +110,9 @@ const featured = allProjects
       ))}
     </div>
   </section>
+
+  <!-- Games: TCHOMBO + Tribe War -->
+  <GamesFeature />
 
   <!-- Category verbs marquee -->
   <section class="border-y border-line py-6">

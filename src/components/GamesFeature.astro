@@ -1,0 +1,105 @@
+---
+import { withBase } from '@/lib/paths';
+
+const tchombo = 'https://tchombo.onrender.com';
+---
+
+<section class="relative overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20" aria-labelledby="games-title">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute -right-40 top-1/4 h-[32rem] w-[32rem] rounded-full bg-[#2E6E52]/15 blur-[120px]"></div>
+    <div class="absolute -left-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-brand-gold/15 blur-[120px]"></div>
+  </div>
+
+  <div class="relative mx-auto grid max-w-[1600px] items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+    <div class="order-2 lg:order-1">
+      <div class="relative mx-auto w-full max-w-md">
+        <a
+          href={withBase('/work/tribal-war-card-game/')}
+          data-cursor="view"
+          data-cursor-text="View"
+          class="sticker-back absolute -left-6 -top-8 w-[72%] -rotate-6 overflow-hidden rounded-2xl border border-line shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] transition-transform duration-500 hover:-rotate-3 sm:-left-10"
+          aria-label="View Tribe War"
+        >
+          <img
+            src={withBase('/media/tribal-war-card-game/hero-cards.webp')}
+            alt="Tribe War, hand-illustrated card game"
+            width="1166"
+            height="826"
+            loading="lazy"
+            decoding="async"
+            class="block h-auto w-full"
+          />
+        </a>
+        <a
+          href={tchombo}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="view"
+          data-cursor-text="Play"
+          class="sticker-front relative ml-auto block w-[72%] rotate-3 overflow-hidden rounded-2xl border border-line bg-[#0E1E3A] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.95)] transition-transform duration-500 hover:rotate-0"
+          aria-label="Play TCHOMBO"
+        >
+          <img
+            src={withBase('/media/tchombo/mascot-tchombo.png')}
+            alt="TCHOMBO, the dodo mascot"
+            width="560"
+            height="551"
+            loading="lazy"
+            decoding="async"
+            class="block h-auto w-full"
+          />
+          <span class="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-[#F6F2E9] px-3 py-1.5 font-display text-[10px] uppercase tracking-[0.08em] text-[#0E1E3A]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#2E6E52]"></span>
+            Live · play now
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="order-1 lg:order-2">
+      <p data-reveal class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-paper/50">
+        <span class="rounded-full bg-[#2E6E52] px-3 py-1 font-display tracking-[0.08em] text-paper">Also</span>
+        Two real, playable games
+      </p>
+      <h2 id="games-title" data-reveal data-reveal-delay="0.06" class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+        He also makes games.
+      </h2>
+      <p data-reveal data-reveal-delay="0.12" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+        <strong class="text-paper">TCHOMBO</strong> is live right now: a real-time, bilingual party game built around 860 fact-checked questions about Mauritius, no install, just a room code. <strong class="text-paper">Tribe War</strong> is a hand-illustrated tactical card game with its own mythology, in French, still looking for a printer. Client work has rules. These don't.
+      </p>
+      <div data-reveal data-reveal-delay="0.18" class="mt-10 flex flex-wrap items-center gap-3">
+        <a
+          href={tchombo}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="link"
+          data-magnetic="0.3"
+          class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-300 hover:scale-[1.03]"
+        >
+          Play TCHOMBO <span>↗</span>
+        </a>
+        <a
+          href={withBase('/contact/')}
+          data-cursor="link"
+          class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
+        >
+          Got a game idea? Let's build it <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sticker-front,
+  .sticker-back {
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticker-front,
+    .sticker-back {
+      transition: none;
+    }
+  }
+</style>

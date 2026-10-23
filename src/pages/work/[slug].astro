@@ -59,6 +59,19 @@ const indexItems = [
         <h1 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-[5.2vw]">
           {data.title}
         </h1>
+        {data.live && (
+          <a
+            href={data.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="mt-6 inline-flex w-fit items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+            style={`background:${data.accent}`}
+          >
+            Play it live <span>↗</span>
+          </a>
+        )}
       </div>
 
       <dl data-reveal data-reveal-delay="0.1" class="grid grid-cols-2 gap-6 border-t border-line pt-6 text-sm lg:border-t-0 lg:pt-0">
