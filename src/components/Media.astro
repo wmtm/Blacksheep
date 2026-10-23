@@ -14,6 +14,7 @@ interface Props {
   class?: string;
   src?: string;
   poster?: string;
+  transparent?: boolean;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   class: className = '',
   src,
   poster,
+  transparent = false,
 } = Astro.props;
 
 const ratioMap: Record<string, string> = {
@@ -39,7 +41,15 @@ const ratioMap: Record<string, string> = {
 
 {
   src ? (
-    <div class:list={['relative overflow-hidden rounded-[2px]', ratioMap[ratio], className]} data-tilt={tilt ? '7' : undefined}>
+    <div
+      class:list={[
+        'relative overflow-hidden rounded-[2px]',
+        ratioMap[ratio],
+        transparent ? 'bg-paper flex items-center justify-center p-[8%]' : '',
+        className,
+      ]}
+      data-tilt={tilt ? '7' : undefined}
+    >
       {kind === 'video' ? (
         <video
           src={withBase(src)}
@@ -51,6 +61,15 @@ const ratioMap: Record<string, string> = {
           preload="metadata"
           aria-label={label}
           class="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : transparent ? (
+        <img
+          src={withBase(src)}
+          alt={label}
+          loading="lazy"
+          decoding="async"
+          class="h-auto max-h-full w-auto max-w-full object-contain"
+          style="max-width: min(100%, 360px); max-height: min(100%, 360px);"
         />
       ) : (
         <img src={withBase(src)} alt={label} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />

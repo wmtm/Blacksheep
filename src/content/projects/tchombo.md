@@ -15,19 +15,23 @@ cover:
   kind: image
   label: "MASCOT · TCHOMBO?"
   src: "/media/tchombo/mascot-tchombo.png"
+  transparent: true
 gallery:
   - ratio: "1:1"
     kind: image
     label: "MASCOT · GAGN TWA!"
     src: "/media/tchombo/mascot-gagn-twa.png"
+    transparent: true
   - ratio: "4:5"
     kind: image
     label: "MASCOT · AYO!"
     src: "/media/tchombo/mascot-ayo.png"
+    transparent: true
   - ratio: "16:9"
     kind: image
     label: "DODO LIFE-POINTS · ICON"
     src: "/media/tchombo/dodo-lifepoint-icon.png"
+    transparent: true
   - ratio: "16:9"
     kind: image
     label: "LIVE APP · GAME SCREEN"

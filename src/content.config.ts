@@ -28,6 +28,7 @@ const projects = defineCollection({
       label: z.string(),
       src: z.string().optional(),
       poster: z.string().optional(),
+      transparent: z.boolean().default(false),
     }),
     gallery: z
       .array(
@@ -37,6 +38,7 @@ const projects = defineCollection({
           label: z.string(),
           src: z.string().optional(),
           poster: z.string().optional(),
+          transparent: z.boolean().default(false),
         })
       )
       .default([]),
