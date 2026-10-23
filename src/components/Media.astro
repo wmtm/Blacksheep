@@ -15,6 +15,7 @@ interface Props {
   src?: string;
   poster?: string;
   transparent?: boolean;
+  fit?: 'cover' | 'contain';
 }
 
 const {
@@ -29,7 +30,15 @@ const {
   src,
   poster,
   transparent = false,
+  fit = 'cover',
 } = Astro.props;
+
+// transparent icons/logos: small, centered, on a pale card (they have no
+// background of their own). contain: show the full frame uncropped on
+// whatever sits behind it, for images where cropping would lose content
+// (a diagram, a map with a legend) but that already have their own
+// background baked in, so they don't need the pale card treatment.
+const containOnly = !transparent && fit === 'contain';
 
 const ratioMap: Record<string, string> = {
   '16:9': 'aspect-[16/9]',
@@ -71,6 +80,8 @@ const ratioMap: Record<string, string> = {
           class="h-auto max-h-full w-auto max-w-full object-contain"
           style="max-width: min(100%, 360px); max-height: min(100%, 360px);"
         />
+      ) : containOnly ? (
+        <img src={withBase(src)} alt={label} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-contain" />
       ) : (
         <img src={withBase(src)} alt={label} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
       )}

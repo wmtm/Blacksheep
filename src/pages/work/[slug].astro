@@ -103,6 +103,7 @@ const indexItems = [
       src={data.cover.src}
       poster={data.cover.poster}
       transparent={data.cover.transparent}
+      fit={data.cover.fit}
     />
   </section>
 
@@ -128,7 +129,7 @@ const indexItems = [
       <div data-reveal-group class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {data.gallery.map((item) => (
           <div data-reveal-item class:list={[item.ratio === 'full' ? 'sm:col-span-2' : '']}>
-            <Media ratio={item.ratio} kind={item.kind} label={item.label} accent={data.accent} category={data.category} src={item.src} poster={item.poster} transparent={item.transparent} />
+            <Media ratio={item.ratio} kind={item.kind} label={item.label} accent={data.accent} category={data.category} src={item.src} poster={item.poster} transparent={item.transparent} fit={item.fit} />
           </div>
         ))}
       </div>
@@ -158,7 +159,7 @@ const indexItems = [
         data-preview-thumb
         class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
       >
-        <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} transparent={nextProject.data.cover.transparent} tilt={false} />
+        <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} transparent={nextProject.data.cover.transparent} fit={nextProject.data.cover.fit} tilt={false} />
       </div>
     </a>
   </section>

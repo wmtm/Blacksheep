@@ -26,6 +26,7 @@ gallery:
     kind: image
     label: "AIRBNB WELCOME BOOK · APPLICATION"
     src: "/media/illustrated-maps/airbnb-welcome-guide.webp"
+    fit: "contain"
 ---
 
 ## Why maps

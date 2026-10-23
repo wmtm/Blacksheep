@@ -29,6 +29,7 @@ const projects = defineCollection({
       src: z.string().optional(),
       poster: z.string().optional(),
       transparent: z.boolean().default(false),
+      fit: z.enum(['cover', 'contain']).default('cover'),
     }),
     gallery: z
       .array(
@@ -39,6 +40,7 @@ const projects = defineCollection({
           src: z.string().optional(),
           poster: z.string().optional(),
           transparent: z.boolean().default(false),
+          fit: z.enum(['cover', 'contain']).default('cover'),
         })
       )
       .default([]),
