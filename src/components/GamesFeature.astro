@@ -37,7 +37,7 @@ const tchombo = 'https://tchombo.onrender.com';
           rel="noopener noreferrer"
           data-cursor="view"
           data-cursor-text="Play"
-          class="sticker-front relative ml-auto block w-[72%] rotate-3 overflow-hidden rounded-2xl border border-line bg-[#0E1E3A] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.95)] transition-transform duration-500 hover:rotate-0"
+          class="sticker-front relative ml-auto block w-[72%] rotate-3 overflow-hidden rounded-2xl border border-line bg-paper p-6 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.95)] transition-transform duration-500 hover:rotate-0"
           aria-label="Play TCHOMBO"
         >
           <img
@@ -47,9 +47,9 @@ const tchombo = 'https://tchombo.onrender.com';
             height="551"
             loading="lazy"
             decoding="async"
-            class="block h-auto w-full"
+            class="sticker-mascot block h-auto w-full"
           />
-          <span class="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-[#F6F2E9] px-3 py-1.5 font-display text-[10px] uppercase tracking-[0.08em] text-[#0E1E3A]">
+          <span class="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-[#0E1E3A] px-3 py-1.5 font-display text-[10px] uppercase tracking-[0.08em] text-paper">
             <span class="h-1.5 w-1.5 rounded-full bg-[#2E6E52]"></span>
             Live · play now
           </span>
@@ -99,10 +99,27 @@ const tchombo = 'https://tchombo.onrender.com';
     will-change: transform;
   }
 
+  .sticker-mascot {
+    animation: sticker-bob 4s var(--ease-in-out-quart) infinite;
+  }
+
+  @keyframes sticker-bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-1.5deg);
+    }
+    50% {
+      transform: translateY(-6px) rotate(1.5deg);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .sticker-front,
     .sticker-back {
       transition: none;
+    }
+    .sticker-mascot {
+      animation: none;
     }
   }
 </style>

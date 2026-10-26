@@ -25,25 +25,29 @@ const steps = [
     n: '01',
     name: 'Raise',
     color: data.accent,
+    rotate: -2,
     text: 'A real fact about Mauritius drops with no answer attached. Name a number higher than the last one named. Anyone can keep going.',
   },
   {
     n: '02',
     name: 'Call TCHOMBO',
     color: 'var(--color-brand-coral)',
+    rotate: 1,
     text: "Think the last player already overshot the true number? Call TCHOMBO on them and bet your read is right.",
   },
   {
     n: '03',
     name: 'Call exact',
     color: 'var(--color-brand-gold)',
+    rotate: -1,
     text: 'Know the precise figure? Call it exact instead. Nail it and nobody loses a dodo. Miss and the cost is yours alone.',
   },
 ];
 
 const flock = [
+  { src: media('mascot-tchombo.png'), caption: 'Still in it', rotate: -3 },
   { src: media('mascot-gagn-twa.png'), caption: 'Gagn twa! Called it exact.', rotate: 3 },
-  { src: media('mascot-ayo.png'), caption: "Ayo! That one's on you.", rotate: -3 },
+  { src: media('mascot-ayo.png'), caption: "Ayo! That one's on you.", rotate: -2 },
 ];
 
 const stats = [
@@ -145,17 +149,33 @@ const indexItems = [
   </section>
 
   <section data-reveal class="px-6 pb-20 sm:px-12 lg:px-20">
-    <Media
-      ratio={data.cover.ratio}
-      kind={data.cover.kind}
-      label={data.cover.label}
-      accent={data.accent}
-      category={data.category}
-      src={data.cover.src}
-      transparent={data.cover.transparent}
-      fit={data.cover.fit}
-      class="mx-auto"
-    />
+    <a
+      href={data.live}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cursor="view"
+      data-cursor-text="Play"
+      data-cursor-accent={data.accent}
+      class="tchombo-sticker relative mx-auto block w-fit"
+      aria-label="Play TCHOMBO"
+    >
+      <div class="tchombo-bob">
+        <Media
+          ratio={data.cover.ratio}
+          kind={data.cover.kind}
+          label={data.cover.label}
+          accent={data.accent}
+          category={data.category}
+          src={data.cover.src}
+          transparent={data.cover.transparent}
+          fit={data.cover.fit}
+        />
+      </div>
+      <span class="pointer-events-none absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-[#0E1E3A] px-3 py-1.5 font-display text-[10px] uppercase tracking-[0.08em] text-paper">
+        <span class="h-1.5 w-1.5 rounded-full" style={`background:${data.accent}`}></span>
+        Live · play now
+      </span>
+    </a>
   </section>
 
   <section id="how-it-plays" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
@@ -166,7 +186,7 @@ const indexItems = [
 
     <div data-reveal-group class="mt-12 grid gap-4 sm:grid-cols-3">
       {steps.map((step) => (
-        <div data-reveal-item class="flex flex-col gap-5 rounded-2xl border border-line bg-ink-soft p-8">
+        <div data-reveal-item class="tchombo-step-card flex flex-col gap-5 rounded-2xl border border-line bg-ink-soft p-8" style={`--rotate:${step.rotate}deg`}>
           <span class="font-display text-sm" style={`color:${step.color}`}>{step.n}</span>
           <h3 class="font-display text-2xl">{step.name}</h3>
           <p class="text-sm leading-relaxed text-paper/60">{step.text}</p>
@@ -187,15 +207,9 @@ const indexItems = [
     </h2>
 
     <div data-reveal-group class="mt-12 flex flex-wrap justify-center gap-6 sm:gap-10">
-      <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
-        <div class="flex aspect-square w-full -rotate-3 items-center justify-center rounded-2xl border border-line-soft bg-paper p-6">
-          <img src={media('mascot-tchombo.png')} alt="Still in it" loading="lazy" decoding="async" class="h-full w-full object-contain" />
-        </div>
-        <p class="mt-4 text-sm text-paper/60">Still in it</p>
-      </div>
       {flock.map((bird) => (
         <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
-          <div class="flex aspect-square w-full items-center justify-center rounded-2xl border border-line-soft bg-paper p-6" style={`transform:rotate(${bird.rotate}deg)`}>
+          <div class="tchombo-flock-card flex aspect-square w-full items-center justify-center rounded-2xl border border-line-soft bg-paper p-6" style={`--rotate:${bird.rotate}deg`}>
             <img src={bird.src} alt={bird.caption} loading="lazy" decoding="async" class="h-full w-full object-contain" />
           </div>
           <p class="mt-4 text-sm text-paper/60">{bird.caption}</p>
@@ -265,3 +279,59 @@ const indexItems = [
     </a>
   </section>
 </BaseLayout>
+
+<style>
+  /*
+   * A live, playable party game deserves more energy than a flat grid of
+   * cards. These add a scattered-stickers tilt + a springy hover pop on the
+   * three "fun" sections (hero mascot, how-it-plays, the flock), reusing
+   * the sitewide --ease-spring/--duration-slow tokens so it still feels
+   * like part of the same system, not a one-off. Everything here is a
+   * plain CSS transition/animation on its own element -- never the same
+   * element the GSAP tilt in Media.astro controls -- so nothing fights it.
+   */
+  .tchombo-sticker {
+    transform: rotate(-2deg);
+    transition: transform var(--duration-slow) var(--ease-spring);
+  }
+  .tchombo-sticker:hover {
+    transform: rotate(0deg) scale(1.04);
+  }
+  .tchombo-bob {
+    animation: tchombo-bob 4.4s var(--ease-in-out-quart) infinite;
+  }
+
+  .tchombo-step-card,
+  .tchombo-flock-card {
+    transform: rotate(var(--rotate, 0deg));
+    transition: transform var(--duration-slow) var(--ease-spring);
+  }
+  .tchombo-step-card:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.02);
+  }
+  .tchombo-flock-card:hover {
+    transform: rotate(0deg) translateY(-4px) scale(1.08);
+  }
+
+  @keyframes tchombo-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tchombo-sticker,
+    .tchombo-step-card,
+    .tchombo-flock-card {
+      transition: none;
+      transform: none;
+    }
+    .tchombo-bob {
+      animation: none;
+    }
+  }
+</style>
