@@ -2,17 +2,25 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AvailabilityBadge from '@/components/AvailabilityBadge.astro';
 import MascotPortrait from '@/components/MascotPortrait.astro';
-import { CATEGORY_LIST } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
 
-const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D', 'Premiere Pro'];
+const tools = ['Photoshop', 'Illustrator', 'InDesign', 'After Effects', 'Procreate'];
+const languages = ['French', 'English'];
+const training = [
+  { school: 'Lycée Labourdonnais', place: 'Curepipe, Mauritius' },
+  { school: "Campus Fonderie de l'Image", place: "Bagnolet, France (1 year, mise à niveau en arts appliqués)" },
+  { school: 'Axe Sud Toulouse, École de Condé', place: '3 years, concepteur designer' },
+];
 ---
 
-<BaseLayout title="About" description="Mathieu Maigrot, graphic & motion designer based in Mauritius, working across visual identity, animation and digital design.">
+<BaseLayout title="About" description="Mathieu Maigrot, graphic & motion designer based in Tamarin, Mauritius, working across visual identity, animation and digital design.">
   <section class="px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
     <div class="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:items-start lg:gap-16">
       <div>
-        <p data-reveal class="mb-4 text-[11px] uppercase tracking-[0.15em] text-paper/40">About</p>
+        <p data-reveal class="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/40">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-teal"></span>
+          About · Tamarin, Mauritius
+        </p>
         <h1 data-reveal-lines class="font-display text-[10.5vw] leading-[0.98] tracking-[-0.03em] sm:text-6xl lg:text-[4.6vw]">
           <span class="block overflow-hidden"><span data-line class="block">Born in Mauritius.</span></span>
           <span class="block overflow-hidden"><span data-line class="block text-outline">Designed for anywhere.</span></span>
@@ -21,16 +29,20 @@ const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D'
         <div data-reveal data-reveal-delay="0.15" class="mt-10 max-w-xl space-y-5 text-lg text-paper/70">
           <p>
             I'm <strong class="text-paper">Mathieu Maigrot</strong>, a graphic &amp; motion designer based in
-            Mauritius, working across visual identity, animation, digital design and everything in between.
+            Tamarin, Mauritius, working across visual identity, animation, digital design and everything in
+            between.
           </p>
           <p>
             I like taking an idea (sometimes clear, sometimes completely chaotic) and turning it into
-            something visual, engaging and impossible to ignore.
+            something visual, engaging and impossible to ignore, quickly, and without pretending I had it
+            figured out from the first sketch. New tools and new briefs don't scare me much.
           </p>
           <p>
             From logos that move to brands that need a personality, digital experiences, illustrations,
             campaigns and the occasional weird side project, I'm interested in design that does more than
-            look good. It should have a point of view.
+            look good. It should have a point of view, and it should be honest about what it's for.
+            Cultural projects especially: give me a museum, a heritage brand, a local story worth telling,
+            and I'm in.
           </p>
         </div>
 
@@ -49,46 +61,68 @@ const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Cinema 4D'
     </div>
   </section>
 
+  <!--
+    Was a full render of CATEGORY_LIST (all 6 studio disciplines) duplicating
+    the Services page verbatim, with no link between the two. Now a short
+    teaser pointing at the single source of truth for the full offer.
+  -->
   <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-    <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">What I do</p>
-    <div data-reveal-group class="divide-y divide-line border-y border-line">
-      {CATEGORY_LIST.map((cat) => (
-        <a
-          href={withBase(`/work/?cat=${cat.id}`)}
-          data-reveal-item
-          data-cursor="link"
-          class="group flex flex-col gap-2 py-6 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between sm:py-8"
-        >
-          <div class="flex items-center gap-5">
-            <span class="font-display text-sm text-paper/30">{cat.index}</span>
-            <h3 class="font-display text-2xl tracking-[-0.01em] transition-colors duration-300 sm:text-4xl" style={`--hover-color:${cat.accent}`}>
-              {cat.label}
-            </h3>
-          </div>
-          <p class="pl-9 text-sm text-paper/50 transition-colors duration-300 sm:pl-0 sm:text-right">
-            {cat.description}
-          </p>
-        </a>
-      ))}
+    <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div>
+        <p data-reveal class="mb-4 text-[11px] uppercase tracking-[0.15em] text-paper/40">What I do</p>
+        <p data-reveal data-reveal-delay="0.06" class="max-w-2xl font-display text-2xl leading-[1.15] tracking-[-0.01em] sm:text-3xl lg:text-4xl">
+          Branding, motion, digital, illustration, editorial, ongoing design support, and a few things that
+          don't fit a normal brief at all: custom maps, games, game nights.
+        </p>
+      </div>
+      <a
+        href={withBase('/services/')}
+        data-cursor="link"
+        data-magnetic="0.3"
+        data-reveal
+        data-reveal-delay="0.12"
+        class="inline-flex w-fit items-center gap-2 rounded-full bg-paper px-6 py-3.5 font-display text-sm text-ink transition-transform duration-base ease-spring hover:scale-[1.03]"
+      >
+        See all services <span>→</span>
+      </a>
     </div>
   </section>
 
-  <section class="px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[0.4fr_1fr]">
-      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Currently using</p>
-      <ul data-reveal-group class="flex flex-wrap gap-3">
-        {tools.map((tool) => (
-          <li data-reveal-item class="rounded-full border border-line px-4 py-2 text-sm text-paper/70">
-            {tool}
-          </li>
-        ))}
-      </ul>
+  <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <div class="divide-y divide-line">
+      <div class="grid gap-6 py-8 first:pt-0 sm:grid-cols-2 lg:grid-cols-[0.4fr_1fr]">
+        <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Languages</p>
+        <ul data-reveal-group class="flex flex-wrap gap-3">
+          {languages.map((lang) => (
+            <li data-reveal-item class="rounded-full border border-line px-4 py-2 text-sm text-paper/70">
+              {lang}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-[0.4fr_1fr]">
+        <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Trained at</p>
+        <ul data-reveal-group class="flex flex-col gap-4">
+          {training.map((t) => (
+            <li data-reveal-item>
+              <p class="font-display text-lg text-paper">{t.school}</p>
+              <p class="text-sm text-paper/50">{t.place}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="grid gap-6 py-8 last:pb-0 sm:grid-cols-2 lg:grid-cols-[0.4fr_1fr]">
+        <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Currently using</p>
+        <ul data-reveal-group class="flex flex-wrap gap-3">
+          {tools.map((tool) => (
+            <li data-reveal-item class="rounded-full border border-line px-4 py-2 text-sm text-paper/70">
+              {tool}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  section a.group h3:hover {
-    color: var(--hover-color, var(--color-brand-coral));
-  }
-</style>
