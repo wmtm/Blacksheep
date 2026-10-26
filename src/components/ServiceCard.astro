@@ -1,0 +1,83 @@
+---
+import type { Service } from '@/lib/services';
+import { buildWhatsAppLink } from '@/lib/social';
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+const { index, label, pitch, included, accent, proof, ctaLabel } = service;
+---
+
+<div
+  data-service-card
+  data-reveal-item
+  class="service-card group relative flex h-full flex-col rounded-2xl border border-line bg-ink-soft p-7 transition-colors duration-base"
+  style={`--accent:${accent}`}
+>
+  <div class="flex items-center justify-between">
+    <span class="font-display text-sm transition-colors duration-base" style={`color:${accent}`}>{index}</span>
+    <span class="service-dot h-2 w-2 rounded-full transition-transform duration-base" style={`background:${accent}`}></span>
+  </div>
+
+  <h3 class="mt-4 font-display text-xl tracking-[-0.01em] sm:text-2xl">{label}</h3>
+  <p class="mt-2 text-sm text-paper/60">{pitch}</p>
+
+  <ul class="mt-5 flex flex-col gap-1.5">
+    {included.map((item) => (
+      <li class="flex items-center gap-2 text-xs text-paper/50">
+        <span class="h-1 w-1 shrink-0 rounded-full bg-paper/30"></span>
+        {item}
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-6 border-t border-line pt-4">
+    {proof ? (
+      <a
+        href={proof.href}
+        data-cursor="link"
+        class="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.1em] text-paper/50 transition-colors duration-base hover:text-paper"
+      >
+        Proof: {proof.label} <span>→</span>
+      </a>
+    ) : (
+      <p class="text-xs italic text-paper/30">No case study yet, ask about it</p>
+    )}
+  </div>
+
+  <a
+    href={buildWhatsAppLink(label)}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-cursor="link"
+    class="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-line py-3 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-base hover:border-paper hover:text-paper"
+  >
+    {ctaLabel} <span>→</span>
+  </a>
+</div>
+
+<style>
+  /*
+   * The category-color hover reaction: at rest the card is neutral except
+   * for its own accent-colored index/dot; on hover the whole card picks up
+   * a soft glow and border in that same accent, so a visitor scanning the
+   * grid sees each discipline "light up" in its own color rather than every
+   * card behaving identically.
+   */
+  .service-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent),
+      0 20px 60px -24px color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  .service-card:hover .service-dot {
+    transform: scale(1.6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-card,
+    .service-dot {
+      transition: none;
+    }
+  }
+</style>
