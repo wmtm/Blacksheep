@@ -8,6 +8,9 @@ interface Props {
   title: string;
   description?: string;
   showFooterCta?: boolean;
+  footerCtaEyebrow?: string;
+  footerCtaHeading?: string;
+  footerCtaContext?: string;
   ogImageLabel?: string;
 }
 
@@ -15,6 +18,9 @@ const {
   title,
   description = 'BlackSheep: Graphic & Motion Designer turning ideas into things you can see, feel and remember. Based in Mauritius, working everywhere.',
   showFooterCta = true,
+  footerCtaEyebrow,
+  footerCtaHeading,
+  footerCtaContext,
 } = Astro.props;
 
 const pageTitle = title === 'BlackSheep' ? title : `${title} · BlackSheep`;
@@ -62,7 +68,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
 
-    <Footer showCta={showFooterCta} />
+    <Footer showCta={showFooterCta} ctaEyebrow={footerCtaEyebrow} ctaHeading={footerCtaHeading} ctaContext={footerCtaContext} />
 
     <script src="../scripts/main.ts"></script>
   </body>

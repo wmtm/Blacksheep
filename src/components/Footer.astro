@@ -1,11 +1,24 @@
 ---
-import { SOCIALS, CONTACT_EMAIL } from '@/lib/social';
+import { SOCIALS, buildWhatsAppLink, buildMailtoLink } from '@/lib/social';
 import AvailabilityBadge from './AvailabilityBadge.astro';
 
 interface Props {
   showCta?: boolean;
+  /** Eyebrow line above the heading. Defaults to the generic sitewide pitch. */
+  ctaEyebrow?: string;
+  /** The big headline. Defaults to the generic sitewide pitch. */
+  ctaHeading?: string;
+  /** A project/service name to prefill into the WhatsApp/email message, so a
+   * case study or Services card closes with "I'd like to talk about X"
+   * instead of a generic opener. */
+  ctaContext?: string;
 }
-const { showCta = true } = Astro.props;
+const {
+  showCta = true,
+  ctaEyebrow = 'You have an idea. We have too many.',
+  ctaHeading = "Let's combine them.",
+  ctaContext,
+} = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -15,26 +28,37 @@ const year = new Date().getFullYear();
       <div class="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(60%_60%_at_20%_20%,var(--color-brand-violet),transparent_60%),radial-gradient(50%_50%_at_85%_80%,var(--color-brand-coral),transparent_60%)]"></div>
       <div class="relative mx-auto max-w-5xl text-center">
         <p data-reveal class="mb-4 text-[11px] uppercase tracking-[0.2em] text-paper/50">
-          You have an idea. We have too many.
+          {ctaEyebrow}
         </p>
         <h2 data-reveal data-reveal-delay="0.08" class="font-display text-[10.5vw] leading-[0.95] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
-          Let's combine them.
+          {ctaHeading}
         </h2>
-        <div data-reveal data-reveal-delay="0.16" class="mt-10 flex flex-col items-center gap-4">
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            data-cursor="drag"
-            data-cursor-text="Say hi"
-            data-magnetic="0.4"
-            class="group inline-flex items-center gap-3 rounded-full bg-paper px-8 py-4 font-display text-lg text-ink transition-transform duration-300 hover:scale-[1.03] sm:text-xl"
-          >
-            {CONTACT_EMAIL}
-            <span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-paper transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </span>
-          </a>
+        <div data-reveal data-reveal-delay="0.16" class="mt-10 flex flex-col items-center gap-5">
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={buildWhatsAppLink(ctaContext)}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="drag"
+              data-cursor-text="Say hi"
+              data-magnetic="0.4"
+              class="group inline-flex items-center gap-3 rounded-full bg-paper px-8 py-4 font-display text-lg text-ink transition-transform duration-base ease-spring hover:scale-[1.03] sm:text-xl"
+            >
+              Message on WhatsApp
+              <span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-paper transition-transform duration-base group-hover:translate-x-1 group-hover:-translate-y-1">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </a>
+            <a
+              href={buildMailtoLink(ctaContext)}
+              data-cursor="link"
+              class="inline-flex items-center gap-2 rounded-full border border-line px-6 py-4 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-base hover:border-paper hover:text-paper"
+            >
+              Email instead
+            </a>
+          </div>
           <AvailabilityBadge />
         </div>
       </div>
@@ -55,7 +79,7 @@ const year = new Date().getFullYear();
             target="_blank"
             rel="noreferrer"
             data-cursor="link"
-            class="text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors duration-300 hover:text-paper"
+            class="text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors duration-base hover:text-paper"
           >
             {social.label}
           </a>
@@ -68,7 +92,7 @@ const year = new Date().getFullYear();
       data-scroll-top
       data-cursor="link"
       data-magnetic="0.5"
-      class="flex items-center gap-2 self-start text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors duration-300 hover:text-paper sm:self-auto"
+      class="flex items-center gap-2 self-start text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors duration-base hover:text-paper sm:self-auto"
       aria-label="Back to top"
     >
       Back to top

@@ -5,6 +5,7 @@ import Media from '@/components/Media.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORIES } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
+import { buildWhatsAppLink } from '@/lib/social';
 
 const allProjects = await getCollection('projects');
 const allIds = [...allProjects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
@@ -67,7 +68,13 @@ const indexItems = [
 ];
 ---
 
-<BaseLayout title={data.title} description={data.excerpt} showFooterCta={false}>
+<BaseLayout
+  title={data.title}
+  description={data.excerpt}
+  footerCtaEyebrow="Liked what you saw?"
+  footerCtaHeading="Let's start yours."
+  footerCtaContext={data.title}
+>
   <CaseStudyIndex items={indexItems} accent={data.accent} />
   <div class="fixed inset-x-0 top-0 z-40 h-[3px] origin-left scale-x-0 bg-paper" data-scroll-progress></div>
 
@@ -103,15 +110,17 @@ const indexItems = [
             rel="noopener noreferrer"
             data-cursor="link"
             data-magnetic="0.3"
-            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-base ease-spring hover:scale-[1.03]"
             style={`background:${data.accent}`}
           >
             Play it live <span>↗</span>
           </a>
           <a
-            href={withBase('/contact/')}
+            href={buildWhatsAppLink('TCHOMBO')}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="link"
-            class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-300 hover:border-paper"
+            class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-base hover:border-paper"
           >
             Got a game idea? Let's build it <span>→</span>
           </a>
@@ -237,7 +246,7 @@ const indexItems = [
       class="group relative block"
     >
       <div data-reveal class="flex items-baseline justify-between gap-6 border-b border-line pb-8">
-        <h2 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] transition-colors duration-500 group-hover:text-brand-coral sm:text-6xl lg:text-7xl">
+        <h2 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] transition-colors duration-slow group-hover:text-brand-coral sm:text-6xl lg:text-7xl">
           {nextProject.data.title}
         </h2>
         <span class="hidden shrink-0 items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 sm:flex">

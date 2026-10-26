@@ -1,5 +1,6 @@
 ---
 import { withBase } from '@/lib/paths';
+import { buildWhatsAppLink } from '@/lib/social';
 
 const tchombo = 'https://tchombo.onrender.com';
 ---
@@ -74,14 +75,16 @@ const tchombo = 'https://tchombo.onrender.com';
           rel="noopener noreferrer"
           data-cursor="link"
           data-magnetic="0.3"
-          class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-300 hover:scale-[1.03]"
+          class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-base ease-spring hover:scale-[1.03]"
         >
           Play TCHOMBO <span>↗</span>
         </a>
         <a
-          href={withBase('/contact/')}
+          href={buildWhatsAppLink('a game idea')}
+          target="_blank"
+          rel="noopener noreferrer"
           data-cursor="link"
-          class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
+          class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] transition-colors duration-base hover:border-paper"
         >
           Got a game idea? Let's build it <span>→</span>
         </a>
