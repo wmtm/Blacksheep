@@ -1,0 +1,177 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '@/lib/paths';
+
+const allProjects = await getCollection('projects');
+const tribeWar = allProjects.find((p) => p.id === 'tribal-war-card-game')!;
+const tchombo = allProjects.find((p) => p.id === 'tchombo')!;
+const maps = allProjects.find((p) => p.id === 'illustrated-maps')!;
+const wolmar = allProjects.find((p) => p.id === 'chasse-de-wolmar')!;
+---
+
+<BaseLayout
+  title="Services"
+  description="Beyond the client brief: Mathieu Maigrot runs tabletop game nights, designs and builds games, and makes custom maps, from illustrated keepsakes to interactive 3D terrain."
+>
+  <section class="relative flex min-h-[70svh] flex-col justify-end overflow-hidden px-6 pb-16 pt-40 sm:px-12 sm:pb-24 lg:px-20">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -left-40 top-10 h-[36rem] w-[36rem] rounded-full bg-brand-violet/20 blur-[120px]"></div>
+      <div class="absolute -right-32 top-1/3 h-[30rem] w-[30rem] rounded-full bg-brand-gold/15 blur-[120px]"></div>
+    </div>
+
+    <div class="relative">
+      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.2em] text-paper/50">Services</p>
+      <h1 data-reveal-lines class="font-display text-[12.5vw] leading-[0.92] tracking-[-0.03em] sm:text-7xl lg:text-[6vw]">
+        <span class="block overflow-hidden"><span data-line class="block">Also at the table.</span></span>
+      </h1>
+      <p data-reveal data-reveal-delay="0.15" class="mt-6 max-w-xl text-lg text-paper/60 sm:text-xl">
+        Design is the day job. Running game nights, building games from scratch and mapping real ground
+        people actually walk on: that's the rest of it.
+      </p>
+    </div>
+  </section>
+
+  <!-- Game nights -->
+  <section class="relative overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20" aria-labelledby="game-nights-title">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -right-40 top-1/4 h-[32rem] w-[32rem] rounded-full bg-brand-violet/15 blur-[120px]"></div>
+      <div class="absolute -left-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-brand-coral/10 blur-[120px]"></div>
+    </div>
+
+    <div class="relative mx-auto grid max-w-[1600px] items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+      <div class="order-2 lg:order-1">
+        <div class="relative mx-auto w-full max-w-sm -rotate-3">
+          <Placeholder
+            ratio="4:5"
+            label="GAME NIGHT · DUNGEON MASTER"
+            accent="#6C4CFF"
+            category="experiments"
+            seed="game-nights"
+          />
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2">
+        <p data-reveal class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-paper/50">
+          <span class="rounded-full bg-brand-violet px-3 py-1 font-display tracking-[0.08em] text-paper">01</span>
+          Game nights
+        </p>
+        <h2 id="game-nights-title" data-reveal data-reveal-delay="0.06" class="font-display text-[10vw] leading-[0.92] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
+          He runs the table, too.
+        </h2>
+        <p data-reveal data-reveal-delay="0.12" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+          Mathieu hosts regular game nights and runs the table as Dungeon Master: one-shots for a single
+          evening, full campaigns that run for months, homebrew settings built from scratch for the group
+          in front of him. If your crew needs someone to hold the story together (and keep the dice
+          honest), that's a service, not just a hobby.
+        </p>
+        <ul data-reveal-group class="mt-8 flex flex-col gap-3 text-paper/70">
+          {[
+            'One-shots and ongoing campaigns',
+            'Homebrew settings, NPCs and rules',
+            'Mauritius-based, in-person, remote on request',
+          ].map((line) => (
+            <li data-reveal-item class="flex items-center gap-3">
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-violet"></span>
+              {line}
+            </li>
+          ))}
+        </ul>
+        <div data-reveal data-reveal-delay="0.2" class="mt-10">
+          <a
+            href={withBase('/contact/')}
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-300 hover:scale-[1.03]"
+          >
+            Book a session <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game design & creation -->
+  <section class="relative overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20" aria-labelledby="game-design-title">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -left-40 top-1/4 h-[32rem] w-[32rem] rounded-full bg-[#2E6E52]/15 blur-[120px]"></div>
+      <div class="absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-brand-gold/15 blur-[120px]"></div>
+    </div>
+
+    <div class="relative mx-auto grid max-w-[1600px] items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+      <div>
+        <p data-reveal class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-paper/50">
+          <span class="rounded-full bg-[#2E6E52] px-3 py-1 font-display tracking-[0.08em] text-paper">02</span>
+          Game design
+        </p>
+        <h2 id="game-design-title" data-reveal data-reveal-delay="0.06" class="font-display text-[10vw] leading-[0.92] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
+          From rulebook to shipped build.
+        </h2>
+        <p data-reveal data-reveal-delay="0.12" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+          Card games with their own mythology, real-time multiplayer web games, pure tabletop roleplay
+          systems, even beta passes on other people's video games before they ship: if it has rules, a win
+          condition and people arguing about the rules, there's a good chance he's designed, tested or
+          broken one.
+        </p>
+        <div data-reveal data-reveal-delay="0.2" class="mt-10 flex flex-wrap items-center gap-3">
+          <a
+            href={withBase('/contact/')}
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-4 font-display text-base text-ink transition-transform duration-300 hover:scale-[1.03]"
+          >
+            Got a game idea? Let's build it <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div data-reveal-group class="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2">
+        <div data-reveal-item><ProjectCard project={tribeWar} /></div>
+        <div data-reveal-item class="sm:mt-10"><ProjectCard project={tchombo} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom mapmaking -->
+  <section class="relative overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20" aria-labelledby="mapmaking-title">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -right-40 top-1/4 h-[32rem] w-[32rem] rounded-full bg-brand-gold/15 blur-[120px]"></div>
+      <div class="absolute -left-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[#3F6B35]/15 blur-[120px]"></div>
+    </div>
+
+    <div class="relative mx-auto grid max-w-[1600px] items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+      <div class="order-2 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:order-1" data-reveal-group>
+        <div data-reveal-item><ProjectCard project={maps} /></div>
+        <div data-reveal-item class="sm:mt-10"><ProjectCard project={wolmar} /></div>
+      </div>
+
+      <div class="order-1 lg:order-2">
+        <p data-reveal class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-paper/50">
+          <span class="rounded-full bg-brand-gold px-3 py-1 font-display tracking-[0.08em] text-ink">03</span>
+          Mapmaking
+        </p>
+        <h2 id="mapmaking-title" data-reveal data-reveal-delay="0.06" class="font-display text-[10vw] leading-[0.92] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
+          Maps built to actually be used.
+        </h2>
+        <p data-reveal data-reveal-delay="0.12" class="mt-8 max-w-xl text-lg text-paper/60 sm:text-xl">
+          Hand-drawn illustrated maps for welcome books and keepsakes, and now full interactive 3D terrain:
+          Chasse de Wolmar maps real hunting grounds for hunters, hikers and nature explorers who need to
+          know the land, not just admire it.
+        </p>
+        <div data-reveal data-reveal-delay="0.2" class="mt-10">
+          <a
+            href={withBase('/contact/')}
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:border-paper"
+          >
+            Need a map? Let's talk <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
