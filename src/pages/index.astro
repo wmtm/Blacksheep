@@ -114,10 +114,11 @@ const featured = allProjects
   <!-- Games: TCHOMBO + Tribe War -->
   <GamesFeature />
 
-  <!-- Category verbs marquee -->
+  <!-- Category verbs marquee: each verb links into the matching Work filter -->
   <section class="border-y border-line py-6">
     <Marquee
       items={CATEGORY_LIST.map((c) => c.verb.replace('.', ''))}
+      hrefs={CATEGORY_LIST.map((c) => withBase(`/work/?cat=${c.id}`))}
       speed={40}
     />
   </section>

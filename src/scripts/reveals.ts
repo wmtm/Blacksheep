@@ -10,10 +10,12 @@ export function initReveals() {
   ScrollTrigger.getAll().forEach((t) => t.kill());
 
   if (reduced()) {
-    document.querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-lines], [data-parallax]').forEach((el) => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    });
+    document
+      .querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-lines], [data-parallax], [data-reveal-line]')
+      .forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
     return;
   }
 
@@ -74,6 +76,26 @@ export function initReveals() {
         scrollTrigger: {
           trigger: el,
           start: 'top 90%',
+          once: true,
+        },
+      }
+    );
+  });
+
+  // Line "draws itself in": scaleX 0 -> 1 from the left, for connector
+  // lines like the Services "how we work" process track.
+  gsap.utils.toArray<HTMLElement>('[data-reveal-line]').forEach((el) => {
+    gsap.fromTo(
+      el,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        transformOrigin: 'left center',
+        duration: DURATION.slower,
+        ease: EASE.inOut,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
           once: true,
         },
       }

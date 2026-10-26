@@ -75,13 +75,19 @@ function attachHoverTargets() {
 
     const type = el.dataset.cursor;
     const text = el.dataset.cursorText ?? '';
+    // Lets a hovered project/service card tint the cursor ring with its own
+    // accent instead of the flat paper default -- set via data-cursor-accent
+    // on the element (see ProjectCard.astro). Falls back to the plain states
+    // below when absent.
+    const accent = el.dataset.cursorAccent;
 
     el.addEventListener('mouseenter', () => {
-      if (type === 'view') setRingState({ scale: 1.7, bg: 'var(--color-paper)', text });
+      if (type === 'view' && accent) setRingState({ scale: 1.7, bg: accent, text });
+      else if (type === 'view') setRingState({ scale: 1.7, bg: 'var(--color-paper)', text });
       else if (type === 'drag') setRingState({ scale: 1.9, bg: 'var(--color-brand-coral)', text: text || 'DRAG' });
       else if (type === 'link') setRingState({ scale: 1.3, border: 'var(--color-paper)' });
       else if (type === 'close') setRingState({ scale: 1.4, bg: 'var(--color-paper)', text: '' });
-      if (ring) ring.style.color = 'var(--color-ink)';
+      if (ring) ring.style.color = accent && type === 'view' ? 'var(--color-paper)' : 'var(--color-ink)';
     });
     el.addEventListener('mouseleave', () => setRingState({}));
   });
