@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { DURATION, EASE, STAGGER } from './motion';
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -18,9 +19,9 @@ export function initPageTransitions() {
       tl.set(panels, { transformOrigin: 'bottom' });
       tl.to(panels, {
         scaleY: 1,
-        duration: 0.5,
-        ease: 'power4.inOut',
-        stagger: 0.05,
+        duration: DURATION.slow,
+        ease: EASE.inOut,
+        stagger: STAGGER.tight,
       });
       await Promise.all([tl.then(), originalLoader()]);
     };
@@ -37,13 +38,13 @@ export function initPageTransitions() {
       gsap.set(panels, { scaleY: 0 });
       return;
     }
-    const tl = gsap.timeline({ delay: 0.05 });
+    const tl = gsap.timeline({ delay: STAGGER.tight });
     tl.set(panels, { transformOrigin: 'top' });
     tl.to(panels, {
       scaleY: 0,
-      duration: 0.6,
-      ease: 'power4.inOut',
-      stagger: 0.05,
+      duration: DURATION.slow,
+      ease: EASE.inOut,
+      stagger: STAGGER.tight,
     });
   });
 }

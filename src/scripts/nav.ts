@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { DURATION, EASE, STAGGER } from './motion';
 
 let isOpen = false;
 
@@ -22,13 +23,20 @@ export function initNav() {
     gsap.fromTo(
       menu,
       { clipPath: 'inset(0% 0% 100% 0%)' },
-      { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'power4.inOut' }
+      { clipPath: 'inset(0% 0% 0% 0%)', duration: DURATION.slow, ease: EASE.inOut }
     );
     if (links) {
       gsap.fromTo(
         links,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.06, delay: 0.25, ease: 'power3.out' }
+        {
+          y: 0,
+          opacity: 1,
+          duration: DURATION.slow,
+          stagger: STAGGER.base,
+          delay: DURATION.base, // let the clip-path panel mostly settle first
+          ease: EASE.spring,
+        }
       );
     }
   };
@@ -40,8 +48,8 @@ export function initNav() {
     toggle.setAttribute('aria-expanded', 'false');
     gsap.to(menu, {
       clipPath: 'inset(0% 0% 100% 0%)',
-      duration: 0.55,
-      ease: 'power4.inOut',
+      duration: DURATION.slow,
+      ease: EASE.inOut,
       onComplete: () => gsap.set(menu, { display: 'none' }),
     });
   };

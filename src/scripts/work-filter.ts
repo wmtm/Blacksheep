@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
+import { DURATION, EASE, STAGGER } from './motion';
 
 gsap.registerPlugin(Flip);
 
@@ -23,8 +24,8 @@ export function initWorkFilter() {
     gsap.to(indicator, {
       x: rect.left - rootRect.left,
       width: rect.width,
-      duration: 0.45,
-      ease: 'power3.out',
+      duration: DURATION.base,
+      ease: EASE.spring,
     });
   }
 
@@ -43,9 +44,9 @@ export function initWorkFilter() {
 
     if (!initial) {
       Flip.from(state, {
-        duration: 0.6,
-        ease: 'power3.inOut',
-        stagger: 0.03,
+        duration: DURATION.slow,
+        ease: EASE.inOut,
+        stagger: STAGGER.tight,
         absolute: true,
       });
       document.dispatchEvent(new CustomEvent('blacksheep:refresh-cursor'));

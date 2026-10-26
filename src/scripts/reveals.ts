@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { DURATION, EASE, DISTANCE, STAGGER } from './motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,13 +22,13 @@ export function initReveals() {
     const delay = Number(el.dataset.revealDelay) || 0;
     gsap.fromTo(
       el,
-      { opacity: 0, y: 28 },
+      { opacity: 0, y: DISTANCE.revealY },
       {
         opacity: 1,
         y: 0,
-        duration: 0.9,
+        duration: DURATION.slower,
         delay,
-        ease: 'power3.out',
+        ease: EASE.out,
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
@@ -37,18 +38,19 @@ export function initReveals() {
     );
   });
 
-  // Staggered group reveals
+  // Staggered group reveals (same rise distance as data-reveal so the two
+  // read as one family, just orchestrated differently)
   gsap.utils.toArray<HTMLElement>('[data-reveal-group]').forEach((group) => {
     const items = group.querySelectorAll<HTMLElement>('[data-reveal-item]');
     gsap.fromTo(
       items,
-      { opacity: 0, y: 24 },
+      { opacity: 0, y: DISTANCE.revealY },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.08,
+        duration: DURATION.slower,
+        ease: EASE.out,
+        stagger: STAGGER.base,
         scrollTrigger: {
           trigger: group,
           start: 'top 85%',
@@ -66,9 +68,9 @@ export function initReveals() {
       { yPercent: 110 },
       {
         yPercent: 0,
-        duration: 0.9,
-        ease: 'expo.out',
-        stagger: 0.06,
+        duration: DURATION.slower,
+        ease: EASE.snap,
+        stagger: STAGGER.tight,
         scrollTrigger: {
           trigger: el,
           start: 'top 90%',

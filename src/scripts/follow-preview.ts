@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { DURATION, EASE } from './motion';
 
 export function initFollowPreview() {
   const triggers = document.querySelectorAll<HTMLElement>('[data-preview-trigger]');
@@ -8,8 +9,8 @@ export function initFollowPreview() {
     const thumb = trigger.querySelector<HTMLElement>('[data-preview-thumb]');
     if (!thumb) return;
 
-    const xTo = gsap.quickTo(thumb, 'x', { duration: 0.5, ease: 'power3.out' });
-    const yTo = gsap.quickTo(thumb, 'y', { duration: 0.5, ease: 'power3.out' });
+    const xTo = gsap.quickTo(thumb, 'x', { duration: DURATION.base, ease: EASE.out });
+    const yTo = gsap.quickTo(thumb, 'y', { duration: DURATION.base, ease: EASE.out });
 
     gsap.set(thumb, { opacity: 0, scale: 0.85, pointerEvents: 'none' });
 
@@ -20,11 +21,11 @@ export function initFollowPreview() {
     });
 
     trigger.addEventListener('mouseenter', () => {
-      gsap.to(thumb, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
+      gsap.to(thumb, { opacity: 1, scale: 1, duration: DURATION.base, ease: EASE.spring });
     });
 
     trigger.addEventListener('mouseleave', () => {
-      gsap.to(thumb, { opacity: 0, scale: 0.85, duration: 0.3, ease: 'power3.in' });
+      gsap.to(thumb, { opacity: 0, scale: 0.85, duration: DURATION.fast, ease: EASE.out });
     });
   });
 }

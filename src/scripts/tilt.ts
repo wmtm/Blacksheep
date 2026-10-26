@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { DURATION, EASE } from './motion';
 
 const isFinePointer = () =>
   window.matchMedia('(pointer: fine)').matches &&
@@ -14,8 +15,8 @@ export function initTilt() {
 
     const strength = Number(el.dataset.tilt) || 7;
     gsap.set(el, { transformPerspective: 900 });
-    const rx = gsap.quickTo(el, 'rotationX', { duration: 0.5, ease: 'power3.out' });
-    const ry = gsap.quickTo(el, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+    const rx = gsap.quickTo(el, 'rotationX', { duration: DURATION.base, ease: EASE.out });
+    const ry = gsap.quickTo(el, 'rotationY', { duration: DURATION.base, ease: EASE.out });
 
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();

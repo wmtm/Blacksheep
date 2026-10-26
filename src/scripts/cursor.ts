@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { DURATION, EASE } from './motion';
 
 let dot: HTMLElement | null = null;
 let ring: HTMLElement | null = null;
@@ -21,8 +22,8 @@ function setRingState(state: { scale?: number; bg?: string; border?: string; tex
     marginLeft: state.scale ? (-22 * state.scale) : -22,
     backgroundColor: state.bg ?? 'transparent',
     borderColor: state.border ?? 'color-mix(in srgb, var(--color-paper) 55%, transparent)',
-    duration: 0.35,
-    ease: 'expo.out',
+    duration: DURATION.fast,
+    ease: EASE.snap,
   });
   ring.textContent = state.text ?? '';
 }
@@ -39,15 +40,15 @@ export function initCursor() {
 
   document.documentElement.classList.add('cursor-ready');
 
-  xTo = gsap.quickTo(dot, 'x', { duration: 0.15, ease: 'power3.out' });
-  yTo = gsap.quickTo(dot, 'y', { duration: 0.15, ease: 'power3.out' });
-  ringXTo = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3.out' });
-  ringYTo = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' });
+  xTo = gsap.quickTo(dot, 'x', { duration: DURATION.instant, ease: EASE.out });
+  yTo = gsap.quickTo(dot, 'y', { duration: DURATION.instant, ease: EASE.out });
+  ringXTo = gsap.quickTo(ring, 'x', { duration: DURATION.base, ease: EASE.out });
+  ringYTo = gsap.quickTo(ring, 'y', { duration: DURATION.base, ease: EASE.out });
 
   if (!bound) {
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('mousedown', () => gsap.to(dot, { scale: 0.6, duration: 0.2 }));
-    window.addEventListener('mouseup', () => gsap.to(dot, { scale: 1, duration: 0.2 }));
+    window.addEventListener('mousedown', () => gsap.to(dot, { scale: 0.6, duration: DURATION.fast, ease: EASE.out }));
+    window.addEventListener('mouseup', () => gsap.to(dot, { scale: 1, duration: DURATION.fast, ease: EASE.spring }));
     bound = true;
   }
 
@@ -62,8 +63,16 @@ function onMove(e: MouseEvent) {
 }
 
 function attachHoverTargets() {
+  // Guarded per-element like tilt.ts/mascot.ts: without this, elements that
+  // survive navigation (transition:persist, e.g. the header) or get
+  // re-scanned without remounting (the work-filter's FLIP reflow calling
+  // refreshCursorTargets) would pick up another full set of listeners every
+  // time, instead of being skipped as already-bound.
   const targets = document.querySelectorAll<HTMLElement>('[data-cursor]');
   targets.forEach((el) => {
+    if (el.dataset.cursorBound) return;
+    el.dataset.cursorBound = 'true';
+
     const type = el.dataset.cursor;
     const text = el.dataset.cursorText ?? '';
 
@@ -80,15 +89,18 @@ function attachHoverTargets() {
   // magnetic buttons
   const magnets = document.querySelectorAll<HTMLElement>('[data-magnetic]');
   magnets.forEach((el) => {
+    if (el.dataset.magneticBound) return;
+    el.dataset.magneticBound = 'true';
+
     const strength = Number(el.dataset.magnetic) || 0.35;
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
       const relX = e.clientX - (r.left + r.width / 2);
       const relY = e.clientY - (r.top + r.height / 2);
-      gsap.to(el, { x: relX * strength, y: relY * strength, duration: 0.4, ease: 'power3.out' });
+      gsap.to(el, { x: relX * strength, y: relY * strength, duration: DURATION.base, ease: EASE.out });
     });
     el.addEventListener('mouseleave', () => {
-      gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+      gsap.to(el, { x: 0, y: 0, duration: DURATION.slow, ease: EASE.bouncy });
     });
   });
 }
