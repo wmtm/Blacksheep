@@ -1,18 +1,21 @@
 ---
-import '@fontsource-variable/fraunces';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CaseStudyIndex from '@/components/CaseStudyIndex.astro';
+import Media from '@/components/Media.astro';
 import { getCollection } from 'astro:content';
+import { CATEGORIES } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
 
 const allProjects = await getCollection('projects');
 const allIds = [...allProjects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
 const project = allProjects.find((p) => p.id === 'tchombo')!;
 const { data } = project;
+const cat = CATEGORIES[data.category];
 
 const currentIndex = allIds.indexOf('tchombo');
 const nextId = allIds[(currentIndex + 1) % allIds.length];
 const nextProject = allProjects.find((p) => p.id === nextId)!;
+const nextCat = CATEGORIES[nextProject.data.category];
 
 const media = (file: string) => withBase(`/media/tchombo/${file}`);
 
@@ -20,27 +23,26 @@ const steps = [
   {
     n: '01',
     name: 'Raise',
-    color: 'var(--tc-leaf)',
+    color: data.accent,
     text: 'A real fact about Mauritius drops with no answer attached. Name a number higher than the last one named. Anyone can keep going.',
   },
   {
     n: '02',
     name: 'Call TCHOMBO',
-    color: 'var(--tc-coral)',
+    color: 'var(--color-brand-coral)',
     text: "Think the last player already overshot the true number? Call TCHOMBO on them and bet your read is right.",
   },
   {
     n: '03',
     name: 'Call exact',
-    color: 'var(--tc-gold)',
+    color: 'var(--color-brand-gold)',
     text: 'Know the precise figure? Call it exact instead. Nail it and nobody loses a dodo. Miss and the cost is yours alone.',
   },
 ];
 
 const flock = [
-  { src: media('mascot-tchombo.png'), caption: 'Still in it', rotate: -4 },
   { src: media('mascot-gagn-twa.png'), caption: 'Gagn twa! Called it exact.', rotate: 3 },
-  { src: media('mascot-ayo.png'), caption: "Ayo! That one's on you.", rotate: -2 },
+  { src: media('mascot-ayo.png'), caption: "Ayo! That one's on you.", rotate: -3 },
 ];
 
 const stats = [
@@ -66,179 +68,190 @@ const indexItems = [
 ---
 
 <BaseLayout title={data.title} description={data.excerpt} showFooterCta={false}>
-  <CaseStudyIndex items={indexItems} accent="#2E6E52" />
+  <CaseStudyIndex items={indexItems} accent={data.accent} />
   <div class="fixed inset-x-0 top-0 z-40 h-[3px] origin-left scale-x-0 bg-paper" data-scroll-progress></div>
 
-  <div class="tchombo-zone" style="--tc-navy:#0E1E3A; --tc-coral:#D9553C; --tc-gold:#D9A441; --tc-leaf:#2E6E52; --tc-cream:#F6F2E9; --tc-ink:#1C2440;">
-    <!-- Overview / hero -->
-    <section id="overview" class="relative overflow-hidden px-6 pb-20 pt-36 sm:px-12 sm:pt-44 lg:px-20">
-      <div class="pointer-events-none absolute inset-0">
-        <div class="absolute -right-32 top-10 h-[34rem] w-[34rem] rounded-full bg-[var(--tc-coral)]/15 blur-[130px]"></div>
-        <div class="absolute -left-24 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[var(--tc-leaf)]/20 blur-[130px]"></div>
-      </div>
+  <section id="overview" class="relative overflow-hidden px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -right-40 top-0 h-[32rem] w-[32rem] rounded-full bg-[#2E6E52]/15 blur-[120px]"></div>
+      <div class="absolute -left-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-brand-gold/10 blur-[120px]"></div>
+    </div>
 
-      <div class="relative">
-        <a
-          href={withBase('/work/')}
-          data-cursor="link"
-          class="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/50 transition-colors hover:text-[var(--tc-cream)]"
-        >
-          ← All work
-        </a>
+    <a
+      href={withBase('/work/')}
+      data-cursor="link"
+      class="relative mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors hover:text-paper"
+    >
+      ← All work
+    </a>
 
-        <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
-          <div data-reveal>
-            <p class="mb-5 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[var(--tc-cream)]/50">
-              <span class="h-1.5 w-1.5 rounded-full bg-[var(--tc-leaf)]"></span>
-              Digital · {data.year} · Live now
-            </p>
-            <h1 class="tc-display text-[13vw] leading-[0.95] tracking-[-0.02em] text-[var(--tc-cream)] sm:text-7xl lg:text-[6vw]">
-              TCHOMBO<span class="text-[var(--tc-coral)]">?</span>
-            </h1>
-            <p class="mt-5 max-w-md text-xl text-[var(--tc-cream)]/70 sm:text-2xl">
-              How far can you push it?
-            </p>
-            <p class="mt-6 max-w-lg text-[var(--tc-cream)]/55">
-              {data.summary}
-            </p>
+    <div class="relative grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-16">
+      <div data-reveal>
+        <p class="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50">
+          <span class="h-1.5 w-1.5 rounded-full" style={`background:${cat.accent}`}></span>
+          {cat.label} · {data.year} · Live now
+        </p>
+        <h1 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-[5.2vw]">
+          {data.title}
+        </h1>
+        <p class="mt-5 max-w-md text-xl text-paper/60 sm:text-2xl">How far can you push it?</p>
 
-            <div class="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href={data.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="link"
-                data-magnetic="0.3"
-                class="inline-flex items-center gap-2 rounded-full bg-[var(--tc-cream)] px-7 py-4 font-display text-sm text-[var(--tc-navy)] transition-transform duration-300 hover:scale-[1.03]"
-              >
-                Play it live <span>↗</span>
-              </a>
-              <a
-                href={withBase('/contact/')}
-                data-cursor="link"
-                class="inline-flex items-center gap-2 rounded-full border border-[var(--tc-cream)]/25 px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] text-[var(--tc-cream)]/80 transition-colors duration-300 hover:border-[var(--tc-cream)]"
-              >
-                Got a game idea? Let's build it <span>→</span>
-              </a>
-            </div>
-          </div>
-
-          <div data-reveal data-reveal-delay="0.1" class="relative mx-auto w-full max-w-sm">
-            <img
-              src={media('mascot-tchombo.png')}
-              alt="The TCHOMBO dodo mascot, wearing a measuring tape like a crown"
-              width="560"
-              height="551"
-              data-tilt="5"
-              class="block w-full"
-            />
-          </div>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href={data.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="link"
+            data-magnetic="0.3"
+            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-300 hover:scale-[1.03]"
+            style={`background:${data.accent}`}
+          >
+            Play it live <span>↗</span>
+          </a>
+          <a
+            href={withBase('/contact/')}
+            data-cursor="link"
+            class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3.5 text-[11px] uppercase tracking-[0.12em] text-paper/80 transition-colors duration-300 hover:border-paper"
+          >
+            Got a game idea? Let's build it <span>→</span>
+          </a>
         </div>
-
-        <dl data-reveal data-reveal-delay="0.16" class="mt-16 grid grid-cols-2 gap-6 border-t border-[var(--tc-cream)]/15 pt-8 sm:grid-cols-4">
-          {stats.map((s) => (
-            <div>
-              <dt class="tc-display text-4xl text-[var(--tc-cream)] sm:text-5xl">{s.n}</dt>
-              <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-[var(--tc-cream)]/50">{s.label}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </section>
-
-    <!-- How it plays -->
-    <section id="how-it-plays" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-      <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">How it plays</p>
-      <h2 data-reveal data-reveal-delay="0.06" class="tc-display max-w-xl text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
-        Three ways a round can end.
-      </h2>
-
-      <div data-reveal-group class="mt-14 grid gap-px overflow-hidden rounded-2xl bg-[var(--tc-cream)]/10 sm:grid-cols-3">
-        {steps.map((step) => (
-          <div data-reveal-item class="flex flex-col gap-5 bg-[var(--tc-navy)] p-8 sm:p-9">
-            <span class="tc-display text-sm" style={`color:${step.color}`}>{step.n}</span>
-            <h3 class="tc-display text-2xl text-[var(--tc-cream)]">{step.name}</h3>
-            <p class="text-sm leading-relaxed text-[var(--tc-cream)]/60">{step.text}</p>
-            <span class="mt-auto h-1 w-10 rounded-full" style={`background:${step.color}`}></span>
-          </div>
-        ))}
       </div>
 
-      <p data-reveal data-reveal-delay="0.1" class="mt-8 max-w-2xl text-[var(--tc-cream)]/55">
-        Guess wrong and you lose dodos, and missing an easy one costs more than missing a brutal one: the one rule that keeps everybody honest.
-      </p>
-    </section>
-
-    <!-- The flock -->
-    <section id="flock" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-      <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">The flock</p>
-      <h2 data-reveal data-reveal-delay="0.06" class="tc-display max-w-xl text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
-        One dodo, three moods.
-      </h2>
-
-      <div data-reveal-group class="mt-14 flex flex-wrap items-end justify-center gap-x-6 gap-y-14 sm:gap-x-10">
-        {flock.map((bird) => (
-          <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
-            <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-[var(--tc-cream)] p-5" style={`transform:rotate(${bird.rotate}deg)`}>
-              <img src={bird.src} alt={bird.caption} loading="lazy" decoding="async" class="h-full w-full object-contain" />
-            </div>
-            <p class="mt-4 text-sm text-[var(--tc-cream)]/60">{bird.caption}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Built the same way it plays -->
-    <section id="built" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-      <div class="grid gap-14 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
+      <dl data-reveal data-reveal-delay="0.1" class="grid grid-cols-2 gap-6 border-t border-line pt-6 text-sm lg:border-t-0 lg:pt-0">
         <div>
-          <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">How it was built</p>
-          <h2 data-reveal data-reveal-delay="0.06" class="tc-display text-3xl leading-[1.08] text-[var(--tc-cream)] sm:text-4xl lg:text-5xl">
-            Built the same way it plays: out loud.
-          </h2>
-          <p data-reveal data-reveal-delay="0.12" class="mt-6 max-w-lg text-[var(--tc-cream)]/60">
-            The real-time engine, the bilingual interface, the trivia itself: all of it came out of a running conversation with an AI pair programmer instead of a blank editor, over a few weeks of back and forth. Every rule was specified in plain language, built, tested and re-checked against the live app before it shipped.
-          </p>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Client</dt>
+          <dd class="mt-1 text-paper/80">{data.client}</dd>
         </div>
+        <div>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Role</dt>
+          <dd class="mt-1 text-paper/80">{data.role.join(', ')}</dd>
+        </div>
+        <div class="col-span-2">
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Summary</dt>
+          <dd class="mt-1 text-paper/80">{data.summary}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
 
-        <dl data-reveal-group class="grid grid-cols-3 gap-6 self-start lg:pt-20">
-          {buildStats.map((s) => (
-            <div data-reveal-item>
-              <dt class="tc-display text-3xl text-[var(--tc-cream)] sm:text-4xl">{s.n}</dt>
-              <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-[var(--tc-cream)]/50">{s.label}</dd>
-            </div>
-          ))}
-        </dl>
+  <section data-reveal class="px-6 pb-20 sm:px-12 lg:px-20">
+    <Media
+      ratio={data.cover.ratio}
+      kind={data.cover.kind}
+      label={data.cover.label}
+      accent={data.accent}
+      category={data.category}
+      src={data.cover.src}
+      transparent={data.cover.transparent}
+      fit={data.cover.fit}
+      class="mx-auto"
+    />
+  </section>
+
+  <section id="how-it-plays" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">How it plays</p>
+    <h2 data-reveal data-reveal-delay="0.06" class="font-display max-w-xl text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
+      Three ways a round can end.
+    </h2>
+
+    <div data-reveal-group class="mt-12 grid gap-4 sm:grid-cols-3">
+      {steps.map((step) => (
+        <div data-reveal-item class="flex flex-col gap-5 rounded-2xl border border-line bg-ink-soft p-8">
+          <span class="font-display text-sm" style={`color:${step.color}`}>{step.n}</span>
+          <h3 class="font-display text-2xl">{step.name}</h3>
+          <p class="text-sm leading-relaxed text-paper/60">{step.text}</p>
+          <span class="mt-auto h-1 w-10 rounded-full" style={`background:${step.color}`}></span>
+        </div>
+      ))}
+    </div>
+
+    <p data-reveal data-reveal-delay="0.1" class="mt-8 max-w-2xl text-paper/60">
+      Guess wrong and you lose dodos, and missing an easy one costs more than missing a brutal one: the one rule that keeps everybody honest.
+    </p>
+  </section>
+
+  <section id="flock" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">The flock</p>
+    <h2 data-reveal data-reveal-delay="0.06" class="font-display max-w-xl text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
+      One dodo, three moods.
+    </h2>
+
+    <div data-reveal-group class="mt-12 flex flex-wrap justify-center gap-6 sm:gap-10">
+      <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
+        <div class="flex aspect-square w-full -rotate-3 items-center justify-center rounded-2xl border border-line-soft bg-paper p-6">
+          <img src={media('mascot-tchombo.png')} alt="Still in it" loading="lazy" decoding="async" class="h-full w-full object-contain" />
+        </div>
+        <p class="mt-4 text-sm text-paper/60">Still in it</p>
       </div>
-    </section>
-
-    <!-- Next project -->
-    <section id="next" class="border-t border-[var(--tc-cream)]/10 px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-[var(--tc-cream)]/40">Next project</p>
-      <a
-        href={withBase(`/work/${nextProject.id}/`)}
-        data-cursor="view"
-        data-cursor-text="View"
-        class="group block"
-      >
-        <div data-reveal class="flex items-baseline justify-between gap-6 border-b border-[var(--tc-cream)]/15 pb-8">
-          <h2 class="tc-display text-[11vw] leading-[0.92] tracking-[-0.02em] text-[var(--tc-cream)] transition-colors duration-500 group-hover:text-[var(--tc-coral)] sm:text-6xl lg:text-7xl">
-            {nextProject.data.title}
-          </h2>
+      {flock.map((bird) => (
+        <div data-reveal-item class="flex w-40 flex-col items-center text-center sm:w-48">
+          <div class="flex aspect-square w-full items-center justify-center rounded-2xl border border-line-soft bg-paper p-6" style={`transform:rotate(${bird.rotate}deg)`}>
+            <img src={bird.src} alt={bird.caption} loading="lazy" decoding="async" class="h-full w-full object-contain" />
+          </div>
+          <p class="mt-4 text-sm text-paper/60">{bird.caption}</p>
         </div>
-      </a>
-    </section>
-  </div>
-</BaseLayout>
+      ))}
+    </div>
+  </section>
 
-<style>
-  .tchombo-zone {
-    background: var(--tc-navy);
-  }
-  .tc-display {
-    font-family: 'Fraunces Variable', ui-serif, Georgia, serif;
-    font-weight: 560;
-    font-style: italic;
-    letter-spacing: -0.01em;
-  }
-</style>
+  <section id="built" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
+      <div>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">How it was built</p>
+        <h2 data-reveal data-reveal-delay="0.06" class="font-display text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
+          Built the same way it plays: out loud.
+        </h2>
+        <p data-reveal data-reveal-delay="0.12" class="mt-6 max-w-lg text-paper/60">
+          The real-time engine, the bilingual interface, the trivia itself: all of it came out of a running conversation with an AI pair programmer instead of a blank editor, over a few weeks of back and forth. Every rule was specified in plain language, built, tested and re-checked against the live app before it shipped.
+        </p>
+      </div>
+
+      <dl data-reveal-group class="grid grid-cols-3 gap-6 self-start border-t border-line pt-8 lg:border-t-0 lg:pt-0">
+        {buildStats.map((s) => (
+          <div data-reveal-item>
+            <dt class="font-display text-3xl sm:text-4xl">{s.n}</dt>
+            <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-paper/50">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <dl data-reveal-group class="mt-16 grid grid-cols-2 gap-6 border-t border-line pt-8 sm:grid-cols-4">
+      {stats.map((s) => (
+        <div data-reveal-item>
+          <dt class="font-display text-3xl sm:text-4xl">{s.n}</dt>
+          <dd class="mt-1 text-[11px] uppercase tracking-[0.1em] text-paper/50">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section id="next" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/40">Next project</p>
+    <a
+      href={withBase(`/work/${nextProject.id}/`)}
+      data-preview-trigger
+      data-cursor="view"
+      data-cursor-text="View"
+      class="group relative block"
+    >
+      <div data-reveal class="flex items-baseline justify-between gap-6 border-b border-line pb-8">
+        <h2 class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] transition-colors duration-500 group-hover:text-brand-coral sm:text-6xl lg:text-7xl">
+          {nextProject.data.title}
+        </h2>
+        <span class="hidden shrink-0 items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 sm:flex">
+          <span class="h-1.5 w-1.5 rounded-full" style={`background:${nextCat.accent}`}></span>
+          {nextCat.short}
+        </span>
+      </div>
+
+      <div
+        data-preview-thumb
+        class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
+      >
+        <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} transparent={nextProject.data.cover.transparent} fit={nextProject.data.cover.fit} tilt={false} />
+      </div>
+    </a>
+  </section>
+</BaseLayout>
