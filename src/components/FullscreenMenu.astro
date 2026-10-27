@@ -15,6 +15,7 @@ const primaryLinks = [
 ---
 
 <div
+  id="nav-menu"
   data-nav-menu
   class="fixed inset-0 z-40 flex-col bg-ink text-paper"
   style="display:none;"
@@ -31,7 +32,7 @@ const primaryLinks = [
               data-cursor="link"
               class="group flex items-baseline gap-4 py-2 font-display text-[13vw] leading-[0.95] tracking-[-0.03em] text-paper/90 transition-colors duration-300 hover:text-brand-coral sm:text-[7vw] lg:text-[5.2vw]"
             >
-              <span class="text-[0.28em] font-body font-normal text-paper/40">0{i + 1}</span>
+              <span class="text-[0.28em] font-body font-normal text-paper/50">0{i + 1}</span>
               {link.label}
             </a>
           </li>
@@ -39,7 +40,7 @@ const primaryLinks = [
       </ul>
 
       <div data-nav-link class="flex flex-col justify-center gap-6 border-t border-line pt-8 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0">
-        <p class="text-[11px] uppercase tracking-[0.15em] text-paper/40">Make it:</p>
+        <p class="text-[11px] uppercase tracking-[0.15em] text-paper/50">Make it:</p>
         <ul class="flex flex-col gap-3">
           {CATEGORY_LIST.map((cat) => (
             <li>
@@ -63,7 +64,7 @@ const primaryLinks = [
     <div data-nav-link class="flex flex-col gap-6 border-t border-line pt-6 sm:flex-row sm:items-end sm:justify-between">
       <div class="flex flex-col gap-3">
         <AvailabilityBadge />
-        <p class="text-[11px] uppercase tracking-[0.15em] text-paper/40">
+        <p class="text-[11px] uppercase tracking-[0.15em] text-paper/50">
           Mauritius / Everywhere · <span data-clock>--:--</span>
         </p>
       </div>

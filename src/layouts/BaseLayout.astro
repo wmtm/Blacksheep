@@ -58,9 +58,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <div data-transition-panel class="h-full w-1/3 origin-bottom scale-y-0 bg-brand-coral"></div>
     </div>
 
-    <!-- Custom cursor -->
-    <div data-cursor-dot class="cursor-dot" transition:persist></div>
-    <div data-cursor-ring class="cursor-ring" transition:persist></div>
+    <!-- Custom cursor: purely decorative, hidden from assistive tech -->
+    <div data-cursor-dot class="cursor-dot" aria-hidden="true" transition:persist></div>
+    <div data-cursor-ring class="cursor-ring" aria-hidden="true" transition:persist></div>
 
     <Header />
 

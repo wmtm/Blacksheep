@@ -6,6 +6,7 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider.astro';
 import { getCollection, render } from 'astro:content';
 import { CATEGORIES } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
+import { readableTextOn } from '@/lib/color';
 
 // TCHOMBO has its own bespoke page (src/pages/work/tchombo.astro) built around
 // its real brand system, instead of this generic cover+gallery template. It
@@ -78,8 +79,8 @@ const indexItems = [
             rel="noopener noreferrer"
             data-cursor="link"
             data-magnetic="0.3"
-            class="mt-6 inline-flex w-fit items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-base ease-spring hover:scale-[1.03]"
-            style={`background:${data.accent}`}
+            class="mt-6 inline-flex w-fit items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm transition-transform duration-base ease-spring hover:scale-[1.03]"
+            style={`background:${data.accent};color:${readableTextOn(data.accent)}`}
           >
             Play it live <span>↗</span>
           </a>
@@ -89,16 +90,16 @@ const indexItems = [
       <dl data-reveal data-reveal-delay="0.1" class="grid grid-cols-2 gap-6 border-t border-line pt-6 text-sm lg:border-t-0 lg:pt-0">
         {data.client && (
           <div>
-            <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Client</dt>
+            <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Client</dt>
             <dd class="mt-1 text-paper/80">{data.client}</dd>
           </div>
         )}
         <div>
-          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Role</dt>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Role</dt>
           <dd class="mt-1 text-paper/80">{data.role.join(', ')}</dd>
         </div>
         <div class="col-span-2">
-          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Summary</dt>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Summary</dt>
           <dd class="mt-1 text-paper/80">{data.summary}</dd>
         </div>
       </dl>
@@ -121,14 +122,14 @@ const indexItems = [
 
   {data.beforeAfter && (
     <section id="before-after" data-reveal class="px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
-      <p class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">Before / after: drag to compare</p>
+      <p class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/50">Before / after: drag to compare</p>
       <BeforeAfterSlider before={data.beforeAfter.before} after={data.beforeAfter.after} accent={data.accent} />
     </section>
   )}
 
   <section id="story" class="px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
     <div class="grid gap-12 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
-      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/40">The story</p>
+      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/50">The story</p>
       <div data-reveal data-reveal-delay="0.08" class="prose-case max-w-2xl text-paper/70">
         <Content />
       </div>
@@ -137,7 +138,7 @@ const indexItems = [
 
   {data.gallery.length > 0 && (
     <section id="gallery" class="px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
-      <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/40">Gallery</p>
+      <p data-reveal class="mb-10 text-[11px] uppercase tracking-[0.15em] text-paper/50">Gallery</p>
       <div data-reveal-group class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {data.gallery.map((item) => (
           <div data-reveal-item class:list={[item.ratio === 'full' ? 'sm:col-span-2' : '']}>
@@ -149,7 +150,7 @@ const indexItems = [
   )}
 
   <section id="next" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/40">Next project</p>
+    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/50">Next project</p>
     <a
       href={withBase(`/work/${nextProject.id}/`)}
       data-preview-trigger
@@ -170,6 +171,7 @@ const indexItems = [
 
       <div
         data-preview-thumb
+        aria-hidden="true"
         class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
       >
         <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} transparent={nextProject.data.cover.transparent} fit={nextProject.data.cover.fit} tilt={false} />

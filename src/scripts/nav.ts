@@ -13,12 +13,14 @@ export function initNav() {
 
   isOpen = false;
   gsap.set(menu, { display: 'none' });
+  menu.setAttribute('aria-hidden', 'true');
   document.documentElement.classList.remove('nav-open');
 
   const open = () => {
     isOpen = true;
     document.documentElement.classList.add('nav-open');
     toggle.setAttribute('aria-expanded', 'true');
+    menu.removeAttribute('aria-hidden');
     gsap.set(menu, { display: 'flex' });
     gsap.fromTo(
       menu,
@@ -46,6 +48,7 @@ export function initNav() {
     isOpen = false;
     document.documentElement.classList.remove('nav-open');
     toggle.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
     gsap.to(menu, {
       clipPath: 'inset(0% 0% 100% 0%)',
       duration: DURATION.slow,

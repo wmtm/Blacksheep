@@ -21,7 +21,13 @@ const { before, after, accent } = Astro.props;
 
   <div
     data-before-after-handle
-    class="pointer-events-none absolute inset-y-0 z-10 flex w-0.5 items-center justify-center bg-paper"
+    role="slider"
+    tabindex="0"
+    aria-label={`Comparison slider between "${before.label}" and "${after.label}": drag, or use the arrow keys`}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="50"
+    class="absolute inset-y-0 z-10 flex w-0.5 items-center justify-center bg-paper"
     style="left: 50%;"
   >
     <span class="flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-lg">

@@ -43,7 +43,7 @@ const process = [
 
   <!-- Who it's for: quick entry points into the service list below -->
   <section class="border-t border-line px-6 py-10 sm:px-12 lg:px-20">
-    <p data-reveal class="mb-5 text-[11px] uppercase tracking-[0.15em] text-paper/40">Find your fit</p>
+    <p data-reveal class="mb-5 text-[11px] uppercase tracking-[0.15em] text-paper/50">Find your fit</p>
     <div data-reveal-group class="flex flex-wrap gap-3">
       {whoItIsFor.map((w) => (
         <a
@@ -52,7 +52,7 @@ const process = [
           data-cursor="link"
           class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-sm text-paper/80 transition-colors duration-base hover:border-paper hover:text-paper"
         >
-          {w.label} <span class="text-paper/40">↓</span>
+          {w.label} <span class="text-paper/50">↓</span>
         </a>
       ))}
     </div>
@@ -62,7 +62,7 @@ const process = [
   <section id="studio" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
     <div class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">Studio</p>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">Studio</p>
         <h2 data-reveal data-reveal-delay="0.06" class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">
           The client-facing six.
         </h2>
@@ -86,7 +86,7 @@ const process = [
   <section id="beyond-the-brief" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
     <div class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">Beyond the brief</p>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">Beyond the brief</p>
         <h2 data-reveal data-reveal-delay="0.06" class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">
           Also at the table.
         </h2>
@@ -109,7 +109,7 @@ const process = [
   <!-- How we work -->
   <section class="relative isolate overflow-hidden border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
     <div class="dot-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
-    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">How we work</p>
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">How we work</p>
     <h2 data-reveal data-reveal-delay="0.06" class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">
       Four steps, no price list.
     </h2>
@@ -118,7 +118,7 @@ const process = [
       <div data-reveal-line class="pointer-events-none absolute left-0 right-0 top-[18px] hidden h-px bg-line lg:block" aria-hidden="true"></div>
       {process.map((step) => (
         <div data-reveal-item class="relative flex flex-col gap-3">
-          <span class="relative w-fit rounded-full bg-ink px-1 font-display text-sm text-paper/40">{step.n}</span>
+          <span class="relative w-fit rounded-full bg-ink px-1 font-display text-sm text-paper/50">{step.n}</span>
           <h3 class="font-display text-xl">{step.label}</h3>
           <p class="text-sm leading-relaxed text-paper/60">{step.text}</p>
         </div>

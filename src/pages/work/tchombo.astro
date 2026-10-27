@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 import { CATEGORIES } from '@/lib/categories';
 import { withBase } from '@/lib/paths';
 import { buildWhatsAppLink } from '@/lib/social';
+import { readableTextOn } from '@/lib/color';
 
 const allProjects = await getCollection('projects');
 const allIds = [...allProjects].sort((a, b) => a.data.order - b.data.order).map((p) => p.id);
@@ -114,8 +115,8 @@ const indexItems = [
             rel="noopener noreferrer"
             data-cursor="link"
             data-magnetic="0.3"
-            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm text-ink transition-transform duration-base ease-spring hover:scale-[1.03]"
-            style={`background:${data.accent}`}
+            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-display text-sm transition-transform duration-base ease-spring hover:scale-[1.03]"
+            style={`background:${data.accent};color:${readableTextOn(data.accent)}`}
           >
             Play it live <span>↗</span>
           </a>
@@ -133,15 +134,15 @@ const indexItems = [
 
       <dl data-reveal data-reveal-delay="0.1" class="grid grid-cols-2 gap-6 border-t border-line pt-6 text-sm lg:border-t-0 lg:pt-0">
         <div>
-          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Client</dt>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Client</dt>
           <dd class="mt-1 text-paper/80">{data.client}</dd>
         </div>
         <div>
-          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Role</dt>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Role</dt>
           <dd class="mt-1 text-paper/80">{data.role.join(', ')}</dd>
         </div>
         <div class="col-span-2">
-          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/40">Summary</dt>
+          <dt class="text-[11px] uppercase tracking-[0.12em] text-paper/50">Summary</dt>
           <dd class="mt-1 text-paper/80">{data.summary}</dd>
         </div>
       </dl>
@@ -179,7 +180,7 @@ const indexItems = [
   </section>
 
   <section id="how-it-plays" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
-    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">How it plays</p>
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">How it plays</p>
     <h2 data-reveal data-reveal-delay="0.06" class="font-display max-w-xl text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
       Three ways a round can end.
     </h2>
@@ -201,7 +202,7 @@ const indexItems = [
   </section>
 
   <section id="flock" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
-    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">The flock</p>
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">The flock</p>
     <h2 data-reveal data-reveal-delay="0.06" class="font-display max-w-xl text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
       One dodo, three moods.
     </h2>
@@ -221,7 +222,7 @@ const indexItems = [
   <section id="built" class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
     <div class="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-20">
       <div>
-        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/40">How it was built</p>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">How it was built</p>
         <h2 data-reveal data-reveal-delay="0.06" class="font-display text-3xl leading-[1.08] tracking-[-0.01em] sm:text-4xl lg:text-5xl">
           Built the same way it plays: out loud.
         </h2>
@@ -251,7 +252,7 @@ const indexItems = [
   </section>
 
   <section id="next" class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
-    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/40">Next project</p>
+    <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/50">Next project</p>
     <a
       href={withBase(`/work/${nextProject.id}/`)}
       data-preview-trigger
@@ -272,6 +273,7 @@ const indexItems = [
 
       <div
         data-preview-thumb
+        aria-hidden="true"
         class="pointer-events-none absolute left-0 top-0 hidden w-64 -translate-x-1/2 -translate-y-1/2 sm:block"
       >
         <Media ratio="4:5" kind={nextProject.data.cover.kind} label={nextProject.data.cover.label} accent={nextProject.data.accent} category={nextProject.data.category} src={nextProject.data.cover.src} poster={nextProject.data.cover.poster} transparent={nextProject.data.cover.transparent} fit={nextProject.data.cover.fit} tilt={false} />
