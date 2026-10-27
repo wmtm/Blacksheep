@@ -3,49 +3,56 @@ title: "Leritaz Maronaz"
 client: "Cultural heritage project"
 year: 2023
 category: branding
-secondaryCategories: [illustration]
-role: ["Visual identity", "Art direction", "Illustration"]
-excerpt: "A visual identity built around Mauritian Creole heritage: proud, textured, impossible to mistake for anywhere else."
-summary: "Leritaz Maronaz asked for an identity that could carry real cultural weight without turning into a museum piece. The result is a system built on hand-cut texture, warm island tones and typography that speaks before anyone reads it."
+secondaryCategories: [illustration, editorial]
+role: ["Visual identity", "Art direction", "Illustration", "Book design"]
+excerpt: "An illustrated book and visual identity for the untold history of Mauritius's Maroons: proud, textured, impossible to mistake for anywhere else."
+summary: "Leritaz Maronaz (\"Maroon heritage\") is an illustrated book on the Mauritians who escaped slavery and resisted colonial rule, built from hand-inked scenes, a mark drawn rather than vectored, and a chapter-by-chapter cast of real historical figures."
 accent: "#FF4B6E"
 featured: true
 order: 1
 cover:
   ratio: "4:5"
   kind: image
-  label: "LERITAZ MARONAZ · PRIMARY MARK"
-beforeAfter:
-  before:
-    label: "OLD MARK · GENERIC HERITAGE CLICHÉ"
-    caption: "Where it started: a stock-photo palm tree and a script font, heritage reduced to a postcard."
-  after:
-    label: "LERITAZ MARONAZ · PRIMARY MARK"
-    caption: "Where it landed: hand-cut texture, earned proportions, a mark that carries the name's weight."
+  label: "LERITAZ MARONAZ · COVER ART"
+  src: "/media/leritaz-maronaz/cover.webp"
 gallery:
   - ratio: "16:9"
     kind: image
-    label: "BRAND SYSTEM · FULL WIDTH"
+    label: "BRAND MARK + ILLUSTRATION STYLE"
+    src: "/media/leritaz-maronaz/overview.webp"
+  - ratio: "16:9"
+    kind: image
+    label: "SCENE STUDY · LINE TO COLOUR"
+    src: "/media/leritaz-maronaz/process-line-to-color.webp"
+  - ratio: "16:9"
+    kind: image
+    label: "ILLUSTRATED SCENE · RESISTANCE BY NIGHT"
+    src: "/media/leritaz-maronaz/scene-resistance.webp"
   - ratio: "1:1"
     kind: image
-    label: "PATTERN / TEXTURE STUDY"
+    label: "SOCIAL CAMPAIGN · BOOK ANNOUNCEMENT"
+    src: "/media/leritaz-maronaz/social-tile.webp"
   - ratio: "4:5"
     kind: image
-    label: "APPLICATION · PRINT"
+    label: "PRINTED BOOK · INTERIOR SPREADS"
+    src: "/media/leritaz-maronaz/book-spreads.webp"
   - ratio: "16:9"
     kind: video
-    label: "IDENTITY IN MOTION · VIDEO"
+    label: "IDENTITY IN MOTION · TEASER"
+    src: "/media/leritaz-maronaz/teaser.mp4"
+    poster: "/media/leritaz-maronaz/teaser-poster.jpg"
 ---
 
 ## The brief
 
-Give a piece of living Mauritian heritage a visual identity that feels earned, not decorative. "Leritaz Maronaz" (Maroon heritage) carries real history. The brand couldn't be loud for the sake of being loud. It had to be *proud* first.
+Give a piece of living Mauritian heritage a visual identity that feels earned, not decorative. "Leritaz Maronaz" (Maroon heritage) is an illustrated book on the Maroons: the enslaved Mauritians who escaped captivity and resisted colonial rule rather than live under it. The book moves chapter by chapter through real figures of that resistance, Louis T. Houat the exiled abolitionist novelist among them, so the identity around it couldn't be loud for the sake of being loud. It had to be *proud* first.
 
 ## The approach
 
-The mark grew out of hand-drawn texture rather than a grid. Every shape was pushed slightly off-perfect on purpose, a reminder that this identity represents people, land and memory, not a product line. The palette pulls from earth, fire and ocean: warm reds, charcoal, and a sun-bleached gold that reads as heritage rather than trend.
+The mark grew out of hand-drawn texture rather than a grid: a bare footprint built from raffia-like strokes, paired with a bold, condensed logotype that reads as carved as much as typeset. The illustration work underneath it runs the same way, ink linework built up into flat, warm colour by hand, panel by panel, so the process itself (line, then colour) became part of the visual story rather than a hidden step.
 
-Typography does the heavy lifting where the mark stays quiet: a display face with weight and grain, paired with a plain-spoken sans for anything that needs to be read at a glance.
+The palette pulls from earth, fire and ocean: sun-bleached orange and red for daylight and confrontation, charcoal and ember for the scenes that happen at night. Every character, from the book's named figures to the people around them, is drawn with the same care, because this identity represents people, land and memory, not a product line.
 
 ## What it became
 
-A flexible system that holds up printed on textile, carved into signage, or reduced to a single-colour stamp, because an identity this rooted needed to survive outside a screen.
+A fully illustrated, printed book, a brand system built to carry it (mark, logotype, palette, a social campaign to announce it), and a short motion teaser that brings a handful of panels to life. It holds up on a page, on a screen, or stacked on a table, because an identity this rooted needed to survive outside a browser.
