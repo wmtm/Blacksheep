@@ -160,5 +160,29 @@ export function initReveals() {
     });
   });
 
+  // Stat numbers count up from 0 when they scroll into view. Keeps any
+  // non-digit prefix/suffix (e.g. "~3", "860") intact around the tween.
+  gsap.utils.toArray<HTMLElement>('[data-count]').forEach((el) => {
+    const match = el.textContent?.trim().match(/^(\D*)(\d+)(\D*)$/);
+    if (!match) return;
+    const [, prefix, numStr, suffix] = match;
+    const target = parseInt(numStr, 10);
+    const counter = { val: 0 };
+    el.textContent = `${prefix}0${suffix}`;
+    gsap.to(counter, {
+      val: target,
+      duration: DURATION.slower,
+      ease: EASE.out,
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+      },
+      onUpdate: () => {
+        el.textContent = `${prefix}${Math.round(counter.val)}${suffix}`;
+      },
+    });
+  });
+
   ScrollTrigger.refresh();
 }

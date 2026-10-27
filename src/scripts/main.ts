@@ -10,6 +10,7 @@ import { initTilt } from './tilt';
 import { initBeforeAfter } from './before-after';
 import { initMoveText } from './move-text';
 import { initMascot } from './mascot';
+import { initMarquee } from './marquee';
 
 function boot() {
   initSmoothScroll();
@@ -23,6 +24,7 @@ function boot() {
   initBeforeAfter();
   initMoveText();
   initMascot();
+  initMarquee();
 }
 
 initPageTransitions();
