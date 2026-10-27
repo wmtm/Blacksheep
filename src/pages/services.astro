@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
 import { STUDIO_SERVICES, BEYOND_SERVICES } from '@/lib/services';
+import { withBase } from '@/lib/paths';
 
 const whoItIsFor = [
   { label: 'I run a small business', href: '#design-support' },
@@ -16,11 +17,48 @@ const process = [
   { n: '03', label: 'Create', text: 'Sketches, drafts, revisions, built in the open so nothing lands as a surprise.' },
   { n: '04', label: 'Deliver', text: 'Final files, handed over clean, ready to use.' },
 ];
+
+const faqs = [
+  {
+    q: 'How much does a project cost?',
+    a: "There's no price list on purpose: a logo mark and a full brand system don't take the same work. Message Mathieu with whatever you've got, even just a rough idea, and you'll get a clear, no-pressure quote scoped to what you actually need before anything starts.",
+  },
+  {
+    q: 'Do you work with clients outside Mauritius?',
+    a: "Yes. BlackSheep is based in Tamarin, Mauritius, but works with clients everywhere remotely, same process either way: message, quote, create, deliver.",
+  },
+  {
+    q: "I don't have a clear brief yet, is that a problem?",
+    a: "Not at all, most projects start that way. Send whatever you've got, even just a feeling or a reference image, and the quote conversation is where that gets shaped into a real brief.",
+  },
+  {
+    q: 'How long does a project take?',
+    a: "It depends entirely on scope, so there's no stock answer. You'll get a realistic timeline as part of the quote, before any work starts, not a surprise halfway through.",
+  },
+  {
+    q: 'Can I see work similar to my project first?',
+    a: 'Browse the full archive and filter by discipline, branding, motion, digital, illustration or editorial, to see real client work and side projects before you reach out.',
+  },
+  {
+    q: 'Do you offer ongoing design support, not just one-off projects?',
+    a: "Yes, that's what Design Support & Media Management is for: a steady hand on ongoing design requests and social or marketing visuals, for teams that need a designer without hiring one in-house.",
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <BaseLayout
   title="Services"
-  description="Branding, motion, digital, illustration, editorial and ongoing design support, plus custom maps, game design and game nights. Quote-only, message Mathieu on WhatsApp or email."
+  description="Graphic & motion design services in Mauritius: branding, motion, digital, illustration, editorial and ongoing design support, plus custom maps, game design and game nights. Quote-only, message Mathieu on WhatsApp or email."
 >
   <section class="relative flex min-h-[60svh] flex-col justify-end overflow-hidden px-6 pb-16 pt-40 sm:px-12 sm:pb-24 lg:px-20">
     <div class="pointer-events-none absolute inset-0">
@@ -125,4 +163,30 @@ const process = [
       ))}
     </div>
   </section>
+
+  <!-- FAQ -->
+  <section class="border-t border-line px-6 py-20 sm:px-12 sm:py-28 lg:px-20">
+    <div class="grid gap-12 lg:grid-cols-[0.4fr_1fr] lg:gap-16">
+      <div>
+        <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">FAQ</p>
+        <h2 data-reveal data-reveal-delay="0.06" class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">
+          Before you ask.
+        </h2>
+      </div>
+
+      <div data-reveal-group class="divide-y divide-line border-t border-line">
+        {faqs.map((f) => (
+          <details data-reveal-item class="group py-6 first:pt-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg text-paper marker:content-none [&::-webkit-details-marker]:hidden sm:text-xl">
+              {f.q}
+              <span class="shrink-0 text-2xl text-paper/40 transition-transform duration-base group-open:rotate-45">+</span>
+            </summary>
+            <p class="mt-4 max-w-2xl text-paper/60">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </BaseLayout>

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 // Deploying to GitHub Pages as a project site (wmtm/Blacksheep)
 // until a custom domain is attached — see README for how to switch.
@@ -14,6 +15,7 @@ export default defineConfig({
     : 'https://wmtm.github.io',
   base: usingCustomDomain ? '/' : '/Blacksheep',
   trailingSlash: 'always',
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

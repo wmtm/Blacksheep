@@ -3,6 +3,8 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { withBase } from '@/lib/paths';
+import { SOCIALS, CONTACT_EMAIL, WHATSAPP_NUMBER } from '@/lib/social';
+import { SERVICES } from '@/lib/services';
 import '@/styles/global.css';
 
 interface Props {
@@ -13,20 +15,62 @@ interface Props {
   footerCtaHeading?: string;
   footerCtaContext?: string;
   ogImageLabel?: string;
+  /** Keep utility pages (404, etc.) out of search results. */
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = 'BlackSheep: Graphic & Motion Designer turning ideas into things you can see, feel and remember. Based in Mauritius, working everywhere.',
+  description = 'BlackSheep: Graphic & Motion Designer in Tamarin, Mauritius, turning ideas into things you can see, feel and remember. Branding, motion, digital design and illustration, working everywhere.',
   showFooterCta = true,
   footerCtaEyebrow,
   footerCtaHeading,
   footerCtaContext,
+  noindex = false,
 } = Astro.props;
 
-const pageTitle = title === 'BlackSheep' ? title : `${title} · BlackSheep`;
+// Most pages get " · BlackSheep" appended; the homepage passes its own
+// full brand + keyword title (e.g. "BlackSheep — Graphic & Motion Designer
+// in Mauritius") and is left exactly as given.
+const pageTitle = title.includes('BlackSheep') ? title : `${title} · BlackSheep`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(withBase('/og.jpg'), Astro.site);
+const siteRoot = new URL(withBase('/'), Astro.site).toString();
+
+// Sitewide structured data: who BlackSheep is, where, and what it offers,
+// pulled straight from the real services/social data (never hand-duplicated
+// here) so this can't drift out of sync with what the page itself says.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'BlackSheep',
+  url: siteRoot,
+  image: ogImageURL.toString(),
+  description:
+    'BlackSheep is the graphic & motion design studio of Mathieu Maigrot, based in Tamarin, Mauritius: branding, motion, digital design, illustration, editorial and custom creative work.',
+  email: CONTACT_EMAIL,
+  telephone: `+${WHATSAPP_NUMBER}`,
+  founder: {
+    '@type': 'Person',
+    name: 'Mathieu Maigrot',
+    jobTitle: 'Graphic & Motion Designer',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tamarin',
+    addressCountry: 'MU',
+  },
+  areaServed: ['Mauritius', 'Remote / worldwide'],
+  sameAs: SOCIALS.map((s) => s.href),
+  makesOffer: SERVICES.map((s) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: s.label,
+      description: s.pitch,
+    },
+  })),
+};
 ---
 
 <!doctype html>
@@ -41,6 +85,7 @@ const ogImageURL = new URL(withBase('/og.jpg'), Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0c" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
@@ -51,6 +96,8 @@ const ogImageURL = new URL(withBase('/og.jpg'), Astro.site);
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 
     <ClientRouter />
   </head>
