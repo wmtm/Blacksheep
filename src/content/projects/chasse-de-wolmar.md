@@ -10,7 +10,6 @@ summary: "A custom web app for Domaine de Wolmar: the whole ~585-hectare estate 
 accent: "#FFD166"
 featured: true
 order: 10
-live: "https://wmtm.github.io/DDW/"
 cover:
   ratio: "16:9"
   kind: image
