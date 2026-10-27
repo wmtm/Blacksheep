@@ -1,0 +1,60 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/paths';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('journal')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<BaseLayout
+  title="Journal"
+  description="Notes on design, motion and running a one-person studio in Mauritius: process, decisions and the occasional detour, from BlackSheep's real projects."
+>
+  <section class="px-6 pb-16 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <p data-reveal class="mb-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">Journal</p>
+    <h1 data-reveal data-reveal-delay="0.08" class="font-display text-[11vw] leading-[0.92] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+      Notes from<br />the studio.
+    </h1>
+    <p data-reveal data-reveal-delay="0.16" class="mt-6 max-w-xl text-lg text-paper/60">
+      Process, decisions and the occasional detour, written from real BlackSheep projects based in
+      Tamarin, Mauritius, not theory.
+    </p>
+  </section>
+
+  <section class="border-t border-line px-6 pb-20 sm:px-12 sm:pb-28 lg:px-20">
+    {posts.length === 0 ? (
+      <p data-reveal class="py-16 text-paper/50">Nothing published yet, check back soon.</p>
+    ) : (
+      <div data-reveal-group class="divide-y divide-line">
+        {posts.map((post) => (
+          <a
+            href={withBase(`/journal/${post.id}/`)}
+            data-reveal-item
+            data-cursor="link"
+            data-magnetic="0.15"
+            class="group flex flex-col gap-3 py-10 first:pt-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+          >
+            <div class="sm:max-w-2xl">
+              <p class="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.15em] text-paper/50">
+                <span class="h-1.5 w-1.5 rounded-full" style={`background:${post.data.accent}`}></span>
+                {dateFmt.format(post.data.date)}
+                {post.data.tags.length > 0 && <span>· {post.data.tags.join(', ')}</span>}
+              </p>
+              <h2 class="font-display text-2xl tracking-[-0.01em] transition-colors duration-base group-hover:text-brand-coral sm:text-3xl">
+                {post.data.title}
+              </h2>
+              <p class="mt-2 text-paper/60">{post.data.excerpt}</p>
+            </div>
+            <span class="shrink-0 text-sm text-paper/40 transition-transform duration-base group-hover:translate-x-1">
+              Read →
+            </span>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

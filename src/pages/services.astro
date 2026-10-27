@@ -2,7 +2,6 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
 import { STUDIO_SERVICES, BEYOND_SERVICES } from '@/lib/services';
-import { withBase } from '@/lib/paths';
 
 const whoItIsFor = [
   { label: 'I run a small business', href: '#design-support' },
@@ -188,5 +187,5 @@ const faqSchema = {
     </div>
   </section>
 
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
 </BaseLayout>

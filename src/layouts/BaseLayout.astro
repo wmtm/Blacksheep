@@ -97,7 +97,7 @@ const structuredData = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />}
 
     <ClientRouter />
   </head>

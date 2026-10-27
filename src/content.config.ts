@@ -64,5 +64,26 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const journal = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/journal' }),
+  schema: z.object({
+    title: z.string(),
+    excerpt: z.string(),
+    date: z.date(),
+    accent: z.string(),
+    tags: z.array(z.string()).default([]),
+    /** id of a project in src/content/projects, for a "related work" link. */
+    relatedProject: z.string().optional(),
+    cover: z
+      .object({
+        ratio: z.enum(['16:9', '4:5', '1:1', 'full']).default('16:9'),
+        kind: z.enum(['image', 'video']).default('image'),
+        label: z.string(),
+        src: z.string().optional(),
+      })
+      .optional(),
+  }),
+});
+
+export const collections = { projects, journal };
 export { categories };

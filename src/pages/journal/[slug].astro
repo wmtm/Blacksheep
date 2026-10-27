@@ -1,0 +1,128 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Media from '@/components/Media.astro';
+import { getCollection, render } from 'astro:content';
+import { withBase } from '@/lib/paths';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('journal');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const allProjects = data.relatedProject ? await getCollection('projects') : [];
+const relatedProject = data.relatedProject
+  ? allProjects.find((p) => p.id === data.relatedProject)
+  : undefined;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.excerpt}
+  footerCtaEyebrow="Liked this one?"
+  footerCtaHeading="Let's make something."
+  footerCtaContext={data.title}
+>
+  <div class="fixed inset-x-0 top-0 z-40 h-[3px] origin-left scale-x-0 bg-paper" data-scroll-progress></div>
+
+  <section class="px-6 pb-12 pt-36 sm:px-12 sm:pt-44 lg:px-20">
+    <a
+      href={withBase('/journal/')}
+      data-cursor="link"
+      class="mb-10 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50 transition-colors hover:text-paper"
+    >
+      ← Journal
+    </a>
+
+    <div data-reveal>
+      <p class="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-paper/50">
+        <span class="h-1.5 w-1.5 rounded-full" style={`background:${data.accent}`}></span>
+        {dateFmt.format(data.date)}
+        {data.tags.length > 0 && <span>· {data.tags.join(', ')}</span>}
+      </p>
+      <h1 class="font-display text-[10vw] leading-[0.95] tracking-[-0.03em] sm:text-6xl lg:text-[4.6vw]">
+        {data.title}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-paper/60">{data.excerpt}</p>
+    </div>
+  </section>
+
+  {data.cover && (
+    <section data-reveal class="px-6 pb-16 sm:px-12 lg:px-20">
+      <Media
+        ratio={data.cover.ratio}
+        kind={data.cover.kind}
+        label={data.cover.label}
+        accent={data.accent}
+        src={data.cover.src}
+        seed={`journal-${post.id}`}
+      />
+    </section>
+  )}
+
+  <section class="px-6 pb-20 sm:px-12 sm:pb-28 lg:px-20">
+    <div class="grid gap-12 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+      <p data-reveal class="text-[11px] uppercase tracking-[0.15em] text-paper/50">The note</p>
+      <div data-reveal data-reveal-delay="0.08" class="prose-journal max-w-2xl text-paper/70">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {relatedProject && (
+    <section class="border-t border-line px-6 py-16 sm:px-12 sm:py-24 lg:px-20">
+      <p data-reveal class="mb-6 text-[11px] uppercase tracking-[0.15em] text-paper/50">The project behind this note</p>
+      <a
+        href={withBase(`/work/${relatedProject.id}/`)}
+        data-reveal
+        data-cursor="view"
+        data-cursor-text="View"
+        data-cursor-accent={relatedProject.data.accent}
+        class="group flex items-baseline justify-between gap-6 border-b border-line pb-8"
+      >
+        <h2 class="font-display text-[9vw] leading-[0.92] tracking-[-0.03em] transition-colors duration-slow group-hover:text-brand-coral sm:text-5xl lg:text-6xl">
+          {relatedProject.data.title}
+        </h2>
+        <span class="hidden shrink-0 text-[11px] uppercase tracking-[0.15em] text-paper/50 sm:block">View case study →</span>
+      </a>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .prose-journal :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    color: var(--color-paper);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-journal :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .prose-journal :global(p) {
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+  .prose-journal :global(ul) {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-journal :global(li) {
+    margin-top: 0.4rem;
+    line-height: 1.7;
+  }
+  .prose-journal :global(strong) {
+    color: var(--color-paper);
+  }
+</style>
