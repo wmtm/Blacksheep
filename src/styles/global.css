@@ -132,6 +132,19 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /*
+   * Same dot-grid pattern MascotPortrait uses on its small card (.mascot-bg),
+   * generalized for section-scale backgrounds: wider spacing and lower
+   * opacity so it reads as texture on a large flat area instead of a
+   * visible dot pattern. Apply to an `absolute inset-0` div inside a
+   * `relative overflow-hidden` section, same as the mascot's own usage.
+   */
+  .dot-grid {
+    background-image: radial-gradient(var(--color-line-soft) 1px, transparent 1.3px);
+    background-size: 24px 24px;
+    opacity: 0.18;
+  }
 }
 
 /* Custom cursor — hidden entirely on touch/coarse pointers */
