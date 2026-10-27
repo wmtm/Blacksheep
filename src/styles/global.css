@@ -147,7 +147,7 @@
   }
 }
 
-/* Custom cursor — hidden entirely on touch/coarse pointers */
+/* Custom cursor: hidden entirely on touch/coarse pointers */
 @media (pointer: fine) {
   html.cursor-ready,
   html.cursor-ready * {

@@ -99,7 +99,7 @@ function randomShape(): Shape {
 }
 
 function buildShapes(): Shape[] {
-  // Branding — one bold, centered mark (circle + triangle overlap), like a logo.
+  // Branding: one bold, centered mark (circle + triangle overlap), like a logo.
   if (category === 'branding') {
     const cx = 42 + rand() * 16;
     const cy = 42 + rand() * 16;
@@ -113,7 +113,7 @@ function buildShapes(): Shape[] {
     ];
   }
 
-  // Motion — streaking diagonal lines suggesting movement/blur.
+  // Motion: streaking diagonal lines suggesting movement/blur.
   if (category === 'motion') {
     const angle = -0.5 + rand() * 0.3;
     return Array.from({ length: 7 + Math.floor(rand() * 4) }).map(() => {
@@ -131,7 +131,7 @@ function buildShapes(): Shape[] {
     });
   }
 
-  // Digital — a loose grid of rectangles, like UI blocks.
+  // Digital: a loose grid of rectangles, like UI blocks.
   if (category === 'digital') {
     const cols = 3;
     const rows = 3;
@@ -156,7 +156,7 @@ function buildShapes(): Shape[] {
     return shapes;
   }
 
-  // Illustration — clustered organic circles.
+  // Illustration: clustered organic circles.
   if (category === 'illustration') {
     const clusterX = 30 + rand() * 40;
     const clusterY = 30 + rand() * 40;
@@ -170,7 +170,7 @@ function buildShapes(): Shape[] {
     }));
   }
 
-  // Editorial — horizontal rules mimicking text columns, plus a divider.
+  // Editorial: horizontal rules mimicking text columns, plus a divider.
   if (category === 'editorial') {
     const shapes: Shape[] = [];
     const lineCount = 6 + Math.floor(rand() * 4);
@@ -191,7 +191,7 @@ function buildShapes(): Shape[] {
     return shapes;
   }
 
-  // Experiments (or no category) — fully chaotic mix.
+  // Experiments (or no category): fully chaotic mix.
   const shapeCount = 5 + Math.floor(rand() * 5);
   return Array.from({ length: shapeCount }).map(() => randomShape());
 }

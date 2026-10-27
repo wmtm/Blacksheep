@@ -30,7 +30,7 @@ const {
 } = Astro.props;
 
 // Most pages get " · BlackSheep" appended; the homepage passes its own
-// full brand + keyword title (e.g. "BlackSheep — Graphic & Motion Designer
+// full brand + keyword title (e.g. "BlackSheep: Graphic & Motion Designer
 // in Mauritius") and is left exactly as given.
 const pageTitle = title.includes('BlackSheep') ? title : `${title} · BlackSheep`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

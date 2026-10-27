@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // "MOVE." deconstructs into scattered, outline-only letters, then snaps
-// together and fills solid — a small, cheap kinetic-type moment that reads
+// together and fills solid: a small, cheap kinetic-type moment that reads
 // as motion-design signature rather than a generic hover effect. Replays
 // on hover so it rewards a second look without looping unprompted.
 export function initMoveText() {
@@ -20,7 +20,7 @@ export function initMoveText() {
     }
 
     // Letters explode outward from the word's centre rather than jittering
-    // randomly — reads as one coherent, spacious motion instead of noise.
+    // randomly, reading as one coherent, spacious motion instead of noise.
     const center = (letters.length - 1) / 2;
     const scatter = () =>
       letters.map((_, i) => {
