@@ -15,16 +15,21 @@ cover:
   kind: image
   label: "LERITAZ MARONAZ · COVER ART"
   src: "/media/leritaz-maronaz/cover.webp"
+beforeAfter:
+  before:
+    label: "LINE ART · UNCOLOURED PANEL"
+    caption: "Where every panel starts: hand-inked line work, no colour yet."
+    src: "/media/leritaz-maronaz/before-after-before.webp"
+  after:
+    label: "FINAL COLOUR · PUBLISHED PANEL"
+    caption: "Where it lands: flat, warm colour laid in by hand over the same linework."
+    src: "/media/leritaz-maronaz/before-after-after.webp"
 gallery:
   - ratio: "16:9"
     kind: image
     label: "BRAND MARK + ILLUSTRATION STYLE"
     src: "/media/leritaz-maronaz/overview.webp"
-  - ratio: "16:9"
-    kind: image
-    label: "SCENE STUDY · LINE TO COLOUR"
-    src: "/media/leritaz-maronaz/process-line-to-color.webp"
-  - ratio: "16:9"
+  - ratio: "1:1"
     kind: image
     label: "ILLUSTRATED SCENE · RESISTANCE BY NIGHT"
     src: "/media/leritaz-maronaz/scene-resistance.webp"

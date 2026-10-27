@@ -52,10 +52,12 @@ const projects = defineCollection({
         before: z.object({
           label: z.string(),
           caption: z.string(),
+          src: z.string().optional(),
         }),
         after: z.object({
           label: z.string(),
           caption: z.string(),
+          src: z.string().optional(),
         }),
       })
       .optional(),

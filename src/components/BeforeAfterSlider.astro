@@ -1,9 +1,9 @@
 ---
-import Placeholder from './Placeholder.astro';
+import Media from './Media.astro';
 
 interface Props {
-  before: { label: string; caption: string };
-  after: { label: string; caption: string };
+  before: { label: string; caption: string; src?: string };
+  after: { label: string; caption: string; src?: string };
   accent: string;
 }
 
@@ -12,11 +12,11 @@ const { before, after, accent } = Astro.props;
 
 <div data-before-after class="relative touch-none select-none overflow-hidden rounded-[2px] aspect-[16/9]" data-cursor="drag" data-cursor-text="Drag">
   <div class="absolute inset-0">
-    <Placeholder ratio="16:9" label={before.label} accent="#5a5a5a" seed={`before-${before.label}`} tilt={false} class="h-full w-full" />
+    <Media ratio="16:9" label={before.label} accent="#5a5a5a" seed={`before-${before.label}`} src={before.src} tilt={false} class="h-full w-full" />
   </div>
 
   <div data-before-after-after class="absolute inset-0" style="clip-path: inset(0 0 0 50%);">
-    <Placeholder ratio="16:9" label={after.label} accent={accent} seed={`after-${after.label}`} tilt={false} class="h-full w-full" />
+    <Media ratio="16:9" label={after.label} accent={accent} seed={`after-${after.label}`} src={after.src} tilt={false} class="h-full w-full" />
   </div>
 
   <div
