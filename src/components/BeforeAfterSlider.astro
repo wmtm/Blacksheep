@@ -10,7 +10,7 @@ interface Props {
 const { before, after, accent } = Astro.props;
 ---
 
-<div data-before-after class="relative select-none overflow-hidden rounded-[2px] aspect-[16/9]" data-cursor="drag" data-cursor-text="Drag">
+<div data-before-after class="relative touch-none select-none overflow-hidden rounded-[2px] aspect-[16/9]" data-cursor="drag" data-cursor-text="Drag">
   <div class="absolute inset-0">
     <Placeholder ratio="16:9" label={before.label} accent="#5a5a5a" seed={`before-${before.label}`} tilt={false} class="h-full w-full" />
   </div>

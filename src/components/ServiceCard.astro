@@ -65,12 +65,14 @@ const { index, label, pitch, included, accent, proof, ctaLabel } = service;
    * grid sees each discipline "light up" in its own color rather than every
    * card behaving identically.
    */
-  .service-card:hover {
+  .service-card:hover,
+  .service-card:active {
     border-color: var(--accent);
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent),
       0 20px 60px -24px color-mix(in srgb, var(--accent) 55%, transparent);
   }
-  .service-card:hover .service-dot {
+  .service-card:hover .service-dot,
+  .service-card:active .service-dot {
     transform: scale(1.6);
   }
 

@@ -1,7 +1,15 @@
 import { gsap } from 'gsap';
 import { DURATION, EASE } from './motion';
 
+const isFinePointer = () =>
+  window.matchMedia('(pointer: fine)').matches &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initFollowPreview() {
+  // Cursor-following thumbnail: no fine pointer to follow, nothing to bind.
+  // The link itself still works by tap; only this decorative preview skips.
+  if (!isFinePointer()) return;
+
   const triggers = document.querySelectorAll<HTMLElement>('[data-preview-trigger]');
   if (triggers.length === 0) return;
 

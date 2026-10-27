@@ -31,12 +31,12 @@ const allCats = [data.category, ...data.secondaryCategories].join(',');
   >
     <div class="relative">
       <div
-        class="pointer-events-none absolute -inset-5 -z-10 rounded-full opacity-0 blur-2xl transition-opacity duration-slow group-hover:opacity-30"
+        class="pointer-events-none absolute -inset-5 -z-10 rounded-full opacity-0 blur-2xl transition-opacity duration-slow group-hover:opacity-30 group-active:opacity-30"
         style="background:var(--accent)"
         aria-hidden="true"
       ></div>
       <Media ratio={data.cover.ratio} kind={data.cover.kind} label={data.cover.label} accent={data.accent} category={data.category} src={data.cover.src} poster={data.cover.poster} transparent={data.cover.transparent} fit={data.cover.fit} />
-      <div class="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-slow group-hover:bg-ink/10"></div>
+      <div class="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-slow group-hover:bg-ink/10 group-active:bg-ink/10"></div>
     </div>
 
     <div class="mt-4 flex items-start justify-between gap-4">
@@ -57,7 +57,11 @@ const allCats = [data.category, ...data.secondaryCategories].join(',');
 </article>
 
 <style>
-  article.group:hover h3 {
+  /* :active mirrors :hover so tapping gives the same "pop" on touch devices
+     that don't have a real hover state (desktop mouse-down gets it too, as
+     a harmless press flash). */
+  article.group:hover h3,
+  article.group:active h3 {
     color: var(--accent);
   }
 </style>
