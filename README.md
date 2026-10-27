@@ -80,12 +80,10 @@ No layout changes should be needed — placeholders were sized to the exact aspe
 
 ## Before you launch
 
-A few things were placeholders by necessity and should be confirmed/replaced before going live:
-
-- **Social links** (`src/lib/social.ts`) — Behance is real; YouTube, LinkedIn and Instagram URLs are guesses marked `todo: true`. Update or remove.
-- **Contact email** — currently `hello@blacksheep.design`; update in `src/lib/social.ts` if that domain isn't secured, or swap for a real inbox.
-- **Portrait photo** — the About/Home placeholder expects a real headshot.
-- **OG/social preview image** — not yet added; drop a `public/og.jpg` and reference it in `BaseLayout.astro`'s `<meta property="og:image">` once you have one.
+- **Social links** (`src/lib/social.ts`) — only Behance is listed; the guessed YouTube/LinkedIn/Instagram URLs were removed rather than published unconfirmed. Add them back once real URLs exist.
+- **Contact** — real email and WhatsApp number are both live in `src/lib/social.ts`.
+- **Portrait photo** — intentionally not used; the animated BlackSheep mascot (`MascotPortrait.astro`) stands in for a headshot on About/Home.
+- **Real project media** — several Work archive projects (and the Illustrated Maps/Chasse de Wolmar case studies) are still running on generated `<Placeholder>` art. See "Swapping in real media" above.
 
 ## Deploying to GitHub Pages
 
