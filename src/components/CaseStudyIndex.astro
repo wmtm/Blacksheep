@@ -32,6 +32,20 @@ const { items, accent } = Astro.props;
   ))}
 </nav>
 
+<nav
+  data-index-nav
+  aria-label="Section index"
+  class="fixed inset-x-0 bottom-5 z-30 flex items-center justify-center gap-1 lg:hidden"
+>
+  <div class="flex items-center gap-3 rounded-full border border-line bg-ink/80 px-4 py-3 backdrop-blur-sm">
+    {items.map((item) => (
+      <a href={`#${item.id}`} data-index-link={item.id} aria-label={item.label} class="index-link flex items-center justify-center p-1">
+        <span class="index-dot block h-1.5 w-1.5 shrink-0 rounded-full border border-paper/40 transition-all duration-300"></span>
+      </a>
+    ))}
+  </div>
+</nav>
+
 <style define:vars={{ accent }}>
   .index-link[data-active='true'] {
     color: var(--color-paper);
